@@ -29,7 +29,7 @@ export const Home = () => {
 			</div>
 			<div className="margin mx-auto d-flex justify-content-around">
 				<div>
-					<Card style={{ width: "18rem" }}>
+					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
 						<Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
 						<Card.Body>
 							<Card.Title>Card Title</Card.Title>
@@ -39,18 +39,19 @@ export const Home = () => {
 							</Card.Text>
 						</Card.Body>
 						<ListGroup className="list-group-flush">
-							<ListGroupItem>Cras justo odio</ListGroupItem>
-							<ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-							<ListGroupItem>Vestibulum at eros</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Cras justo odio</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Dapibus ac facilisis in</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Vestibulum at eros</ListGroupItem>
 						</ListGroup>
 						<Card.Body>
-							<Card.Link href="#">Card Link</Card.Link>
-							<Card.Link href="#">Another Link</Card.Link>
+							<Card.Link href="#" className="btn shade-button text-white">
+								Card Link
+							</Card.Link>
 						</Card.Body>
 					</Card>
 				</div>
 				<div>
-					<Card style={{ width: "18rem" }}>
+					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
 						<Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
 						<Card.Body>
 							<Card.Title>Card Title</Card.Title>
@@ -60,18 +61,19 @@ export const Home = () => {
 							</Card.Text>
 						</Card.Body>
 						<ListGroup className="list-group-flush">
-							<ListGroupItem>Cras justo odio</ListGroupItem>
-							<ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-							<ListGroupItem>Vestibulum at eros</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Cras justo odio</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Dapibus ac facilisis in</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Vestibulum at eros</ListGroupItem>
 						</ListGroup>
 						<Card.Body>
-							<Card.Link href="#">Card Link</Card.Link>
-							<Card.Link href="#">Another Link</Card.Link>
+							<Card.Link href="#" className="btn shade-button text-white">
+								Card Link
+							</Card.Link>
 						</Card.Body>
 					</Card>
 				</div>
 				<div>
-					<Card style={{ width: "18rem" }}>
+					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
 						<Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
 						<Card.Body>
 							<Card.Title>Card Title</Card.Title>
@@ -81,18 +83,19 @@ export const Home = () => {
 							</Card.Text>
 						</Card.Body>
 						<ListGroup className="list-group-flush">
-							<ListGroupItem>Cras justo odio</ListGroupItem>
-							<ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-							<ListGroupItem>Vestibulum at eros</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Cras justo odio</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Dapibus ac facilisis in</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Vestibulum at eros</ListGroupItem>
 						</ListGroup>
 						<Card.Body>
-							<Card.Link href="#">Card Link</Card.Link>
-							<Card.Link href="#">Another Link</Card.Link>
+							<Card.Link href="#" className="btn shade-button text-white">
+								Card Link
+							</Card.Link>
 						</Card.Body>
 					</Card>
 				</div>
 				<div>
-					<Card style={{ width: "18rem" }}>
+					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
 						<Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
 						<Card.Body>
 							<Card.Title>Card Title</Card.Title>
@@ -102,18 +105,19 @@ export const Home = () => {
 							</Card.Text>
 						</Card.Body>
 						<ListGroup className="list-group-flush">
-							<ListGroupItem>Cras justo odio</ListGroupItem>
-							<ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-							<ListGroupItem>Vestibulum at eros</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Cras justo odio</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Dapibus ac facilisis in</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Vestibulum at eros</ListGroupItem>
 						</ListGroup>
 						<Card.Body>
-							<Card.Link href="#">Card Link</Card.Link>
-							<Card.Link href="#">Another Link</Card.Link>
+							<Card.Link href="#" className="btn shade-button text-white">
+								Card Link
+							</Card.Link>
 						</Card.Body>
 					</Card>
 				</div>
 				<div>
-					<Card style={{ width: "18rem" }}>
+					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
 						<Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
 						<Card.Body>
 							<Card.Title>Card Title</Card.Title>
@@ -123,20 +127,21 @@ export const Home = () => {
 							</Card.Text>
 						</Card.Body>
 						<ListGroup className="list-group-flush">
-							<ListGroupItem>Cras justo odio</ListGroupItem>
-							<ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-							<ListGroupItem>Vestibulum at eros</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Cras justo odio</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Dapibus ac facilisis in</ListGroupItem>
+							<ListGroupItem className="bg-transparent">Vestibulum at eros</ListGroupItem>
 						</ListGroup>
 						<Card.Body>
-							<Card.Link href="#">Card Link</Card.Link>
-							<Card.Link href="#">Another Link</Card.Link>
+							<Card.Link href="#" className="btn shade-button text-white">
+								Card Link
+							</Card.Link>
 						</Card.Body>
 					</Card>
 				</div>
 			</div>
 			<div className="my-3 container">
 				<div>
-					<Card>
+					<Card className="shade-color4 border-0">
 						<Card.Header>
 							<Nav variant="tabs" defaultActiveKey="#first">
 								<Nav.Item>
@@ -155,7 +160,9 @@ export const Home = () => {
 							<Card.Text>
 								With supporting text below as a natural lead-in to additional content.
 							</Card.Text>
-							<Button variant="primary">Go somewhere</Button>
+							<Button variant="primary" className="btn shade-button border-0">
+								Go somewhere
+							</Button>
 						</Card.Body>
 					</Card>
 				</div>

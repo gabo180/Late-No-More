@@ -38,6 +38,14 @@ body{
     ),
 }
 
+.shade-color3 {
+    background: linear-gradient(to top, rgba(255,0,0,0), rgba(0, 141, 206, 0.486))
+}
+
+.shade-color4 {
+    background: linear-gradient(to bottom, rgba(255,0,0,0), rgba(0, 141, 206, 0.39))
+}
+
 .home-header{
     width: 99%;
     height: 600px;
