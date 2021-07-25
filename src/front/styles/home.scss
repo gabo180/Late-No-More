@@ -8,10 +8,15 @@ body{
     )
 }
 
+.margin{
+    margin-top: 215px;
+    width: 99%;
+}
+
 .shade-button{
     background: radial-gradient(
         rgb(108, 213, 255),
-        rgb(0, 141, 206) 100%,
+        rgb(0, 141, 206),
         
     );
     border-radius: 15px;
@@ -20,21 +25,21 @@ body{
 .shade-color {
     background: linear-gradient(
         0deg,
-            rgb(0, 138, 138) 0%,
-            rgb(123, 213, 255) 100%
+        rgb(0, 141, 206) 0%,
+            rgb(108, 213, 255) 100%
     ),
 }
 
 .shade-color2 {
     background: linear-gradient(
         0deg,
-            rgb(123, 213, 255)0%,
-            rgb(0, 138, 138)  100%
+        rgb(108, 213, 255)0%,
+            rgb(0, 141, 206)  100%
     ),
 }
 
 .home-header{
-    width: 98%;
+    width: 99%;
     height: 600px;
     border-radius: 10px;
 }
@@ -47,7 +52,7 @@ body{
 .font-title {
     font-family: 'EB Garamond', serif;
     font-weight: bold;
-    color:rgb(86, 159, 192);
+    color:rgb(0, 141, 206);
 }
 
 .font-body {
