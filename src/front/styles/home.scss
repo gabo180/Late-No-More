@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,500&family=Zilla+Slab:wght@300&display=swap');
+
+body{
+    background: radial-gradient(
+        white,
+        rgb(123, 213, 255) 100%,
+
+    )
+}
+
+.shade-button{
+    background: radial-gradient(
+        rgb(108, 213, 255),
+        rgb(0, 141, 206) 100%,
+        
+    );
+    border-radius: 15px;
+}
+
+.shade-color {
+    background: linear-gradient(
+        0deg,
+            rgb(0, 138, 138) 0%,
+            rgb(123, 213, 255) 100%
+    ),
+}
+
+.shade-color2 {
+    background: linear-gradient(
+        0deg,
+            rgb(123, 213, 255)0%,
+            rgb(0, 138, 138)  100%
+    ),
+}
+
+.home-header{
+    width: 98%;
+    height: 600px;
+    border-radius: 10px;
+}
+
+.position-try {
+    margin-top: -500px;
+    font-size: 3rem;
+}
+
+.font-title {
+    font-family: 'EB Garamond', serif;
+    font-weight: bold;
+    color:rgb(86, 159, 192);
+}
+
+.font-body {
+    font-family: 'Zilla Slab', serif;
+    color:black
+}
+
+.fadein-animation {
+    animation: fadeInAnimation ease 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
