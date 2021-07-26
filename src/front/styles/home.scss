@@ -39,20 +39,22 @@ body{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.shade-color {
+.shade-color-navbar {
     background: linear-gradient(
         0deg,
         rgb(70, 0, 151) 0%,
             rgb(171, 157, 245) 100%
-    ),
+    );
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.shade-color2 {
+.shade-color-footer {
     background: linear-gradient(
         0deg,
         rgb(171, 157, 245)0%,
         rgb(70, 0, 151)  100%
-    ),
+    );
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .shade-color3 {
@@ -94,6 +96,13 @@ body{
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 }
+
+.fadein-animation2 {
+    animation: fadeInAnimation ease 5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
 @keyframes fadeInAnimation {
     0% {
         opacity: 0;

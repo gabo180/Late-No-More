@@ -29,7 +29,7 @@ export const Home = () => {
 			</div>
 			<div className="margin mx-auto d-flex justify-content-around">
 				<div>
-					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
+					<Card style={{ width: "18rem" }} className="shade-color3 border-0 fadein-animation">
 						<Card.Body>
 							<Card.Title>
 								<i className="far fa-clock font-size-xl" />
@@ -53,7 +53,7 @@ export const Home = () => {
 					</Card>
 				</div>
 				<div>
-					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
+					<Card style={{ width: "18rem" }} className="shade-color3 border-0 fadein-animation">
 						<Card.Body>
 							<Card.Title>
 								<i className="fas fa-book font-size-xl" />
@@ -77,7 +77,7 @@ export const Home = () => {
 					</Card>
 				</div>
 				<div>
-					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
+					<Card style={{ width: "18rem" }} className="shade-color3 border-0 fadein-animation">
 						<Card.Body>
 							<Card.Title>
 								<i className="fas fa-user-cog font-size-xl" />
@@ -101,7 +101,7 @@ export const Home = () => {
 					</Card>
 				</div>
 				<div>
-					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
+					<Card style={{ width: "18rem" }} className="shade-color3 border-0 fadein-animation">
 						<Card.Body>
 							<Card.Title>
 								<i className="fas fa-globe font-size-xl" />
