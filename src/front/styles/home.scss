@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,500&family=Zilla+Slab:wght@300&display=swap');
 
-// body{
-//     background:
-//         rgb(27, 189, 27)
-// }
 
 .font-size-xl {
     font-size: 8rem;
@@ -11,7 +7,7 @@
 }
 
 .margin{
-    margin-top: 215px;
+    margin-top: 30px;
     width: 99%;
 }
 
@@ -23,7 +19,7 @@
 
 .shade-button:hover{
     background:
-        rgb(44, 12, 131);
+    rgb(7, 62, 133);
     border-radius: 15px;
     border: 1px solid black;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -52,20 +48,22 @@
 }
 
 .home-header{
-    width: 99%;
+    width: 70%;
     height: 600px;
     border-radius: 10px;
+    margin-right: 10px
 }
 
 .position-try {
-    margin-top: -500px;
-    font-size: 3rem;
+    max-width: 630px;
+    font-size: 2.7rem;
+    margin-right: 10px
 }
 
 .font-title {
     font-family: 'EB Garamond', serif;
     font-weight:bolder;
-    color:rgb(194, 174, 0);
+    color:rgb(86, 172, 252);
     text-shadow: 2px 2px 5px black;
 }
 
@@ -73,6 +71,13 @@
     font-family: 'Zilla Slab', serif;
     color:rgb(255, 255, 255);
     text-shadow: 2px 2px 5px black;
+}
+
+.font-navbar {
+    font-family: 'Zilla Slab', serif;
+    color:rgb(255, 255, 255);
+    text-shadow: 2px 2px 5px black;
+    font-size: xx-large;
 }
 
 .fadein-animation {
