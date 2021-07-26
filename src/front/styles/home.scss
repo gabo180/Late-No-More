@@ -1,16 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,500&family=Zilla+Slab:wght@300&display=swap');
 
-body{
-    background: radial-gradient(
-        white,
-        rgb(214, 183, 7) 100%,
-
-    )
-}
+// body{
+//     background:
+//         rgb(27, 189, 27)
+// }
 
 .font-size-xl {
     font-size: 8rem;
-    color: rgb(70, 0, 151)
+    color: rgb(253, 253, 253)
 }
 
 .margin{
@@ -19,51 +16,38 @@ body{
 }
 
 .shade-button{
-    background: radial-gradient(
-        rgb(181, 149, 255),
-        rgb(60, 0, 226),
-        
-    );
+    background: 
+    rgb(17, 83, 168);
     border-radius: 15px;
-    border: 2px solid black;
 }
 
 .shade-button:hover{
-    background: radial-gradient(
-        rgb(112, 50, 255),
-        rgb(31, 0, 116),
-        
-    );
+    background:
+        rgb(44, 12, 131);
     border-radius: 15px;
-    border: 2px solid black;
+    border: 1px solid black;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .shade-color-navbar {
-    background: linear-gradient(
-        0deg,
-        rgb(70, 0, 151) 0%,
-            rgb(171, 157, 245) 100%
-    );
+    background: 
+    rgb(40, 123, 231);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .shade-color-footer {
-    background: linear-gradient(
-        0deg,
-        rgb(171, 157, 245)0%,
-        rgb(70, 0, 151)  100%
-    );
+    background: 
+    rgb(40, 123, 231);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .shade-color3 {
-    background: linear-gradient(to top, rgba(255,0,0,0), rgb(214, 183, 7));
+    background: rgb(90, 158, 247);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .shade-color4 {
-    background: linear-gradient(to bottom, rgba(255,0,0,0), rgb(214, 183, 7));
+    background:rgb(156, 199, 255);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -80,7 +64,7 @@ body{
 
 .font-title {
     font-family: 'EB Garamond', serif;
-    font-weight: bold;
+    font-weight:bolder;
     color:rgb(194, 174, 0);
     text-shadow: 2px 2px 5px black;
 }
