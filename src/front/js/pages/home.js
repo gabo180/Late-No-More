@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
+// import rigoImageUrl from "../../img/clock-(no-background).jpg";
 import "../../styles/home.scss";
 import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
 
@@ -30,8 +30,10 @@ export const Home = () => {
 			<div className="margin mx-auto d-flex justify-content-around">
 				<div>
 					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
-						<Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
 						<Card.Body>
+							<Card.Title>
+								<i className="far fa-clock font-size-xl" />
+							</Card.Title>
 							<Card.Title>Card Title</Card.Title>
 							<Card.Text>
 								Some quick example text to build on the card title and make up the bulk of the card
@@ -52,8 +54,10 @@ export const Home = () => {
 				</div>
 				<div>
 					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
-						<Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
 						<Card.Body>
+							<Card.Title>
+								<i className="fas fa-book font-size-xl" />
+							</Card.Title>
 							<Card.Title>Card Title</Card.Title>
 							<Card.Text>
 								Some quick example text to build on the card title and make up the bulk of the card
@@ -74,8 +78,10 @@ export const Home = () => {
 				</div>
 				<div>
 					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
-						<Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
 						<Card.Body>
+							<Card.Title>
+								<i className="fas fa-user-cog font-size-xl" />
+							</Card.Title>
 							<Card.Title>Card Title</Card.Title>
 							<Card.Text>
 								Some quick example text to build on the card title and make up the bulk of the card
@@ -96,30 +102,10 @@ export const Home = () => {
 				</div>
 				<div>
 					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
-						<Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
 						<Card.Body>
-							<Card.Title>Card Title</Card.Title>
-							<Card.Text>
-								Some quick example text to build on the card title and make up the bulk of the card
-								{"'"}s content.
-							</Card.Text>
-						</Card.Body>
-						<ListGroup className="list-group-flush">
-							<ListGroupItem className="bg-transparent">Cras justo odio</ListGroupItem>
-							<ListGroupItem className="bg-transparent">Dapibus ac facilisis in</ListGroupItem>
-							<ListGroupItem className="bg-transparent">Vestibulum at eros</ListGroupItem>
-						</ListGroup>
-						<Card.Body>
-							<Card.Link href="#" className="btn shade-button text-white">
-								Card Link
-							</Card.Link>
-						</Card.Body>
-					</Card>
-				</div>
-				<div>
-					<Card style={{ width: "18rem" }} className="shade-color3 border-0">
-						<Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
-						<Card.Body>
+							<Card.Title>
+								<i className="fas fa-globe font-size-xl" />
+							</Card.Title>
 							<Card.Title>Card Title</Card.Title>
 							<Card.Text>
 								Some quick example text to build on the card title and make up the bulk of the card
@@ -160,7 +146,7 @@ export const Home = () => {
 							<Card.Text>
 								With supporting text below as a natural lead-in to additional content.
 							</Card.Text>
-							<Button variant="primary" className="btn shade-button border-0">
+							<Button variant="primary" className="btn shade-button">
 								Go somewhere
 							</Button>
 						</Card.Body>
