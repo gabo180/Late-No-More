@@ -14,7 +14,6 @@ class Profile(db.Model):
     messages_id = db.Column(db.ForeignKey('messages.id'), primary_key=True)
     # user_id = db.Column(db.ForeignKey('user.id'), primary_key=True)
 
-
     def __repr__(self):
         return '<Profile %r>' % self.username
 
@@ -27,6 +26,7 @@ class Profile(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
+
 
 class Messages(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -41,11 +41,11 @@ class Messages(db.Model):
             "id": self.id
         }
 
+
 class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     role = db.Column(db.String(120), unique=True, nullable=False)
     hourly_rate = db.Column(db.Float, unique=True, nullable=False)
-
 
     def __repr__(self):
         return '<Employee %r>' % self.employee
@@ -57,6 +57,7 @@ class Employee(db.Model):
             "hourly_rate": self.hourly_rate
         }
 
+
 class Employer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
@@ -67,6 +68,7 @@ class Employer(db.Model):
         return {
             "id": self.id
         }
+
 
 class Request(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -83,6 +85,7 @@ class Request(db.Model):
         return {
             "id": self.id
         }
+
 
 class Shift(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -105,6 +108,7 @@ class Shift(db.Model):
             "ending_time": self.ending_time
             # do not serialize the password, its a security breach
         }
+
 
 class Punch(db.Model):
     id = db.Column(db.Integer, primary_key=True)
