@@ -15,7 +15,7 @@ class Profile(db.Model):
     # messages_id = db.Column(db.Integer, db.ForeignKey('messages.id'))
     # employee_id = db.relationship("Employee", uselist=False, backref="profile")
     employee = db.relationship("Employee", backref="profile", uselist=False)
-    # employer = db.relationship("Employer", backref="profile", uselist=False)
+    employer = db.relationship("Employer", backref="profile", uselist=False)
     
 
     def __repr__(self):
@@ -87,9 +87,10 @@ class Employer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     role = db.Column(db.String(120), unique=False, nullable=False)
     hourly_rate = db.Column(db.Float, unique=False, nullable=False)
+    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
 
     def __repr__(self):
-        return '<Employer %r>' % self.employer
+        return '<Employer %r>' % self.id
 
     def serialize(self):
         return {
