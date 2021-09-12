@@ -50,6 +50,7 @@ class Employee(db.Model):
     hourly_rate = db.Column(db.Float, unique=False, nullable=False)
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
     # profile = db.relationship("Profile", back_populates="employee")
+    punch = db.relationship('Punch', backref="employee", lazy=True)
     
     def __repr__(self):
         return '<Employee %r>' % self.id
@@ -86,6 +87,7 @@ class Employer(db.Model):
     role = db.Column(db.String(120), unique=False, nullable=False)
     hourly_rate = db.Column(db.Float, unique=False, nullable=False)
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
+    
 
     def __repr__(self):
         return '<Employer %r>' % self.id
@@ -140,10 +142,10 @@ class Shift(db.Model):
 
 class Punch(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    # shift_id = db.Column(db.String(120), unique=False, nullable=False)
-    # employee_id = db.Column(db.String(120), unique=False, nullable=False)
     time_stamp = db.Column(db.Integer, unique=False, nullable=False)
     shift_id = db.Column(db.Integer, db.ForeignKey("shift.id"))
+    employee_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
+    
 
     def __repr__(self):
         return '<Punch %r>' % self.id
