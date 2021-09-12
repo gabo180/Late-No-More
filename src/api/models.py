@@ -121,9 +121,10 @@ class Shift(db.Model):
     role = db.Column(db.String(120), unique=False, nullable=False)
     starting_time = db.Column(db.Integer, unique=False, nullable=False)
     ending_time = db.Column(db.Integer, unique=False, nullable=False)
+    punch = db.relationship('Punch', backref="shift", lazy=True)
 
     def __repr__(self):
-        return '<Shift %r>' % self.shift
+        return '<Shift %r>' % self.id
 
     def serialize(self):
         return {
@@ -139,14 +140,17 @@ class Shift(db.Model):
 
 class Punch(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    shift_id = db.Column(db.String(120), unique=False, nullable=False)
-    employee_id = db.Column(db.String(120), unique=False, nullable=False)
+    # shift_id = db.Column(db.String(120), unique=False, nullable=False)
+    # employee_id = db.Column(db.String(120), unique=False, nullable=False)
     time_stamp = db.Column(db.Integer, unique=False, nullable=False)
+    shift_id = db.Column(db.Integer, db.ForeignKey("shift.id"))
 
     def __repr__(self):
-        return '<Punch %r>' % self.punch
+        return '<Punch %r>' % self.id
 
     def serialize(self):
         return {
-            "id": self.id
+            "id": self.id,
+            "time_stamp": self.time_stamp,
+            "shift_id": self.shift_id
         }
