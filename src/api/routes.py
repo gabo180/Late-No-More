@@ -14,13 +14,14 @@ api = Blueprint('api', __name__)
 ##Profile
 
 @api.route('/profile', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def handle_profile():
     profiles = Profile.query.all()
     mapped_profiles=[p.serialize() for p in profiles]
     return jsonify(mapped_profiles), 200
 
 @api.route('/profile/<int:profile_id>', methods=['GET'])
+@jwt_required()
 def handle_single_profile(profile_id):
     profiles = Profile.query.get(profile_id)
     profiles = profiles.serialize()
@@ -29,13 +30,14 @@ def handle_single_profile(profile_id):
 ##Messages
 
 @api.route('/messages', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def handle_messages():
     messages = Messages.query.all()
     mapped_messages=[m.serialize() for m in messages]
     return jsonify(mapped_messages), 200
 
 @api.route('/messages/<int:messages_id>', methods=['GET'])
+@jwt_required()
 def handle_single_message(messages_id):
     messages = Messages.query.get(messages_id)
     messages = messages.serialize()
@@ -51,6 +53,7 @@ def handle_shift():
     return jsonify(mapped_shifts), 200
 
 @api.route('/shift/<int:shift_id>', methods=['GET'])
+@jwt_required()
 def handle_single_shift(shift_id):
     shifts = Shift.query.get(shift_id)
     shifts = shifts.serialize()
@@ -66,6 +69,7 @@ def handle_punch():
     return jsonify(mapped_punches), 200
 
 @api.route('/punch/<int:punch_id>', methods=['GET'])
+@jwt_required()
 def handle_single_punch(punch_id):
     punches = Punch.query.get(punch_id)
     punches = punches.serialize()
