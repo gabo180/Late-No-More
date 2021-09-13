@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Profile
+from api.models import db, Profile, Punch, Messages, Shift
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -14,14 +14,14 @@ api = Blueprint('api', __name__)
 ##Profile
 
 @api.route('/profile', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def handle_profile():
     profiles = Profile.query.all()
     mapped_profiles=[p.serialize() for p in profiles]
     return jsonify(mapped_profiles), 200
 
 @api.route('/profile/<int:profile_id>', methods=['GET'])
-def handle_single_user(profile_id):
+def handle_single_profile(profile_id):
     profiles = Profile.query.get(profile_id)
     profiles = profiles.serialize()
     return jsonify(profiles), 200
@@ -29,10 +29,10 @@ def handle_single_user(profile_id):
 ##Messages
 
 @api.route('/messages', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def handle_messages():
     messages = Messages.query.all()
-    mapped_messages=[m.serialize() for m in mesagges]
+    mapped_messages=[m.serialize() for m in messages]
     return jsonify(mapped_messages), 200
 
 @api.route('/messages/<int:messages_id>', methods=['GET'])
