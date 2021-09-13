@@ -120,16 +120,10 @@ class Shift(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.String(40), unique=False, nullable=False)
     hours = db.Column(db.String(50), unique=False, nullable=False)
-<<<<<<< HEAD
     role = db.Column(db.String(120), unique=False, nullable=False)
     starting_time = db.Column(db.Integer, unique=False, nullable=False)
     ending_time = db.Column(db.Integer, unique=False, nullable=False)
     punch = db.relationship('Punch', backref="shift", lazy=True)
-=======
-    starting_time = db.Column(db.String(15), unique=False, nullable=False)
-    ending_time = db.Column(db.String(15), unique=False, nullable=False)
->>>>>>> 646f0d24180803baa718a79994d60995a6cdcfaf
-
 
     def __repr__(self):
         return '<Shift %r>' % self.id
