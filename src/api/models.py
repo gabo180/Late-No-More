@@ -15,7 +15,8 @@ class Profile(db.Model):
     # messages_id = db.Column(db.Integer, db.ForeignKey('messages.id'))
     # employee_id = db.relationship("Employee", uselist=False, backref="profile")
     employee = db.relationship("Employee", backref="profile", uselist=False)
-    # employer = db.relationship("Employer", backref="profile", uselist=False)
+    employer = db.relationship("Employer", backref="profile", uselist=False)
+    messages = db.relationship('Messages', backref="profile", lazy=True)
     
 
     def __repr__(self):
@@ -28,24 +29,20 @@ class Profile(db.Model):
             "last_name": self.last_name,
             "username": self.username,
             "email": self.email,
+            "messages": list(map(lambda x: x.serialize(), self.messages))
             # do not serialize the password, its a security breach
         }
 
-# class Parent(Base):
-#     __tablename__ = 'parent'
-#     id = Column(Integer, primary_key=True)
+# class Person(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(50), nullable=False)
+#     addresses = db.relationship('Address', backref='person', lazy=True)
 
-#     # previously one-to-many Parent.children is now
-#     # one-to-one Parent.child
-#     child = relationship("Child", back_populates="parent", uselist=False)
-
-# class Child(Base):
-#     __tablename__ = 'child'
-#     id = Column(Integer, primary_key=True)
-#     parent_id = Column(Integer, ForeignKey('parent.id'))
-
-#     # many-to-one side remains, see tip below
-#     parent = relationship("Parent", back_populates="child")
+# class Address(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     email = db.Column(db.String(120), nullable=False)
+#     person_id = db.Column(db.Integer, db.ForeignKey('person.id'),
+#         nullable=False)
 
 class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -53,6 +50,7 @@ class Employee(db.Model):
     hourly_rate = db.Column(db.Float, unique=False, nullable=False)
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
     # profile = db.relationship("Profile", back_populates="employee")
+    punch = db.relationship('Punch', backref="employee", lazy=True)
     
     def __repr__(self):
         return '<Employee %r>' % self.id
@@ -73,9 +71,10 @@ class Messages(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, unique=False, nullable=False)
     recipient_id = db.Column(db.Integer, unique=False, nullable=False)
+    profile_id = db.Column(db.Integer, db.ForeignKey("profile.id"))
 
     def __repr__(self):
-        return '<Messages %r>' % self.message
+        return '<Messages %r>' % self.id
 
     def serialize(self):
         return {
@@ -87,9 +86,11 @@ class Employer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     role = db.Column(db.String(120), unique=False, nullable=False)
     hourly_rate = db.Column(db.Float, unique=False, nullable=False)
+    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
+    
 
     def __repr__(self):
-        return '<Employer %r>' % self.employer
+        return '<Employer %r>' % self.id
 
     def serialize(self):
         return {
@@ -120,11 +121,12 @@ class Shift(db.Model):
     date = db.Column(db.String(40), unique=False, nullable=False)
     hours = db.Column(db.String(50), unique=False, nullable=False)
     role = db.Column(db.String(120), unique=False, nullable=False)
-    starting_time = db.Column(db.String(15), unique=False, nullable=False)
-    ending_time = db.Column(db.String(15), unique=False, nullable=False)
+    starting_time = db.Column(db.Integer, unique=False, nullable=False)
+    ending_time = db.Column(db.Integer, unique=False, nullable=False)
+    punch = db.relationship('Punch', backref="shift", lazy=True)
 
     def __repr__(self):
-        return '<Shift %r>' % self.shift
+        return '<Shift %r>' % self.id
 
     def serialize(self):
         return {
@@ -140,14 +142,17 @@ class Shift(db.Model):
 
 class Punch(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    shift_id = db.Column(db.String(120), unique=False, nullable=False)
-    employee_id = db.Column(db.String(120), unique=False, nullable=False)
     time_stamp = db.Column(db.Integer, unique=False, nullable=False)
+    shift_id = db.Column(db.Integer, db.ForeignKey("shift.id"))
+    employee_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
+    
 
     def __repr__(self):
-        return '<Punch %r>' % self.punch
+        return '<Punch %r>' % self.id
 
     def serialize(self):
         return {
-            "id": self.id
+            "id": self.id,
+            "time_stamp": self.time_stamp,
+            "shift_id": self.shift_id
         }
