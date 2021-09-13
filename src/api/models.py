@@ -120,8 +120,8 @@ class Shift(db.Model):
     date = db.Column(db.String(40), unique=False, nullable=False)
     hours = db.Column(db.String(50), unique=False, nullable=False)
     role = db.Column(db.String(120), unique=False, nullable=False)
-    starting_time = db.Column(db.Integer, unique=False, nullable=False)
-    ending_time = db.Column(db.Integer, unique=False, nullable=False)
+    starting_time = db.Column(db.String(15), unique=False, nullable=False)
+    ending_time = db.Column(db.String(15), unique=False, nullable=False)
 
     def __repr__(self):
         return '<Shift %r>' % self.shift
