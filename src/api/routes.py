@@ -11,15 +11,26 @@ from flask_jwt_extended import JWTManager
 
 api = Blueprint('api', __name__)
 
+##Profile
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
+@api.route('/profile', methods=['GET'])
+@jwt_required()
+def handle_profile():
+    profiles = Profile.query.all()
+    mapped_profiles=[u.serialize() for u in users]
+    return jsonify(mapped_profiles), 200
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend"
-    }
+@api.route('/profile/<int:profile_id>', methods=['GET'])
+def handle_single_user(profile_id):
+    profiles = Profile.query.get(profile_id)
+    profiles = profiles.serialize()
+    return jsonify(profiles), 200
 
-    return jsonify(response_body), 200
+##Login
+
+
+
+##Login
 
 @api.route("/login", methods=["POST"])
 def login():
