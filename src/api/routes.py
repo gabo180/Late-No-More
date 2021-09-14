@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Profile, Punch, Messages, Shift
+from api.models import db, Profile, Punch, Messages_author, Messages_recipient, Shift
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -27,19 +27,35 @@ def handle_single_profile(profile_id):
     profiles = profiles.serialize()
     return jsonify(profiles), 200
 
-##Messages
+##Messages author
 
-@api.route('/messages', methods=['GET'])
+@api.route('/messages-author', methods=['GET'])
 @jwt_required()
-def handle_messages():
+def handle_messages_author():
+    messages = Messages_author.query.all()
+    mapped_messages=[m.serialize() for m in messages]
+    return jsonify(mapped_messages), 200
+
+@api.route('/messages-author/<int:messages_id>', methods=['GET'])
+@jwt_required()
+def handle_single_message_author(messages_id):
+    messages = Messages_author.query.get(messages_id)
+    messages = messages.serialize()
+    return jsonify(messages), 200
+
+##Messages recipient
+
+@api.route('/messages-recipient', methods=['GET'])
+@jwt_required()
+def handle_messages_recipient():
     messages = Messages.query.all()
     mapped_messages=[m.serialize() for m in messages]
     return jsonify(mapped_messages), 200
 
-@api.route('/messages/<int:messages_id>', methods=['GET'])
+@api.route('/messages-recipient/<int:messages_id>', methods=['GET'])
 @jwt_required()
-def handle_single_message(messages_id):
-    messages = Messages.query.get(messages_id)
+def handle_single_message_recipient(messages_id):
+    messages = Messages_recipient.query.get(messages_id)
     messages = messages.serialize()
     return jsonify(messages), 200
 
