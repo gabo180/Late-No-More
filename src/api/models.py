@@ -127,6 +127,7 @@ class Shift(db.Model):
     punch = db.relationship('Punch', backref="shift", lazy=True)
     request_shift = db.relationship("Request", back_populates="shift")
 
+
     def __repr__(self):
         return '<Shift %r>' % self.id
 
