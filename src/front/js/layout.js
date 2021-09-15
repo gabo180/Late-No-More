@@ -5,7 +5,50 @@ import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
-import injectContext from "./store/appContext";
+
+{
+	/* main imports */
+}
+
+import { ConfirmClockIn } from "./pages/main/confirmClockIn";
+import { ConfirmClockOut } from "./pages/main/confirmClockOut";
+import { ConfirmEmail } from "./pages/main/confirmEmail";
+import { HomePage } from "./pages/main/homePage";
+import { Main } from "./pages/main/main";
+import { SignUp } from "./pages/main/signUp";
+
+{
+	/* shift info imports */
+}
+
+import { Shifts } from "./pages/shift/shifts";
+import { CreateEvent } from "./pages/shift/createEvent";
+import { ShiftInfo } from "./pages/shift/shiftInfo";
+import { Timesheet } from "./pages/shift/timesheet";
+
+{
+	/* messages imports */
+}
+
+import { Messages } from "./pages/messages/messages";
+import { SingleMessage } from "./pages/messages/singleMessage";
+
+{
+	/* account info imports */
+}
+
+import { Account } from "./pages/account-info/account";
+import { CompanyProfile } from "./pages/account-info/companyProfile";
+import { Profile } from "./pages/account-info/profile";
+import { Roles } from "./pages/account-info/roles";
+
+{
+	/* settings imports */
+}
+
+import { Settings } from "./pages/settings/settings";
+import { Help } from "./pages/settings/help";
+import { About } from "./pages/settings/about";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -22,9 +65,80 @@ const Layout = () => {
 				<ScrollToTop>
 					<Navbar />
 					<Switch>
+						{/* main */}
+
 						<Route exact path="/">
-							<Home />
+							<HomePage />
 						</Route>
+						<Route exact path="/sign-up">
+							<SignUp />
+						</Route>
+						<Route exact path="/confirm-email">
+							<ConfirmEmail />
+						</Route>
+						<Route exact path="/home">
+							<Main />
+						</Route>
+						<Route exact path="/confirm-CI">
+							<ConfirmClockIn />
+						</Route>
+						<Route exact path="/confirm-CO">
+							<ConfirmClockOut />
+						</Route>
+
+						{/* shift info */}
+
+						<Route exact path="/shifts">
+							<Shifts />
+						</Route>
+						<Route exact path="/shifts/create-event">
+							<CreateEvent />
+						</Route>
+						<Route exact path="/shifts/timesheet">
+							<Timesheet />
+						</Route>
+						<Route exact path="/shifts/shift-info">
+							<ShiftInfo />
+						</Route>
+
+						{/* messages */}
+
+						<Route exact path="/messages">
+							<Messages />
+						</Route>
+						<Route exact path="/messages/:theid">
+							<SingleMessage />
+						</Route>
+
+						{/* acc info */}
+
+						<Route exact path="/account">
+							<Account />
+						</Route>
+						<Route exact path="/account/profile">
+							<Profile />
+						</Route>
+						<Route exact path="/account/company-profile">
+							<CompanyProfile />
+						</Route>
+						<Route exact path="/account/roles">
+							<Roles />
+						</Route>
+
+						{/* settings */}
+
+						<Route exact path="/settings">
+							<Settings />
+						</Route>
+						<Route exact path="/settings/help">
+							<Help />
+						</Route>
+						<Route exact path="/settings/about">
+							<About />
+						</Route>
+
+						{/* layouts */}
+
 						<Route exact path="/demo">
 							<Demo />
 						</Route>
