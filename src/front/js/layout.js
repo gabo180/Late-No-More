@@ -66,7 +66,7 @@ const Layout = () => {
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					<NavbarPublicUser />
+					<NavbarPublicUser /> 
 					<Switch>
 						{/* main */}
 
