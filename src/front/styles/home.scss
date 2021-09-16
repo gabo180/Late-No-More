@@ -22,6 +22,13 @@
     border-radius: 15px;
 }
 
+.round-bord{
+    border: 5px solid white;
+    width: 100px;
+    border-radius: 100px;
+    box-shadow: 1px 1px 4px black;
+}
+
 .shade-button:hover{
     background:
     rgb(7, 62, 133);

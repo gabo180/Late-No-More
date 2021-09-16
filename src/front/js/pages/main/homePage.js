@@ -13,7 +13,7 @@ export const HomePage = () => {
 
 	return (
 		<div className="pb-5 mb-5 text-center">
-			<div className="d-flex justify-content-around">
+			<div className="d-flex justify-content-end mx-1 my-1">
 				<form
 					className="d-flex justify-content-around"
 					onSubmit={e => {
@@ -45,7 +45,7 @@ export const HomePage = () => {
 					{/* </Link> */}
 				</form>
 				<Link to="/sign-up">
-					<button type="submit" className="btn btn-success mb-2" value="Sign up">
+					<button type="submit" className="btn btn-success ml-2" value="Sign up">
 						Signup
 					</button>
 				</Link>

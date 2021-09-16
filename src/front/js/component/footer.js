@@ -10,7 +10,7 @@ export const FooterLoggedIn = () => (
 				</button>
 			</Link>
 			<Link to="/shifts">
-				<button className="btn text-white font-body">
+				<button className="btn text-white round-bord">
 					Shifts <br /> <i className="pt-1 icon-size-xl far fa-calendar-alt" />
 				</button>
 			</Link>

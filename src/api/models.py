@@ -25,8 +25,7 @@ class Profile(db.Model):
             "name": self.name,
             "last_name": self.last_name,
             "username": self.username,
-            "email": self.email,
-            "messages": list(map(lambda x: x.serialize(), self.messages))
+            "email": self.email
         }
 
 class Employee(db.Model):
