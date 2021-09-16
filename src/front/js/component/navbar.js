@@ -5,7 +5,7 @@ import latenomoreLogo from "../../img/latenomoreLogo.png";
 export const NavbarLoggedIn = () => {
 	return (
 		<nav className="navbar navbar-light mb-1 shade-color-navbar">
-			<Link to="/" className="text-decoration-none">
+			<Link to="/home" className="text-decoration-none">
 				<span className="mb-0 h1 text-white font-navbar">
 					LateNoMore <img src={latenomoreLogo} />
 				</span>

@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { Context } from "../../store/appContext";
 // import rigoImageUrl from "../../img/clock-(no-background).jpg";
 import "../../../styles/home.scss";
@@ -6,9 +7,49 @@ import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bo
 
 export const HomePage = () => {
 	const { store, actions } = useContext(Context);
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const history = useHistory();
 
 	return (
 		<div className="pb-5 mb-5 text-center">
+			<div className="d-flex justify-content-around">
+				<form
+					className="d-flex justify-content-around"
+					onSubmit={e => {
+						e.preventDefault();
+						actions.login(username, password, history);
+					}}>
+					<div className="form-group mb-2">
+						<input
+							type="text"
+							className="form-control"
+							placeholder="Username"
+							onChange={e => setUsername(e.target.value)}
+							value={username}
+						/>
+					</div>
+					<div className="form-group mx-sm-3 mb-2">
+						<input
+							type="password"
+							className="form-control"
+							placeholder="Password"
+							onChange={e => setPassword(e.target.value)}
+							value={password}
+						/>
+					</div>
+					{/* <Link to="/home"> */}
+					<button type="submit" className="btn btn-primary mb-2" value="Log in">
+						Login
+					</button>
+					{/* </Link> */}
+				</form>
+				<Link to="/sign-up">
+					<button type="submit" className="btn btn-success mb-2" value="Sign up">
+						Signup
+					</button>
+				</Link>
+			</div>
 			<div className="my-3">
 				<div className="fadein-animation d-flex">
 					<div className="position-try">
