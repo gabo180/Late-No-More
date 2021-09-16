@@ -8,7 +8,7 @@ export const HomePage = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="text-center">
+		<div className="pb-5 mb-5 text-center">
 			<div className="my-3">
 				<div className="fadein-animation d-flex">
 					<div className="position-try">
@@ -21,13 +21,9 @@ export const HomePage = () => {
 							{"'"}s going on.{" "}
 						</sapn>
 					</div>
-					<img
-						className="home-header"
-						src="https://mms.businesswire.com/media/20201027005001/en/830831/5/Compass_Offices_Why_the_Office_remains_in_Japans_Future_Way_of_Working.jpg"
-					/>
 				</div>
 			</div>
-			<div className="margin mx-auto d-flex justify-content-around text-white">
+			{/* <div className="margin mx-auto d-flex justify-content-around text-white">
 				<div>
 					<Card style={{ width: "18rem" }} className="shade-color3 border-0 fadein-animation">
 						<Card.Body>
@@ -124,8 +120,8 @@ export const HomePage = () => {
 						</Card.Body>
 					</Card>
 				</div>
-			</div>
-			<div className="my-3 container">
+			</div> */}
+			<div className="my-4 container">
 				<div>
 					<Card className="shade-color4 border-0 text-white">
 						<Card.Header>

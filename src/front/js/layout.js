@@ -1,4 +1,5 @@
 import React from "react";
+import injectContext from "./store/appContext.js";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
@@ -50,8 +51,10 @@ import { Settings } from "./pages/settings/settings";
 import { Help } from "./pages/settings/help";
 import { About } from "./pages/settings/about";
 
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+import { NavbarLoggedIn } from "./component/navbar";
+import { NavbarPublicUser } from "./component/navbar";
+import { FooterLoggedIn } from "./component/footer";
+import { FooterPublicUser } from "./component/footer";
 
 //create your first component
 const Layout = () => {
@@ -63,7 +66,7 @@ const Layout = () => {
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					<Navbar />
+					<NavbarPublicUser />
 					<Switch>
 						{/* main */}
 
@@ -149,7 +152,7 @@ const Layout = () => {
 							<h1>Not found!</h1>
 						</Route>
 					</Switch>
-					<Footer />
+					<FooterPublicUser />
 				</ScrollToTop>
 			</BrowserRouter>
 		</div>
