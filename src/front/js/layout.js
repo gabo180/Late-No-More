@@ -1,4 +1,5 @@
 import React from "react";
+import injectContext from "./store/appContext.js";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
@@ -50,8 +51,10 @@ import { Settings } from "./pages/settings/settings";
 import { Help } from "./pages/settings/help";
 import { About } from "./pages/settings/about";
 
-import { Navbar } from "./component/navbar";
-import { Footer } from "./component/footer";
+import { NavbarLoggedIn } from "./component/navbar";
+import { NavbarPublicUser } from "./component/navbar";
+import { FooterLoggedIn } from "./component/footer";
+import { FooterPublicUser } from "./component/footer";
 
 //create your first component
 const Layout = () => {
@@ -63,78 +66,115 @@ const Layout = () => {
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					<Navbar />
 					<Switch>
 						{/* main */}
 
 						<Route exact path="/">
+							<NavbarPublicUser />
 							<HomePage />
+							<FooterPublicUser />
 						</Route>
 						<Route exact path="/sign-up">
+							<NavbarPublicUser />
 							<SignUp />
+							<FooterPublicUser />
 						</Route>
 						<Route exact path="/confirm-email">
+							<NavbarPublicUser />
 							<ConfirmEmail />
+							<FooterPublicUser />
 						</Route>
 						<Route exact path="/home">
+							<NavbarLoggedIn />
 							<Main />
+							<FooterLoggedIn />
 						</Route>
 						<Route exact path="/confirm-CI">
+							<NavbarLoggedIn />
 							<ConfirmClockIn />
+							<FooterLoggedIn />
 						</Route>
 						<Route exact path="/confirm-CO">
+							<NavbarLoggedIn />
 							<ConfirmClockOut />
+							<FooterLoggedIn />
 						</Route>
 
 						{/* shift info */}
 
 						<Route exact path="/shifts">
+							<NavbarLoggedIn />
 							<Shifts />
+							<FooterLoggedIn />
 						</Route>
 						<Route exact path="/shifts/create-event">
+							<NavbarLoggedIn />
 							<CreateEvent />
+							<FooterLoggedIn />
 						</Route>
 						<Route exact path="/shifts/timesheet">
+							<NavbarLoggedIn />
 							<Timesheet />
+							<FooterLoggedIn />
 						</Route>
 						<Route exact path="/shifts/shift-info">
+							<NavbarLoggedIn />
 							<ShiftInfo />
+							<FooterLoggedIn />
 						</Route>
 
 						{/* messages */}
 
 						<Route exact path="/messages">
+							<NavbarLoggedIn />
 							<Messages />
+							<FooterLoggedIn />
 						</Route>
 						<Route exact path="/messages/:theid">
+							<NavbarLoggedIn />
 							<SingleMessage />
+							<FooterLoggedIn />
 						</Route>
 
 						{/* acc info */}
 
 						<Route exact path="/account">
+							<NavbarLoggedIn />
 							<Account />
+							<FooterLoggedIn />
 						</Route>
 						<Route exact path="/account/profile">
+							<NavbarLoggedIn />
 							<Profile />
+							<FooterLoggedIn />
 						</Route>
 						<Route exact path="/account/company-profile">
+							<NavbarLoggedIn />
 							<CompanyProfile />
+							<FooterLoggedIn />
 						</Route>
 						<Route exact path="/account/roles">
+							<NavbarLoggedIn />
 							<Roles />
+							<FooterLoggedIn />
 						</Route>
 
 						{/* settings */}
 
 						<Route exact path="/settings">
+							<NavbarLoggedIn />
 							<Settings />
+							<FooterLoggedIn />
 						</Route>
 						<Route exact path="/settings/help">
+							<NavbarLoggedIn />
 							<Help />
+							<FooterLoggedIn />
 						</Route>
 						<Route exact path="/settings/about">
+							<NavbarLoggedIn />
 							<About />
+							<FooterLoggedIn />
 						</Route>
 
 						{/* layouts */}
@@ -149,7 +189,6 @@ const Layout = () => {
 							<h1>Not found!</h1>
 						</Route>
 					</Switch>
-					<Footer />
 				</ScrollToTop>
 			</BrowserRouter>
 		</div>

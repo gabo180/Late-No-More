@@ -153,7 +153,14 @@ export const About = () => {
 					</Card>
 				</div>
 			</div>
-
+			Made with <i className="fas fa-palette" /> by{" "}
+			<a className="text-white text-decoration-none" href="https://github.com/marcoescmont">
+				Marco Escalona
+			</a>
+			{", "}
+			<a className="text-white text-decoration-none" href="https://github.com/gabo180">
+				Gabriel Hernandez
+			</a>
 			<div />
 		</div>
 	);
