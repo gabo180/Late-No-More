@@ -54,6 +54,7 @@ class Employee(db.Model):
 
 class Messages_author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text, unique=False, nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
     
 
@@ -67,6 +68,7 @@ class Messages_author(db.Model):
 
 class Messages_recipient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text, unique=False, nullable=False)
     recipient_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
     
 
