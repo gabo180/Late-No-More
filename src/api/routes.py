@@ -8,7 +8,11 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+<<<<<<< HEAD
 import datetime
+=======
+from api.emailSender import emailSender
+>>>>>>> 005f00020d1a3011a2718c6b23c575a30eb4718a
 
 api = Blueprint('api', __name__)
 
@@ -49,7 +53,7 @@ def handle_single_message_author(messages_id):
 @api.route('/messages-recipient', methods=['GET'])
 @jwt_required()
 def handle_messages_recipient():
-    messages = Messages.query.all()
+    messages = Messages_recipient.query.all()
     mapped_messages=[m.serialize() for m in messages]
     return jsonify(mapped_messages), 200
 
@@ -95,20 +99,20 @@ def handle_single_punch(punch_id):
 ##Login
 
 @api.route("/login", methods=["POST"])
-def login():
-    body = request.get_json()
-    if body is None:
-        raise APIException("You need to specify the body", 400)
-
-    user = Profile.query.filter_by(email = body["email"]).first()
+def create_token():
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+    # Query your database for username and password
+    user = Profile.query.filter_by(username=username, password=password).first()
     if user is None:
-        raise APIException("This user does NOT exist!", 400)
+        # the user was not found on the database
+        return jsonify({"msg": "Bad username or password"}), 401
+    
+    # create a new token with the user id inside
+    emailSender(user.email)
+    access_token = create_access_token(identity=user.id)
+    return jsonify({ "token": access_token, "user_id": user.id })
 
-    if user.password != body["password"]:
-        raise APIException ("Credentials are wrong!", 400)
-
-    access_token = create_access_token(identity=user.email)
-    return jsonify(access_token=access_token)
 
 ##POST Shift
 
@@ -124,3 +128,6 @@ def post_shift():
     db.session.add(shift)
     db.session.commit()
     return jsonify(shift.serialize())
+
+
+ 

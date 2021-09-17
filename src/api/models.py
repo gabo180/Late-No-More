@@ -8,6 +8,7 @@ class Profile(db.Model):
     name = db.Column(db.String(120), unique=False, nullable=False)
     last_name = db.Column(db.String(120), unique=False, nullable=False)
     username = db.Column(db.String(120), unique=False, nullable=False)
+    phone_number = db.Column(db.String(35), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     employee = db.relationship("Employee", backref="profile", uselist=False)
@@ -26,7 +27,7 @@ class Profile(db.Model):
             "last_name": self.last_name,
             "username": self.username,
             "email": self.email,
-            "messages": list(map(lambda x: x.serialize(), self.messages))
+            "phone_number": self.phone_number
         }
 
 class Employee(db.Model):
@@ -54,6 +55,7 @@ class Employee(db.Model):
 
 class Messages_author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text, unique=False, nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
     
 
@@ -67,6 +69,7 @@ class Messages_author(db.Model):
 
 class Messages_recipient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text, unique=False, nullable=False)
     recipient_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
     
 
@@ -81,8 +84,6 @@ class Messages_recipient(db.Model):
 
 class Employer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    role = db.Column(db.String(120), unique=False, nullable=False)
-    hourly_rate = db.Column(db.Float, unique=False, nullable=False)
     request_employer = db.relationship("Request", back_populates="employer")
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
     

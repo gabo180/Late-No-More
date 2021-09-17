@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../../store/appContext";
+
 import userImage from "../../../img/userImage.jpg";
 // import rigoImageUrl from "../../img/clock-(no-background).jpg";
 import "../../../styles/home.scss";
 import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
 
-export const Profile = () => {
+export const ProfileUpdate = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
@@ -30,7 +31,7 @@ export const Profile = () => {
 							<input className="ml-4 form-control" type="text" />
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
-							<span className="mr-auto ml-2">First name</span>{" "}
+							<span className="mr-auto ml-2">Firs name</span>{" "}
 							<input className="ml-4 form-control" type="text" />
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
