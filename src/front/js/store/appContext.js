@@ -21,7 +21,7 @@ const injectContext = PassedComponent => {
 			})
 		);
 		useEffect(() => {
-			// state.actions.initializeFunction();
+			state.actions.initializeFunction();
 		}, []);
 		// useEffect(() => {
 		// 	/**
