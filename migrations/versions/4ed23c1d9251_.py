@@ -1,14 +1,8 @@
 """empty message
 
-<<<<<<< HEAD:migrations/versions/365c4f6c7bd0_.py
-Revision ID: 365c4f6c7bd0
+Revision ID: 4ed23c1d9251
 Revises: 
-Create Date: 2021-09-16 21:08:36.273827
-=======
-Revision ID: e71ed3765c06
-Revises: 
-Create Date: 2021-09-17 00:02:29.243971
->>>>>>> 005f00020d1a3011a2718c6b23c575a30eb4718a:migrations/versions/e71ed3765c06_.py
+Create Date: 2021-09-17 16:47:37.181231
 
 """
 from alembic import op
@@ -16,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<< HEAD:migrations/versions/365c4f6c7bd0_.py
-revision = '365c4f6c7bd0'
-=======
-revision = 'e71ed3765c06'
->>>>>>> 005f00020d1a3011a2718c6b23c575a30eb4718a:migrations/versions/e71ed3765c06_.py
+revision = '4ed23c1d9251'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -58,28 +48,20 @@ def upgrade():
     )
     op.create_table('employer',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('role', sa.String(length=120), nullable=False),
-    sa.Column('hourly_rate', sa.Float(), nullable=False),
     sa.Column('profile_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['profile_id'], ['profile.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('messages_author',
     sa.Column('id', sa.Integer(), nullable=False),
-<<<<<<< HEAD:migrations/versions/365c4f6c7bd0_.py
-=======
     sa.Column('body', sa.Text(), nullable=False),
->>>>>>> 005f00020d1a3011a2718c6b23c575a30eb4718a:migrations/versions/e71ed3765c06_.py
     sa.Column('author_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['author_id'], ['profile.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('messages_recipient',
     sa.Column('id', sa.Integer(), nullable=False),
-<<<<<<< HEAD:migrations/versions/365c4f6c7bd0_.py
-=======
     sa.Column('body', sa.Text(), nullable=False),
->>>>>>> 005f00020d1a3011a2718c6b23c575a30eb4718a:migrations/versions/e71ed3765c06_.py
     sa.Column('recipient_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['recipient_id'], ['profile.id'], ),
     sa.PrimaryKeyConstraint('id')

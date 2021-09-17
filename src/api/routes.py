@@ -8,11 +8,8 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
-<<<<<<< HEAD
 import datetime
-=======
 from api.emailSender import emailSender
->>>>>>> 005f00020d1a3011a2718c6b23c575a30eb4718a
 
 api = Blueprint('api', __name__)
 
