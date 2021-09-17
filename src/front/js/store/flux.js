@@ -1,16 +1,22 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-blush-egret-h8cs868o.ws-us15.gitpod.io/api",
+			myURL: "https://3001-ivory-landfowl-eb74y3hg.ws-us15.gitpod.io/api",
 			messagesAuthor: [],
 			messagesRecipient: [],
 			shift: [],
-			profile: []
+			profile: [],
+			isClockIn: false
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
+			},
+
+			setIsClockIn: () => {
+				const clockIn = getStore().isClockIn;
+				setStore({ isClockIn: !clockIn });
 			},
 
 			initializeFunction: () => {
