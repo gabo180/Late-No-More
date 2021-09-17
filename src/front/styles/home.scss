@@ -11,6 +11,14 @@
     color: rgb(253, 253, 253)
 }
 
+.user-img {
+    border-radius: 100px;
+    height: 70px;
+    width: 70px;
+    object-fit: cover;
+    border: 2px solid black
+}
+
 .margin{
     margin-top: 30px;
     width: 99%;

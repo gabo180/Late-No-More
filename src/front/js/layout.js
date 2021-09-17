@@ -41,6 +41,7 @@ import { SingleMessage } from "./pages/messages/singleMessage";
 import { Account } from "./pages/account-info/account";
 import { CompanyProfile } from "./pages/account-info/companyProfile";
 import { Profile } from "./pages/account-info/profile";
+import { ProfileUpdate } from "./pages/account-info/profileUpdate";
 import { Roles } from "./pages/account-info/roles";
 
 {
@@ -146,6 +147,11 @@ const Layout = () => {
 						<Route exact path="/account/profile">
 							<NavbarLoggedIn />
 							<Profile />
+							<FooterLoggedIn />
+						</Route>
+						<Route exact path="/account/profile/update">
+							<NavbarLoggedIn />
+							<ProfileUpdate />
 							<FooterLoggedIn />
 						</Route>
 						<Route exact path="/account/company-profile">
