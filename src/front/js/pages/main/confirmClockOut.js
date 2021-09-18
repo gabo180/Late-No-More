@@ -45,7 +45,12 @@ export const ConfirmClockOut = () => {
 						</button>
 					</div>
 					<div className="col-6">
-						<button type="button" className="btn btn-danger">
+						<button
+							type="button"
+							className="btn btn-danger"
+							onClick={() => {
+								history.push("/home");
+							}}>
 							No
 						</button>
 					</div>
