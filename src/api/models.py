@@ -37,6 +37,7 @@ class Employee(db.Model):
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
     request_employee = db.relationship("Request", back_populates="employee")
     punch = db.relationship('Punch', backref="employee", lazy=True)
+    shift = db.relationship('Shift', backref="role", lazy=True)
     
     def __repr__(self):
         return '<Employee %r>' % self.role
@@ -122,7 +123,7 @@ class Shift(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, unique=False, nullable=False)
     hours = db.Column(db.Integer, unique=False, nullable=False)
-    role = db.Column(db.String(120), unique=False, nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
     starting_time = db.Column(db.DateTime, unique=False, nullable=False)
     ending_time = db.Column(db.DateTime, unique=False, nullable=False)
     punch = db.relationship('Punch', backref="shift", lazy=True)
@@ -137,7 +138,6 @@ class Shift(db.Model):
             "id": self.id,
             "date": self.date,
             "hours": self.hours,
-            "role": self.role,
             "starting_time": self.starting_time,
             "ending_time": self.ending_time
         }
