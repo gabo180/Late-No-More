@@ -40,6 +40,7 @@ export const ConfirmClockIn = () => {
 							onClick={() => {
 								history.push("/home");
 								actions.setIsClockIn();
+								actions.doClockInOut();
 							}}>
 							Yes
 						</button>

@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			messagesRecipient: [],
 			shift: [],
 			profile: [],
+			punch: [],
 			isClockIn: false
 		},
 		actions: {
@@ -114,6 +115,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 
 					.catch(error => console.error("There has been an uknown error", error));
+			},
+
+			doClockInOut: async () => {
+				console.log(getStore().shift.id);
+				try {
+					const response = await fetch(`${getStore().myURL}/punch/${getStore().shift[0].id}`, {
+						method: "POST"
+					});
+					const data = await response.json();
+					console.log(data);
+					setStore({ punch: data });
+				} catch (error) {
+					throw new Error(error);
+				}
 			},
 
 			// getMessage: () => {
