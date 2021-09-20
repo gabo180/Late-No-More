@@ -84,6 +84,8 @@ def handle_single_shift(shift_id):
     shifts = shifts.serialize()
     return jsonify(shifts), 200
 
+
+
 ##Punch
 
 @api.route('/punch', methods=['GET'])
@@ -99,6 +101,32 @@ def handle_single_punch(punch_id):
     punches = Punch.query.get(punch_id)
     punches = punches.serialize()
     return jsonify(punches), 200
+
+# @api.route('/shift/<int:shift_id>', methods=['PUT'])
+# @jwt_required()
+# def update_shift(shift_id):
+#     request_data = request.data
+#     body = json.loads(request_data)
+#     shift1 = Shift.query.get(shift_id)
+#     if shift1 is None:
+#         raise APIException('Shift not found', status_code=404)
+#     if "username" in body:
+#         user1.username = body["username"]
+#     if "email" in body:
+#         user1.email = body["email"]
+#     db.session.commit()
+
+@api.route('/punch/<int:shift_id>', methods=['POST'])
+# @jwt_required()
+def post_punch(shift_id):
+    body = request.get_json()
+    punch1 = Punch(
+        time_stamp=datetime.datetime.now(),
+        shift_id = shift_id
+        )
+    db.session.add(punch1)
+    db.session.commit()
+    return jsonify(punch1.serialize())
 
 ##Employee
 
@@ -136,18 +164,18 @@ def create_token():
 
 ##POST Shift
 
-@api.route('/shift', methods=['POST'])
-def post_shift():
-    body = request.get_json()
-    shift = Shift(
-        hours=body["hours"], 
-        role=body["role"],
-        starting_time=datetime.datetime.now(),
-        ending_time=datetime.datetime.now()
-        )
-    db.session.add(shift)
-    db.session.commit()
-    return jsonify(shift.serialize())
+# @api.route('/shift', methods=['POST'])
+# def post_shift():
+#     body = request.get_json()
+#     shift = Shift(
+#         hours=body["hours"], 
+#         role=body["role"],
+#         starting_time=datetime.datetime.now(),
+#         ending_time=datetime.datetime.now()
+#         )
+#     db.session.add(shift)
+#     db.session.commit()
+#     return jsonify(shift.serialize())
 
 
  

@@ -1,23 +1,28 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-ivory-landfowl-eb74y3hg.ws-us15.gitpod.io/api",
+			myURL: "https://3001-sapphire-blackbird-ghrwuerm.ws-us15.gitpod.io/api",
 			messagesAuthor: [],
 			messagesRecipient: [],
 			shift: [],
 			profile: [],
-			employee: []
+			punch: [],
+			employee: [],
 			isClockIn: false
 		},
-    
-		actions: {
 
+		actions: {
 			initializeFunction: () => {
 				getActions().loadProfile();
 				getActions().loadShift();
 				getActions().loadEmployee();
 				getActions().loadMessageAuthor();
 				getActions().loadMessageRecipient();
+			},
+
+			setIsClockIn: () => {
+				const clockIn = getStore().isClockIn;
+				setStore({ isClockIn: !clockIn });
 			},
 
 			loadProfile: async () => {
@@ -124,6 +129,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 
 					.catch(error => console.error("There has been an uknown error", error));
+			},
+
+			doClockInOut: async () => {
+				console.log(getStore().shift.id);
+				try {
+					const response = await fetch(`${getStore().myURL}/punch/${getStore().shift[0].id}`, {
+						method: "POST"
+					});
+					const data = await response.json();
+					console.log(data);
+					setStore({ punch: data });
+				} catch (error) {
+					throw new Error(error);
+				}
 			}
 
 			// getMessage: () => {

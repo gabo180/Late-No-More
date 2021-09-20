@@ -40,12 +40,18 @@ export const ConfirmClockIn = () => {
 							onClick={() => {
 								history.push("/home");
 								actions.setIsClockIn();
+								actions.doClockInOut();
 							}}>
 							Yes
 						</button>
 					</div>
 					<div className="col-6">
-						<button type="button" className="btn btn-danger">
+						<button
+							type="button"
+							className="btn btn-danger"
+							onClick={() => {
+								history.push("/shifts");
+							}}>
 							No
 						</button>
 					</div>
