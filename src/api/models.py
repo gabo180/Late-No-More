@@ -121,7 +121,6 @@ class Request(db.Model):
 
 class Shift(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, unique=False, nullable=False)
     hours = db.Column(db.Integer, unique=False, nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
     starting_time = db.Column(db.DateTime, unique=False, nullable=False)
@@ -136,7 +135,6 @@ class Shift(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "date": self.date,
             "hours": self.hours,
             "starting_time": self.starting_time,
             "ending_time": self.ending_time

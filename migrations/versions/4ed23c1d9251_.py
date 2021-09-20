@@ -1,14 +1,11 @@
 """empty message
 
-<<<<<<< HEAD:migrations/versions/a00414020bf7_.py
 Revision ID: a00414020bf7
 Revises: 
 Create Date: 2021-09-20 19:46:48.820760
-=======
 Revision ID: 4ed23c1d9251
 Revises: 
 Create Date: 2021-09-17 16:47:37.181231
->>>>>>> bc4fc9ada806cf2b6e7697ebb44531930f332099:migrations/versions/4ed23c1d9251_.py
 
 """
 from alembic import op
@@ -16,11 +13,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<< HEAD:migrations/versions/a00414020bf7_.py
 revision = 'a00414020bf7'
-=======
 revision = '4ed23c1d9251'
->>>>>>> bc4fc9ada806cf2b6e7697ebb44531930f332099:migrations/versions/4ed23c1d9251_.py
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -40,8 +34,6 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('phone_number')
     )
-<<<<<<< HEAD:migrations/versions/a00414020bf7_.py
-=======
     op.create_table('shift',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('hours', sa.Integer(), nullable=False),
@@ -50,7 +42,6 @@ def upgrade():
     sa.Column('ending_time', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
->>>>>>> bc4fc9ada806cf2b6e7697ebb44531930f332099:migrations/versions/4ed23c1d9251_.py
     op.create_table('employee',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('role', sa.String(length=120), nullable=False),
