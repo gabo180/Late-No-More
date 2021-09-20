@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Context } from "../../store/appContext";
 import userImage from "../../../img/userImage.jpg";
-// import rigoImageUrl from "../../img/clock-(no-background).jpg";
+import PropTypes from "prop-types";
 import "../../../styles/home.scss";
 import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
 
 export const Profile = () => {
 	const { store, actions } = useContext(Context);
+	const params = useParams();
 
 	return (
 		<div className="text-center">
@@ -27,30 +28,55 @@ export const Profile = () => {
 					<div className="d-flex flex-column mr-auto">
 						<div className="my-2 d-flex flex-column mx-auto">
 							<span className="mr-auto ml-2">Username</span>{" "}
-							<input className="ml-4 form-control" type="text" />
+							<input
+								className="ml-4 form-control"
+								placeholder={store.profile[params.theid].username}
+								type="text"
+								disabled
+							/>
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
 							<span className="mr-auto ml-2">First name</span>{" "}
-							<input className="ml-4 form-control" type="text" />
+							<input
+								className="ml-4 form-control"
+								placeholder={store.profile[params.theid].name}
+								type="text"
+								disabled
+							/>
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
 							<span className="mr-auto ml-2">Last name</span>{" "}
-							<input className="ml-4 form-control" type="text" />
+							<input
+								className="ml-4 form-control"
+								placeholder={store.profile[params.theid].last_name}
+								type="text"
+								disabled
+							/>
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
 							<span className="mr-auto ml-2">Email address</span>{" "}
-							<input className="ml-4 form-control" type="text" />
+							<input
+								className="ml-4 form-control"
+								placeholder={store.profile[params.theid].email}
+								type="text"
+								disabled
+							/>
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
 							<span className="mr-auto ml-2">Password</span>{" "}
-							<input className="ml-4 form-control" type="text" />
+							<input className="ml-4 form-control" type="password" disabled />
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
 							<span className="mr-auto ml-2">Phone number</span>{" "}
-							<input className="ml-4 form-control" type="text" />
+							<input
+								className="ml-4 form-control"
+								placeholder={store.profile[params.theid].phone_number}
+								type="text"
+								disabled
+							/>
 						</div>
 					</div>
-					<Link to="/account/profile/update">
+					<Link key={0} to={"/account/profile/" + 0 + "/update"}>
 						<button type="submit" className="btn btn-primary mb-2 px-5 my-2" value="Log in">
 							Edit
 						</button>

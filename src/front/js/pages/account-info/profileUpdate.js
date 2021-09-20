@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Context } from "../../store/appContext";
-
 import userImage from "../../../img/userImage.jpg";
 // import rigoImageUrl from "../../img/clock-(no-background).jpg";
 import "../../../styles/home.scss";
@@ -9,6 +8,7 @@ import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bo
 
 export const ProfileUpdate = () => {
 	const { store, actions } = useContext(Context);
+	const params = useParams();
 
 	return (
 		<div className="text-center">
@@ -28,32 +28,52 @@ export const ProfileUpdate = () => {
 					<div className="d-flex flex-column mr-auto">
 						<div className="my-2 d-flex flex-column mx-auto">
 							<span className="mr-auto ml-2">Username</span>{" "}
-							<input className="ml-4 form-control" type="text" />
+							<input
+								className="ml-4 form-control"
+								placeholder={store.profile[params.theid].username}
+								type="text"
+							/>
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
-							<span className="mr-auto ml-2">Firs name</span>{" "}
-							<input className="ml-4 form-control" type="text" />
+							<span className="mr-auto ml-2">First name</span>{" "}
+							<input
+								className="ml-4 form-control"
+								placeholder={store.profile[params.theid].name}
+								type="text"
+							/>
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
 							<span className="mr-auto ml-2">Last name</span>{" "}
-							<input className="ml-4 form-control" type="text" />
+							<input
+								className="ml-4 form-control"
+								placeholder={store.profile[params.theid].last_name}
+								type="text"
+							/>
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
 							<span className="mr-auto ml-2">Email address</span>{" "}
-							<input className="ml-4 form-control" type="text" />
+							<input
+								className="ml-4 form-control"
+								placeholder={store.profile[params.theid].email}
+								type="text"
+							/>
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
 							<span className="mr-auto ml-2">Password</span>{" "}
-							<input className="ml-4 form-control" type="text" />
+							<input className="ml-4 form-control" type="password" />
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
 							<span className="mr-auto ml-2">Phone number</span>{" "}
-							<input className="ml-4 form-control" type="text" />
+							<input
+								className="ml-4 form-control"
+								placeholder={store.profile[params.theid].phone_number}
+								type="text"
+							/>
 						</div>
 					</div>
 					<Link to="/account/profile/update">
-						<button type="submit" className="btn btn-primary mb-2 px-5 my-2" value="Log in">
-							Edit
+						<button type="submit" className="btn btn-primary mb-2 px-5 my-2" value="edit">
+							Submit
 						</button>
 					</Link>
 				</div>

@@ -18,7 +18,7 @@ class Profile(db.Model):
     
 
     def __repr__(self):
-        return '<Profile %r>' % self.username
+        return '<Profile %r>' % self.id
 
     def serialize(self):
         return {
@@ -39,7 +39,7 @@ class Employee(db.Model):
     punch = db.relationship('Punch', backref="employee", lazy=True)
     
     def __repr__(self):
-        return '<Employee %r>' % self.id
+        return '<Employee %r>' % self.role
         # if self.profile_id is None:
         #     return self.id
         # else:
@@ -110,7 +110,7 @@ class Request(db.Model):
     status = db.Column(db.String(50), unique=False, nullable=False)
 
     def __repr__(self):
-        return '<Request %r>' % self.request
+        return '<Request %r>' % self.shift_id
 
     def serialize(self):
         return {
@@ -149,7 +149,7 @@ class Punch(db.Model):
     
 
     def __repr__(self):
-        return '<Punch %r>' % self.id
+        return '<Punch %r>' % self.shift_id
 
     def serialize(self):
         return {

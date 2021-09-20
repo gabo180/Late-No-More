@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useParams } from "react-router-dom";
 import { Context } from "../../store/appContext";
 // import rigoImageUrl from "../../img/clock-(no-background).jpg";
 import "../../../styles/home.scss";
@@ -8,7 +8,7 @@ import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bo
 
 export const Account = () => {
 	const { store, actions } = useContext(Context);
-
+	const params = useParams();
 	return (
 		<div className="text-center">
 			<div className="my-3">
@@ -22,8 +22,8 @@ export const Account = () => {
 					</div>
 					<div className="position-try">
 						<ul className="text-primary mx-3">
-							<li>
-								<Link to="/account/profile">
+							<li key={0}>
+								<Link to={"/account/profile/" + 0}>
 									<button type="submit" className="font-navbar text-dark btn my-2" value="Sign up">
 										<h2>Update information</h2>
 									</button>
