@@ -8,6 +8,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+import datetime
 from api.emailSender import emailSender
 
 api = Blueprint('api', __name__)
@@ -131,3 +132,22 @@ def create_token():
     emailSender(user.email)
     access_token = create_access_token(identity=user.id)
     return jsonify({ "token": access_token, "user_id": user.id })
+
+
+##POST Shift
+
+@api.route('/shift', methods=['POST'])
+def post_shift():
+    body = request.get_json()
+    shift = Shift(
+        hours=body["hours"], 
+        role=body["role"],
+        starting_time=datetime.datetime.now(),
+        ending_time=datetime.datetime.now()
+        )
+    db.session.add(shift)
+    db.session.commit()
+    return jsonify(shift.serialize())
+
+
+ 

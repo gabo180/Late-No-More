@@ -1,14 +1,17 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-blush-egret-h8cs868o.ws-us15.gitpod.io/api",
+			myURL: "https://3001-ivory-landfowl-eb74y3hg.ws-us15.gitpod.io/api",
 			messagesAuthor: [],
 			messagesRecipient: [],
 			shift: [],
 			profile: [],
 			employee: []
+			isClockIn: false
 		},
+    
 		actions: {
+
 			initializeFunction: () => {
 				getActions().loadProfile();
 				getActions().loadShift();
