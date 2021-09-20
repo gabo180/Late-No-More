@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Profile, Punch, Messages_author, Messages_recipient, Shift
+from api.models import db, Profile, Punch, Messages_author, Messages_recipient, Shift, Employee
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
@@ -28,6 +28,13 @@ def handle_single_profile(profile_id):
     profiles = Profile.query.get(profile_id)
     profiles = profiles.serialize()
     return jsonify(profiles), 200
+
+@api.route('/profile', methods=['POST'])
+def post_profile():
+    profile1 = Profile(name="my_super_name", last_name="my_super_last_name", username="my_super_height", email="my_super_weight", phone_number="000-000-0000")
+    db.session.add(profile1)
+    db.session.commit()
+    return jsonify(profile1.serialize())
 
 ##Messages author
 
@@ -121,6 +128,21 @@ def post_punch(shift_id):
     db.session.commit()
     return jsonify(punch1.serialize())
 
+##Employee
+
+@api.route('/employee', methods=['GET'])
+@jwt_required()
+def handle_employee():
+    employees = Employee.query.all()
+    mapped_employees=[p.serialize() for p in employees]
+    return jsonify(mapped_employees), 200
+
+@api.route('/profile/<int:profile_id>', methods=['GET'])
+@jwt_required()
+def handle_single_employee(employee_id):
+    employees = Employee.query.get(employee_id)
+    employees = employees.serialize()
+    return jsonify(employees), 200
 
 ##Login
 

@@ -7,24 +7,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 			shift: [],
 			profile: [],
 			punch: [],
+			employee: [],
 			isClockIn: false
 		},
+
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			initializeFunction: () => {
+				getActions().loadProfile();
+				getActions().loadShift();
+				getActions().loadEmployee();
+				getActions().loadMessageAuthor();
+				getActions().loadMessageRecipient();
 			},
 
 			setIsClockIn: () => {
 				const clockIn = getStore().isClockIn;
 				setStore({ isClockIn: !clockIn });
-			},
-
-			initializeFunction: () => {
-				getActions().loadProfile();
-				getActions().loadShift();
-				getActions().loadMessageAuthor();
-				getActions().loadMessageRecipient();
 			},
 
 			loadProfile: async () => {
@@ -91,6 +89,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			loadEmployee: async () => {
+				const endPoint = "/employee";
+				const token = localStorage.getItem("jwt-token");
+				try {
+					const response = await fetch(`${getStore().myURL}${endPoint}`, {
+						method: "GET",
+						headers: { Authorization: "Bearer " + token }
+					});
+					const data = await response.json();
+					console.log(data);
+					setStore({ employee: data });
+				} catch (error) {
+					throw new Error(error);
+				}
+			},
+
 			login: (username, password, history) => {
 				fetch(`${getStore().myURL}/login`, {
 					headers: { "Content-type": "application/json" },
@@ -129,7 +143,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					throw new Error(error);
 				}
-			},
+			}
 
 			// getMessage: () => {
 			// 	// fetching data from the backend
@@ -137,21 +151,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 		.then(resp => resp.json())
 			// 		.then(data => setStore({ message: data.message }))
 			// 		.catch(error => console.log("Error loading message from backend", error));
-			// },
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
-			}
+			// }
 		}
 	};
 };
