@@ -18,7 +18,7 @@ class Profile(db.Model):
     
 
     def __repr__(self):
-        return '<Profile %r>' % self.username
+        return '<Profile %r>' % self.id
 
     def serialize(self):
         return {
@@ -110,7 +110,7 @@ class Request(db.Model):
     status = db.Column(db.String(50), unique=False, nullable=False)
 
     def __repr__(self):
-        return '<Request %r>' % self.request
+        return '<Request %r>' % self.id
 
     def serialize(self):
         return {

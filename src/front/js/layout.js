@@ -52,6 +52,10 @@ import { Settings } from "./pages/settings/settings";
 import { Help } from "./pages/settings/help";
 import { About } from "./pages/settings/about";
 
+{
+	/* components imports */
+}
+
 import { NavbarLoggedIn } from "./component/navbar";
 import { NavbarPublicUser } from "./component/navbar";
 import { FooterLoggedIn } from "./component/footer";
@@ -144,12 +148,12 @@ const Layout = () => {
 							<Account />
 							<FooterLoggedIn />
 						</Route>
-						<Route exact path="/account/profile">
+						<Route exact path="/account/profile/:theid">
 							<NavbarLoggedIn />
 							<Profile />
 							<FooterLoggedIn />
 						</Route>
-						<Route exact path="/account/profile/update">
+						<Route exact path="/account/profile/:theid/update">
 							<NavbarLoggedIn />
 							<ProfileUpdate />
 							<FooterLoggedIn />

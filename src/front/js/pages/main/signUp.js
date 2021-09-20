@@ -97,7 +97,6 @@ export const SignUp = () => {
 						// value={password}
 					/>
 				</div>
-				<input type="datetime-local" onChange={e => console.log(e.target.value)} />
 			</form>
 			<div>
 				<Link to="/">
