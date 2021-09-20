@@ -137,12 +137,23 @@ def handle_employee():
     mapped_employees=[p.serialize() for p in employees]
     return jsonify(mapped_employees), 200
 
-@api.route('/profile/<int:profile_id>', methods=['GET'])
+@api.route('/employee/<int:employee_id>', methods=['GET'])
 @jwt_required()
 def handle_single_employee(employee_id):
     employees = Employee.query.get(employee_id)
     employees = employees.serialize()
     return jsonify(employees), 200
+
+@api.route('/employee', methods=['PUT'])
+def update_employee(employee_id):
+    employee1 = Employee.query.get(employee_id)
+    if employee1 is None:
+        raise APIException('User not found', status_code=404)
+
+    if "role" in body:
+        employee1.username = body["role"]
+    db.session.commit()
+    return jsonify(employee1.serialize())
 
 ##Login
 

@@ -28,6 +28,7 @@ export const Roles = () => {
 						<table className="table">
 							<thead>
 								<tr>
+									<th scope="col" />
 									<th scope="col">Role</th>
 									<th scope="col">Hourly rate</th>
 								</tr>
@@ -36,6 +37,10 @@ export const Roles = () => {
 								{store.employee.map((item, index) => {
 									return (
 										<tr key={index}>
+											<td>
+												<i className="text-success far fa-edit" />{" "}
+												<i className="text-danger far fa-trash-alt" />
+											</td>
 											<td>{item.role}</td>
 											<td>{item.hourly_rate}</td>
 										</tr>
@@ -44,11 +49,6 @@ export const Roles = () => {
 							</tbody>
 						</table>
 						<div className="d-flex justify-content-around">
-							<Link to="/account/profile/update">
-								<button type="submit" className="btn btn-primary mb-2 px-5 my-2" value="Log in">
-									Edit
-								</button>
-							</Link>
 							<Link to="/account/profile/update">
 								<button type="submit" className="btn btn-primary mb-2 px-5 my-2" value="Log in">
 									Create

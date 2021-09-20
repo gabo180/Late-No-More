@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import userImage from "../../../img/userImage.jpg";
 import { Link } from "react-router-dom";
+import moment from "moment";
 import { Context } from "../../store/appContext";
 // import rigoImageUrl from "../../img/clock-(no-background).jpg";
 import "../../../styles/home.scss";
@@ -31,6 +32,33 @@ export const Shifts = () => {
 								+ Create shift
 							</button>
 						</Link>
+					</div>
+					<div>
+						<table className="table">
+							<thead>
+								<tr>
+									<th scope="rowgroup">{moment().format("ll")}</th>
+								</tr>
+							</thead>
+							<tbody>
+								{store.shift.map((item, index) => {
+									return (
+										<Link key={index} to={"/shifts/shift-info/" + index}>
+											<tr>
+												<td>
+													<i className="text-success far fa-edit" />{" "}
+													<i className="text-danger far fa-trash-alt" />
+												</td>
+												<td>{item.role}</td>
+												<td>{item.ending_time}</td>
+												<td>{item.starting_time}</td>
+												<td>{item.hours}</td>
+											</tr>
+										</Link>
+									);
+								})}
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>

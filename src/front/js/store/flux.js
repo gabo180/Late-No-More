@@ -131,6 +131,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.error("There has been an uknown error", error));
 			},
 
+			updateEmployee: tasks => {
+				return fetch(`${setURL}/employee`, {
+					method: "PUT",
+					body: JSON.stringify(tasks),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(resp => {
+						console.log(resp.ok);
+						console.log(resp.status);
+						console.log(resp.text());
+						return resp.json();
+					})
+
+					.catch(error => {
+						console.log(error);
+					})
+				},
+				
 			doClockInOut: async () => {
 				console.log(getStore().shift.id);
 				try {

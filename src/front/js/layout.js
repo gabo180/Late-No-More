@@ -122,7 +122,7 @@ const Layout = () => {
 							<Timesheet />
 							<FooterLoggedIn />
 						</Route>
-						<Route exact path="/shifts/shift-info">
+						<Route exact path="/shifts/shift-info/:theid">
 							<NavbarLoggedIn />
 							<ShiftInfo />
 							<FooterLoggedIn />
