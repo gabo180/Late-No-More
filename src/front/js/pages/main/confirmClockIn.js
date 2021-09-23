@@ -1,13 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
 // import rigoImageUrl from "../../img/clock-(no-background).jpg";
 import "../../../styles/home.scss";
 import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export const ConfirmClockIn = () => {
 	const { store, actions } = useContext(Context);
+	const [shift, setShift] = useState(null);
 	const history = useHistory();
+	const params = useParams();
+	useEffect(async () => {
+		const shift = await actions.loadSingleShift(params.shift_id);
+		setShift(shift);
+	}, []);
+	if (!shift)
+		return (
+			<div className="spinner-border" role="status">
+				<span className="sr-only">Loading shift...</span>
+			</div>
+		);
 
 	return (
 		<>
@@ -40,7 +53,7 @@ export const ConfirmClockIn = () => {
 							onClick={() => {
 								history.push("/home");
 								actions.setIsClockIn();
-								actions.doClockInOut();
+								actions.doClockIn(shift.id);
 							}}>
 							Yes
 						</button>

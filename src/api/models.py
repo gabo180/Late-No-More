@@ -18,7 +18,7 @@ class Profile(db.Model):
     
 
     def __repr__(self):
-        return '<Profile %r>' % self.id
+        return '<Profile %r>' % self.username
 
     def serialize(self):
         return {
@@ -36,11 +36,10 @@ class Employee(db.Model):
     hourly_rate = db.Column(db.Float, unique=False, nullable=False)
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
     request_employee = db.relationship("Request", back_populates="employee")
-    punch = db.relationship('Punch', backref="employee", lazy=True)
     shift = db.relationship('Shift', backref="role", lazy=True)
     
     def __repr__(self):
-        return '<Employee %r>' % self.role
+        return self.role
         # if self.profile_id is None:
         #     return self.id
         # else:
@@ -121,11 +120,12 @@ class Request(db.Model):
 
 class Shift(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    hours = db.Column(db.Integer, unique=False, nullable=False)
+    hours = db.Column(db.Integer, unique=False, nullable=True)
     role_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
-    starting_time = db.Column(db.DateTime, unique=False, nullable=False)
-    ending_time = db.Column(db.DateTime, unique=False, nullable=False)
-    punch = db.relationship('Punch', backref="shift", lazy=True)
+    starting_time = db.Column(db.DateTime(timezone=True), unique=False, nullable=False)
+    ending_time = db.Column(db.DateTime(timezone=True), unique=False, nullable=False)
+    clock_in = db.Column(db.DateTime(timezone=True), unique=False, nullable=True)
+    clock_out = db.Column(db.DateTime(timezone=True), unique=False, nullable=True)
     request_shift = db.relationship("Request", back_populates="shift")
 
 
@@ -135,25 +135,11 @@ class Shift(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            
             "hours": self.hours,
+            "clock_in": self.clock_in, 
+            "clock_out": self.clock_out,
+            "role_id": self.role_id,
             "starting_time": self.starting_time,
             "ending_time": self.ending_time
-        }
-
-
-class Punch(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    time_stamp = db.Column(db.DateTime, unique=False, nullable=False)
-    shift_id = db.Column(db.Integer, db.ForeignKey("shift.id"))
-    employee_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
-    
-
-    def __repr__(self):
-        return '<Punch %r>' % self.shift_id
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "time_stamp": self.time_stamp,
-            "shift_id": self.shift_id
         }

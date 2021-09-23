@@ -4,10 +4,25 @@ import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
 import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export const ConfirmClockOut = () => {
 	const { store, actions } = useContext(Context);
 	const history = useHistory();
+	const params = useParams();
+	const [shift, setShift] = useState(null);
+
+	useEffect(async () => {
+		const shift = await actions.loadSingleShift(params.shift_id);
+		setShift(shift);
+	}, []);
+	debugger;
+	if (!shift)
+		return (
+			<div className="spinner-border" role="status">
+				<span className="sr-only">Loading shift...</span>
+			</div>
+		);
 
 	return (
 		<>
@@ -36,11 +51,11 @@ export const ConfirmClockOut = () => {
 					<div className="col-6">
 						<button
 							type="button"
-							className="btn btn-success"
+							className="btn btn-danger"
 							onClick={() => {
 								history.push("/home");
 								actions.setIsClockIn();
-								actions.doClockInOut();
+								actions.doClockOut(store.shift[params.theid].id);
 							}}>
 							Yes
 						</button>

@@ -2,13 +2,14 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Profile, Punch, Messages_author, Messages_recipient, Shift, Employee
+from api.models import db, Profile, Messages_author, Messages_recipient, Shift, Employee
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 import datetime
+import pytz
 from api.emailSender import emailSender
 
 api = Blueprint('api', __name__)
@@ -84,23 +85,98 @@ def handle_single_shift(shift_id):
     shifts = shifts.serialize()
     return jsonify(shifts), 200
 
+@api.route('/shift', methods=['POST'])
+# @jwt_required()
+def post_shift():
+    body = request.get_json()
+
+    shift = Shift()
+
+    if "role_id" in body:
+        shift.role_id = body["role_id"]
+    if "starting_time" in body:
+        shift.starting_time = body["starting_time"]
+    if "ending_time" in body:
+        shift.ending_time = body["ending_time"]
+    if "hours" in body:
+        shift.ending_time = body["ending_time"] - body["starting_time"]
+    
+    db.session.add(shift)
+    db.session.commit()
+    return jsonify(shift.serialize())
+
+@api.route('/shift/<int:shift_id>/CI', methods=['PUT'])
+@jwt_required()
+def update_single_shift_clock_in(shift_id):
+    body = request.get_json()
+    shift = Shift.query.get(shift_id)
+    current_user_id = get_jwt_identity()
+    current_user_id_role = Profile.query.get(current_user_id)
+    IST = pytz.timezone('America/New_York')
+    UTC = pytz.utc
+    # print(current_user_id_role.id)
+    # print(current_user_id)
+    # print(shift.role_id)
+
+    if shift is None:
+        raise APIException('Shift not found', status_code=404)
+
+    if shift.role_id is not current_user_id_role.employee.id:
+        return "Your role assigned doesn't match the on ein this shift", 401
+
+    if shift.clock_in is not None:
+        return 'Clock in already done', 400
+
+    shift.clock_in = datetime.datetime.utcnow()
+    
+    db.session.commit()
+    return jsonify(shift.serialize())
+
+@api.route('/shift/<int:shift_id>/CO', methods=['PUT'])
+@jwt_required()
+def update_single_shift_clock_out(shift_id):
+    body = request.get_json()
+    shift = Shift.query.get(shift_id)
+    current_user_id = get_jwt_identity()
+    current_user_id_role = Profile.query.get(current_user_id)
+    IST = pytz.timezone('America/New_York')
+    UTC = pytz.utc
+
+    print(datetime.datetime.now(IST))
+
+    if shift is None:
+        raise APIException('Shift not found', status_code=404)
+    
+    if shift.role_id is not current_user_id_role.employee.id:
+        return "Your role assigned doesn't match the on ein this shift", 401
+
+    if shift.clock_out is not None:
+        return 'Clock out already done', 400
+
+
+    # if "clock_out" in body:
+    shift.clock_out = datetime.datetime.now(UTC)
+
+    db.session.commit()
+    return jsonify(shift.serialize())
+
 
 
 ##Punch
 
-@api.route('/punch', methods=['GET'])
-@jwt_required()
-def handle_punch():
-    punches = Punch.query.all()
-    mapped_punches=[s.serialize() for s in punches]
-    return jsonify(mapped_punches), 200
+# @api.route('/punch', methods=['GET'])
+# @jwt_required()
+# def handle_punch():
+#     punches = Punch.query.all()
+#     mapped_punches=[s.serialize() for s in punches]
+#     return jsonify(mapped_punches), 200
 
-@api.route('/punch/<int:punch_id>', methods=['GET'])
-@jwt_required()
-def handle_single_punch(punch_id):
-    punches = Punch.query.get(punch_id)
-    punches = punches.serialize()
-    return jsonify(punches), 200
+# @api.route('/punch/<int:punch_id>', methods=['GET'])
+# @jwt_required()
+# def handle_single_punch(punch_id):
+#     punches = Punch.query.get(punch_id)
+#     punches = punches.serialize()
+#     return jsonify(punches), 200
 
 # @api.route('/shift/<int:shift_id>', methods=['PUT'])
 # @jwt_required()
@@ -116,17 +192,17 @@ def handle_single_punch(punch_id):
 #         user1.email = body["email"]
 #     db.session.commit()
 
-@api.route('/punch/<int:shift_id>', methods=['POST'])
+# @api.route('/punch/<int:shift_id>', methods=['POST'])
 # @jwt_required()
-def post_punch(shift_id):
-    body = request.get_json()
-    punch1 = Punch(
-        time_stamp=datetime.datetime.now(),
-        shift_id = shift_id
-        )
-    db.session.add(punch1)
-    db.session.commit()
-    return jsonify(punch1.serialize())
+# def post_punch(shift_id):
+#     body = request.get_json()
+#     punch1 = Punch(
+#         time_stamp=datetime.datetime.now(),
+#         shift_id = shift_id
+#         )
+#     db.session.add(punch1)
+#     db.session.commit()
+#     return jsonify(punch1.serialize())
 
 ##Employee
 
