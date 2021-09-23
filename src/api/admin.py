@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, Profile, Employee, Employer, Shift, Messages_author, Messages_recipient, Punch
+from .models import db, Profile, Employee, Employer, Shift, Messages_author, Messages_recipient
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -17,4 +17,3 @@ def setup_admin(app):
     admin.add_view(ModelView(Shift, db.session))
     admin.add_view(ModelView(Messages_author, db.session))
     admin.add_view(ModelView(Messages_recipient, db.session))
-    admin.add_view(ModelView(Punch, db.session))

@@ -4,17 +4,18 @@ import userImage from "../../../img/userImage.jpg";
 import "../../../styles/home.scss";
 import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export const ShiftInfo = () => {
 	const { store, actions } = useContext(Context);
 	const history = useHistory();
+	const params = useParams();
 
 	const handleClock = () => {
 		if (store.isClockIn) {
-			history.push("/confirm-CO");
+			history.push("/confirm-CO/" + params.shift_id);
 		} else {
-			history.push("/confirm-CI");
+			history.push("/confirm-CI/" + params.shift_id);
 		}
 	};
 

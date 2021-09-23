@@ -28,12 +28,16 @@ export const CreateEvent = () => {
 							<input className="ml-4 form-control" type="text" />
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
-							<span className="mr-auto ml-2">Select start date and time</span>{" "}
-							<input className="ml-4 form-control" type="datetime-local" />
+							<span className="mr-auto ml-2">Select date</span>{" "}
+							<input className="ml-4 form-control" type="date" />
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
-							<span className="mr-auto ml-2">Select end date and time</span>{" "}
-							<input className="ml-4 form-control" type="datetime-local" />
+							<span className="mr-auto ml-2">Select starting time</span>{" "}
+							<input className="ml-4 form-control" type="time" />
+						</div>
+						<div className="my-2 d-flex flex-column mx-auto">
+							<span className="mr-auto ml-2">Select ending time</span>{" "}
+							<input className="ml-4 form-control" type="time" />
 						</div>
 					</form>
 					<div className="d-flex justify-content-around">

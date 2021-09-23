@@ -94,12 +94,12 @@ const Layout = () => {
 							<Main />
 							<FooterLoggedIn />
 						</Route>
-						<Route exact path="/confirm-CI">
+						<Route exact path="/confirm-CI/:shift_id">
 							<NavbarLoggedIn />
 							<ConfirmClockIn />
 							<FooterLoggedIn />
 						</Route>
-						<Route exact path="/confirm-CO">
+						<Route exact path="/confirm-CO/:shift_id">
 							<NavbarLoggedIn />
 							<ConfirmClockOut />
 							<FooterLoggedIn />
@@ -122,7 +122,7 @@ const Layout = () => {
 							<Timesheet />
 							<FooterLoggedIn />
 						</Route>
-						<Route exact path="/shifts/shift-info/:theid">
+						<Route exact path="/shifts/shift-info/:shift_id">
 							<NavbarLoggedIn />
 							<ShiftInfo />
 							<FooterLoggedIn />
@@ -135,7 +135,7 @@ const Layout = () => {
 							<Messages />
 							<FooterLoggedIn />
 						</Route>
-						<Route exact path="/messages/:theid">
+						<Route exact path="/messages/:message_id">
 							<NavbarLoggedIn />
 							<SingleMessage />
 							<FooterLoggedIn />
@@ -148,12 +148,12 @@ const Layout = () => {
 							<Account />
 							<FooterLoggedIn />
 						</Route>
-						<Route exact path="/account/profile/:theid">
+						<Route exact path="/account/profile/:profile_id">
 							<NavbarLoggedIn />
 							<Profile />
 							<FooterLoggedIn />
 						</Route>
-						<Route exact path="/account/profile/:theid/update">
+						<Route exact path="/account/profile/:profile_id/update">
 							<NavbarLoggedIn />
 							<ProfileUpdate />
 							<FooterLoggedIn />

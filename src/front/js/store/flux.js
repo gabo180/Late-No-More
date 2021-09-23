@@ -1,12 +1,12 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-sapphire-blackbird-ghrwuerm.ws-us15.gitpod.io/api",
+			myURL: "https://3001-blush-egret-h8cs868o.ws-us17.gitpod.io/api",
 			messagesAuthor: [],
 			messagesRecipient: [],
 			shift: [],
+			// TODO: rename shift to allShifts
 			profile: [],
-			punch: [],
 			employee: [],
 			isClockIn: false
 		},
@@ -19,6 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().loadMessageAuthor();
 				getActions().loadMessageRecipient();
 			},
+			//TODO: add return to all asyncs fucntions
 
 			setIsClockIn: () => {
 				const clockIn = getStore().isClockIn;
@@ -52,6 +53,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json();
 					console.log(data);
 					setStore({ shift: data });
+					return data;
+				} catch (error) {
+					throw new Error(error);
+				}
+			},
+
+			loadSingleShift: async shift_id => {
+				const endPoint = "/shift/" + shift_id;
+				const token = localStorage.getItem("jwt-token");
+				try {
+					const response = await fetch(`${getStore().myURL}${endPoint}`, {
+						method: "GET",
+						headers: { Authorization: "Bearer " + token }
+					});
+					const data = await response.json();
+					return data;
 				} catch (error) {
 					throw new Error(error);
 				}
@@ -148,30 +165,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					.catch(error => {
 						console.log(error);
-					})
-				},
-				
-			doClockInOut: async () => {
-				console.log(getStore().shift.id);
+					});
+			},
+
+			doClockIn: async shift_id => {
+				const token = localStorage.getItem("jwt-token");
 				try {
-					const response = await fetch(`${getStore().myURL}/punch/${getStore().shift[0].id}`, {
-						method: "POST"
+					const response = await fetch(`${getStore().myURL}/shift/${shift_id}/CI`, {
+						method: "PUT",
+						headers: { Authorization: "Bearer " + token }
+					});
+					const data = await response.json();
+					if (data.ok) {
+						console.log(data);
+						setStore({ shift: data });
+					}
+				} catch (error) {
+					throw new Error(error);
+				}
+			},
+
+			doClockOut: async shift_id => {
+				const token = localStorage.getItem("jwt-token");
+				try {
+					const response = await fetch(`${getStore().myURL}/shift/${shift_id}/CO`, {
+						method: "PUT",
+						headers: { Authorization: "Bearer " + token }
 					});
 					const data = await response.json();
 					console.log(data);
-					setStore({ punch: data });
+					setStore({ shift: data });
 				} catch (error) {
 					throw new Error(error);
 				}
 			}
-
-			// getMessage: () => {
-			// 	// fetching data from the backend
-			// 	fetch(process.env.BACKEND_URL + "/api/hello")
-			// 		.then(resp => resp.json())
-			// 		.then(data => setStore({ message: data.message }))
-			// 		.catch(error => console.log("Error loading message from backend", error));
-			// }
 		}
 	};
 };
