@@ -9,8 +9,6 @@ def setup_admin(app):
     app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
     admin = Admin(app, name='Late No More Admin', template_mode='bootstrap3')
 
-    
-    # Add your models here, for example this is how we add a the User model to the admin
     admin.add_view(ModelView(Profile, db.session))
     admin.add_view(ModelView(Employee, db.session))
     admin.add_view(ModelView(Employer, db.session))

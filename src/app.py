@@ -11,6 +11,9 @@ from api.models import db
 from api.routes import api
 from api.admin import setup_admin
 from flask_jwt_extended import JWTManager
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
 #from models import Person
 
 ENV = os.getenv("FLASK_ENV")
@@ -20,6 +23,9 @@ app.url_map.strict_slashes = False
 
 #JWT Config
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+# app.config["JWT_COOKIE_SECURE"] = False
+# app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=2)
 jwt = JWTManager(app)
 
 # database condiguration

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 781c37d3e9f1
+Revision ID: 71e53e423970
 Revises: 
-Create Date: 2021-09-22 22:38:35.898120
+Create Date: 2021-09-24 18:48:05.642354
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '781c37d3e9f1'
+revision = '71e53e423970'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -40,7 +40,8 @@ def upgrade():
     )
     op.create_table('employer',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('profile_id', sa.Integer(), nullable=True),
+    sa.Column('company_name', sa.String(length=120), nullable=False),
+    sa.Column('profile_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['profile_id'], ['profile.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -60,12 +61,14 @@ def upgrade():
     )
     op.create_table('shift',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('hours', sa.Integer(), nullable=False),
+    sa.Column('hours', sa.Integer(), nullable=True),
+    sa.Column('profile_id', sa.Integer(), nullable=True),
     sa.Column('role_id', sa.Integer(), nullable=True),
     sa.Column('starting_time', sa.DateTime(timezone=True), nullable=False),
     sa.Column('ending_time', sa.DateTime(timezone=True), nullable=False),
     sa.Column('clock_in', sa.DateTime(timezone=True), nullable=True),
     sa.Column('clock_out', sa.DateTime(timezone=True), nullable=True),
+    sa.ForeignKeyConstraint(['profile_id'], ['profile.id'], ),
     sa.ForeignKeyConstraint(['role_id'], ['employee.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

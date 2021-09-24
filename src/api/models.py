@@ -12,13 +12,14 @@ class Profile(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     employee = db.relationship("Employee", backref="profile", uselist=False)
+    shift = db.relationship('Shift', backref="profile", lazy=True)
     employer = db.relationship("Employer", backref="profile", uselist=False)
     messages_author = db.relationship('Messages_author', backref="author", lazy=True)
     messages_recipient = db.relationship('Messages_recipient', backref="recipient", lazy=True)
     
 
     def __repr__(self):
-        return '<Profile %r>' % self.username
+        return self.username
 
     def serialize(self):
         return {
@@ -28,6 +29,23 @@ class Profile(db.Model):
             "username": self.username,
             "email": self.email,
             "phone_number": self.phone_number
+        }
+
+class Employer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    company_name = db.Column(db.String(120), unique=False, nullable=False)
+    request_employer = db.relationship("Request", back_populates="employer")
+    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), nullable=False)
+    
+
+    def __repr__(self):
+        return self.company_name
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "role": self.role,
+            "company name": self.company_name
         }
 
 class Employee(db.Model):
@@ -40,10 +58,6 @@ class Employee(db.Model):
     
     def __repr__(self):
         return self.role
-        # if self.profile_id is None:
-        #     return self.id
-        # else:
-        #     return self.profile_id.name
 
     def serialize(self):
         return {
@@ -52,6 +66,52 @@ class Employee(db.Model):
             "hourly_rate": self.hourly_rate
         }
 
+class Shift(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    hours = db.Column(db.Integer, unique=False, nullable=True)
+    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
+    role_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
+    starting_time = db.Column(db.DateTime(timezone=True), unique=False, nullable=False)
+    ending_time = db.Column(db.DateTime(timezone=True), unique=False, nullable=False)
+    clock_in = db.Column(db.DateTime(timezone=True), unique=False, nullable=True)
+    clock_out = db.Column(db.DateTime(timezone=True), unique=False, nullable=True)
+    request_shift = db.relationship("Request", back_populates="shift")
+
+
+    def __repr__(self):
+        return '<Shift %r>' % self.profile_id
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            
+            "hours": self.hours,
+            "clock_in": self.clock_in, 
+            "clock_out": self.clock_out,
+            "role_id": self.role_id,
+            "starting_time": self.starting_time,
+            "ending_time": self.ending_time,
+            "profile_id": self.profile_id,
+        }
+
+class Request(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    employer_id = db.Column(db.ForeignKey('employer.id'), primary_key=True)
+    employee_id = db.Column(db.ForeignKey('employee.id'), primary_key=True)
+    shift_id = db.Column(db.ForeignKey('shift.id'), primary_key=True)
+    employer = db.relationship("Employer", back_populates="request_employer")
+    employee = db.relationship("Employee", back_populates="request_employee")
+    shift = db.relationship("Shift", back_populates="request_shift")
+    status = db.Column(db.String(50), unique=False, nullable=False)
+
+    def __repr__(self):
+        return '<Request %r>' % self.shift_id
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "status": self.status
+        }
 
 class Messages_author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -79,67 +139,4 @@ class Messages_recipient(db.Model):
     def serialize(self):
         return {
             "id": self.id
-        }
-
-
-class Employer(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    request_employer = db.relationship("Request", back_populates="employer")
-    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
-    
-
-    def __repr__(self):
-        return '<Employer %r>' % self.id
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "role": self.role,
-            "hourly_rate": self.hourly_rate
-        }
-
-
-class Request(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    employer_id = db.Column(db.ForeignKey('employer.id'), primary_key=True)
-    employee_id = db.Column(db.ForeignKey('employee.id'), primary_key=True)
-    shift_id = db.Column(db.ForeignKey('shift.id'), primary_key=True)
-    employer = db.relationship("Employer", back_populates="request_employer")
-    employee = db.relationship("Employee", back_populates="request_employee")
-    shift = db.relationship("Shift", back_populates="request_shift")
-    status = db.Column(db.String(50), unique=False, nullable=False)
-
-    def __repr__(self):
-        return '<Request %r>' % self.shift_id
-
-    def serialize(self):
-        return {
-            "id": self.id
-        }
-
-
-class Shift(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    hours = db.Column(db.Integer, unique=False, nullable=True)
-    role_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
-    starting_time = db.Column(db.DateTime(timezone=True), unique=False, nullable=False)
-    ending_time = db.Column(db.DateTime(timezone=True), unique=False, nullable=False)
-    clock_in = db.Column(db.DateTime(timezone=True), unique=False, nullable=True)
-    clock_out = db.Column(db.DateTime(timezone=True), unique=False, nullable=True)
-    request_shift = db.relationship("Request", back_populates="shift")
-
-
-    def __repr__(self):
-        return '<Shift %r>' % self.id
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            
-            "hours": self.hours,
-            "clock_in": self.clock_in, 
-            "clock_out": self.clock_out,
-            "role_id": self.role_id,
-            "starting_time": self.starting_time,
-            "ending_time": self.ending_time
         }

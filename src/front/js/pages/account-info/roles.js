@@ -16,7 +16,10 @@ export const Roles = () => {
 					<div className="d-flex justify-content-start mx-2">
 						<img className="user-img" src={userImage} />
 						<h4 className="justify-content-start my-auto">
-							<span className="pl-2">Username</span> <br /> <span className="pr-5">Role</span>
+							<span className="pl-2">{store.profile.username}</span> <br />{" "}
+							<span className="pr-5">
+								{store.profile.employer === null ? "Employee" : store.profile.employer}
+							</span>
 						</h4>
 						<h2 className="ml-4 my-2 font-weight-bold">
 							Manage
@@ -34,18 +37,22 @@ export const Roles = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{store.employee.map((item, index) => {
-									return (
-										<tr key={index}>
-											<td>
-												<i className="text-success far fa-edit" />{" "}
-												<i className="text-danger far fa-trash-alt" />
-											</td>
-											<td>{item.role}</td>
-											<td>{item.hourly_rate}</td>
-										</tr>
-									);
-								})}
+								{store.employee &&
+									store.employee.map((item, index) => {
+										return (
+											<tr key={index}>
+												<td>
+													<i className="text-success far fa-edit" />{" "}
+													<i
+														className="text-danger far fa-trash-alt"
+														onClick={() => actions.deleteSingleEmployee(item.id)}
+													/>
+												</td>
+												<td>{item.role}</td>
+												<td>{item.hourly_rate}</td>
+											</tr>
+										);
+									})}
 							</tbody>
 						</table>
 						<div className="d-flex justify-content-around">

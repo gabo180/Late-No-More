@@ -43,7 +43,7 @@ export const ShiftInfo = () => {
 				<div className="d-flex justify-content-start mx-2">
 					<img className="user-img" src={userImage} />
 					<h4 className="justify-content-start my-auto">
-						<span className="pl-2">Username</span> <br /> <span className="pr-5">Role</span>
+						<span className="pl-2">{store.profile.username}</span> <br /> <span className="pr-5">Role</span>
 					</h4>
 					{handleButton}
 				</div>

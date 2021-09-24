@@ -23,6 +23,8 @@ export const Shifts = () => {
 	// 		</div>
 	// 	);
 
+	// if(actions.loadSingleShift(params.shift_id) === actions.loadProfile(params.shift_id))
+
 	return (
 		<div className="text-center pb-5">
 			<div className="my-3">
@@ -30,7 +32,8 @@ export const Shifts = () => {
 					<div className="d-flex justify-content-start mx-2">
 						<img className="user-img" src={userImage} />
 						<h4 className="justify-content-start my-auto">
-							<span className="pl-2">Username</span> <br /> <span className="pr-5">Role</span>
+							<span className="pl-2">{store.profile.username}</span> <br />{" "}
+							<span className="pr-5">Role</span>
 						</h4>
 						<h1 className="mx-auto my-2 font-weight-bold">Shifts</h1>
 					</div>
@@ -66,44 +69,47 @@ export const Shifts = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{store.shift.map((item, index) => {
-									const starting_time = new Date(item.starting_time);
-									const ending_time = new Date(item.ending_time);
-									const hours_ending_time =
-										ending_time.getUTCHours() + (ending_time.getUTCMinutes() * 100) / 60;
-									const hours_starting_time =
-										starting_time.getUTCHours() + (starting_time.getUTCMinutes() * 100) / 60;
-									const hours = hours_ending_time - hours_starting_time;
+								{store.shift &&
+									store.shift.map((item, index) => {
+										const starting_time = new Date(item.starting_time);
+										const ending_time = new Date(item.ending_time);
+										const hours_ending_time =
+											ending_time.getUTCHours() + (ending_time.getUTCMinutes() * 100) / 60;
+										const hours_starting_time =
+											starting_time.getUTCHours() + (starting_time.getUTCMinutes() * 100) / 60;
+										const hours = hours_ending_time - hours_starting_time;
 
-									return (
-										<tr key={index}>
-											<td>
-												{store.employee.map((i, ind) => {
-													if (i.id === item.role_id) return i.role;
-												})}
-											</td>
-											<td>
-												{starting_time.getUTCHours()}:
-												{starting_time.getUTCMinutes() < 10
-													? "0" + starting_time.getUTCMinutes()
-													: starting_time.getUTCMinutes()}
-											</td>
-											<td>
-												{ending_time.getUTCHours()}:
-												{ending_time.getUTCMinutes() < 10
-													? "0" + starting_time.getUTCMinutes()
-													: starting_time.getUTCMinutes()}
-											</td>
+										if (item.profile_id == store.profile.id)
+											return (
+												<tr key={index}>
+													<td>
+														{store.employee.map((i, ind) => {
+															if (i.id === item.role_id) return i.role;
+														})}
+													</td>
+													<td>
+														{starting_time.getUTCHours()}:
+														{starting_time.getUTCMinutes() < 10
+															? "0" + starting_time.getUTCMinutes()
+															: starting_time.getUTCMinutes()}
+													</td>
+													<td>
+														{ending_time.getUTCHours()}:
+														{ending_time.getUTCMinutes() < 10
+															? "0" + starting_time.getUTCMinutes()
+															: starting_time.getUTCMinutes()}
+													</td>
 
-											<td>{hours < 0 ? hours + 24 : hours}</td>
-											<td>
-												<Link to={"/shifts/shift-info/" + item.id}>
-													<i className="text-success fas fa-arrow-right" />
-												</Link>
-											</td>
-										</tr>
-									);
-								})}
+													<td>{hours < 0 ? hours + 24 : hours}</td>
+													<td>
+														<Link to={"/shifts/shift-info/" + item.id}>
+															<i className="text-success fas fa-arrow-right" />
+														</Link>
+													</td>
+												</tr>
+											);
+										else null;
+									})}
 							</tbody>
 						</table>
 					</div>
