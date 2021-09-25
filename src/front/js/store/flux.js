@@ -1,12 +1,12 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-blush-egret-h8cs868o.ws-us17.gitpod.io/api",
+			myURL: "https://3001-blush-egret-h8cs868o.ws-us18.gitpod.io/api",
 			messagesAuthor: [],
 			messagesRecipient: [],
 			shift: [],
 			// TODO: rename shift to allShifts
-			profile: [],
+			profile: {},
 			employee: [],
 			isClockIn: false
 		},
@@ -37,6 +37,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json();
 					console.log(data);
 					setStore({ profile: data });
+				} catch (error) {
+					throw new Error(error);
+				}
+			},
+
+			updateProfile: async () => {
+				const endPoint = "/profile";
+				const token = localStorage.getItem("jwt-token");
+				try {
+					const response = await fetch(`${getStore().myURL}${endPoint}`, {
+						method: "PUT",
+						headers: { Authorization: "Bearer " + token }
+					});
+					const data = await response.json();
+					if (data.ok) {
+						console.log(data);
+						setStore({ profile: data });
+					}
 				} catch (error) {
 					throw new Error(error);
 				}
@@ -122,6 +140,58 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			loadSingleEmployee: async employee_id => {
+				const endPoint = "/employee/" + employee_id;
+				const token = localStorage.getItem("jwt-token");
+				try {
+					const response = await fetch(`${getStore().myURL}${endPoint}`, {
+						method: "GET",
+						headers: { Authorization: "Bearer " + token }
+					});
+					const data = await response.json();
+					return data;
+				} catch (error) {
+					throw new Error(error);
+				}
+			},
+
+			deleteSingleEmployee: async employee_id => {
+				const endPoint = "/employee/" + employee_id;
+				const token = localStorage.getItem("jwt-token");
+				try {
+					const response = await fetch(`${getStore().myURL}${endPoint}`, {
+						method: "DELETE",
+						headers: { Authorization: "Bearer " + token }
+					});
+					console.log("KISSES KISSES", response);
+					const data = await response.json();
+					console.log("HOLIWIS", data);
+					setStore({ employee: data });
+				} catch (error) {
+					throw new Error(error);
+				}
+			},
+
+			updateEmployee: info => {
+				fetch(`${setURL}/employee/${info.id}`, {
+					method: "PUT",
+					body: JSON.stringify(info),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(resp => {
+						console.log(resp.ok);
+						console.log(resp.status);
+						console.log(resp.text());
+						return resp.json();
+					})
+
+					.catch(error => {
+						console.log(error);
+					});
+			},
+
 			login: (username, password, history) => {
 				fetch(`${getStore().myURL}/login`, {
 					headers: { "Content-type": "application/json" },
@@ -148,26 +218,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.error("There has been an uknown error", error));
 			},
 
-			updateEmployee: tasks => {
-				return fetch(`${setURL}/employee`, {
-					method: "PUT",
-					body: JSON.stringify(tasks),
-					headers: {
-						"Content-Type": "application/json"
-					}
-				})
-					.then(resp => {
-						console.log(resp.ok);
-						console.log(resp.status);
-						console.log(resp.text());
-						return resp.json();
-					})
-
-					.catch(error => {
-						console.log(error);
-					});
-			},
-
 			doClockIn: async shift_id => {
 				const token = localStorage.getItem("jwt-token");
 				try {
@@ -177,9 +227,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					const data = await response.json();
 					if (data.ok) {
-						console.log(data);
+						console.log("HOLIWIS KISSES KISSES", data);
 						setStore({ shift: data });
 					}
+					return data;
 				} catch (error) {
 					throw new Error(error);
 				}

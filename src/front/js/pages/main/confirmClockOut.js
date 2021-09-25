@@ -1,22 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
-// import rigoImageUrl from "../../img/clock-(no-background).jpg";
 import "../../../styles/home.scss";
-import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export const ConfirmClockOut = () => {
 	const { store, actions } = useContext(Context);
+	const [shift, setShift] = useState(null);
 	const history = useHistory();
 	const params = useParams();
-	const [shift, setShift] = useState(null);
 
-	useEffect(async () => {
-		const shift = await actions.loadSingleShift(params.shift_id);
-		setShift(shift);
+	useEffect(() => {
+		actions.loadSingleShift(params.shift_id).then(shift => setShift(shift));
 	}, []);
-	debugger;
 	if (!shift)
 		return (
 			<div className="spinner-border" role="status">
@@ -36,7 +32,7 @@ export const ConfirmClockOut = () => {
 						/>
 					</div>
 					<div className="col">
-						<h3>username</h3>
+						<h3>{store.profile.username}</h3>
 						<h3>roll</h3>
 					</div>
 					<div className="col">
@@ -55,7 +51,7 @@ export const ConfirmClockOut = () => {
 							onClick={() => {
 								history.push("/home");
 								actions.setIsClockIn();
-								actions.doClockOut(store.shift[params.theid].id);
+								actions.doClockOut(shift.id);
 							}}>
 							Yes
 						</button>

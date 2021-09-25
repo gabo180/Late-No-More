@@ -11,10 +11,11 @@ export const ConfirmClockIn = () => {
 	const [shift, setShift] = useState(null);
 	const history = useHistory();
 	const params = useParams();
-	useEffect(async () => {
-		const shift = await actions.loadSingleShift(params.shift_id);
-		setShift(shift);
+
+	useEffect(() => {
+		actions.loadSingleShift(params.shift_id).then(shift => setShift(shift));
 	}, []);
+
 	if (!shift)
 		return (
 			<div className="spinner-border" role="status">
@@ -34,7 +35,7 @@ export const ConfirmClockIn = () => {
 						/>
 					</div>
 					<div className="col">
-						<h3>username</h3>
+						<h3>{store.profile.username}</h3>
 						<h3>roll</h3>
 					</div>
 					<div className="col">
@@ -51,9 +52,9 @@ export const ConfirmClockIn = () => {
 							type="button"
 							className="btn btn-success"
 							onClick={() => {
-								history.push("/home");
 								actions.setIsClockIn();
 								actions.doClockIn(shift.id);
+								history.push("/home");
 							}}>
 							Yes
 						</button>
