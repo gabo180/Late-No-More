@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-blush-egret-h8cs868o.ws-us18.gitpod.io/api",
+			myURL: "https://3001-amaranth-silverfish-ulc73bqz.ws-us18.gitpod.io/api",
 			messagesAuthor: [],
 			messagesRecipient: [],
 			shift: [],
