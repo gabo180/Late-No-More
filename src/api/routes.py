@@ -11,7 +11,11 @@ from api.emailSender import emailSender
 
 api = Blueprint('api', __name__)
 
+
+
 ##Profile
+
+
 
 @api.route('/profile', methods=['GET'])
 @jwt_required()
@@ -21,11 +25,27 @@ def handle_profile():
     return jsonify(profile.serialize()), 200
 
 @api.route('/profile', methods=['POST'])
-def post_profile():
-    profile1 = Profile(name="my_super_name", last_name="my_super_last_name", username="my_super_height", email="my_super_weight", phone_number="000-000-0000")
-    db.session.add(profile1)
+def create_profile():
+    body = request.get_json()
+    profile = Profile()
+
+    if "name" in body:
+        profile.name = body["name"]
+    if "last_name" in body:
+        profile.last_name = body["last_name"]
+    if "username" in body:
+        profile.username = body["username"]
+    if "phone_number" in body:
+        profile.phone_number = body["phone_number"]
+    if "email" in body:
+        profile.email = body["email"]
+    if "password" in body:
+        profile.password = body["password"]
+    
+
+    db.session.add(profile)
     db.session.commit()
-    return jsonify(profile1.serialize())
+    return jsonify(profile.serialize())
 
 @api.route('/profile/', methods=['PUT'])
 @jwt_required()
@@ -51,7 +71,10 @@ def update_profile():
     return jsonify(profile1.serialize())
 
 
+
 ##Shift
+
+
 
 @api.route('/shift', methods=['GET'])
 @jwt_required()
@@ -68,7 +91,7 @@ def handle_single_shift(shift_id):
     return jsonify(shifts), 200
 
 @api.route('/shift', methods=['POST'])
-# @jwt_required()
+@jwt_required()
 def post_shift():
     body = request.get_json()
 
@@ -76,14 +99,33 @@ def post_shift():
 
     if "role_id" in body:
         shift.role_id = body["role_id"]
+    if "profile_id" in body:
+        shift.profile_id = body["profile_id"]
     if "starting_time" in body:
         shift.starting_time = body["starting_time"]
     if "ending_time" in body:
         shift.ending_time = body["ending_time"]
-    if "hours" in body:
-        shift.ending_time = body["ending_time"] - body["starting_time"]
     
     db.session.add(shift)
+    db.session.commit()
+    get_all_shifts = Shift.query.all()
+    mapped_shifts=[s.serialize() for s in get_all_shifts]
+    return jsonify(mapped_shifts)
+
+@api.route('/shift/<int:shift_id>', methods=['PUT'])
+# @jwt_required()
+def put_shift(shift_id):
+    body = request.get_json()
+
+    shift = Shift.query.filter_by(id = shift_id)
+
+    if "role_id" in body:
+        shift.role_id = body["role_id"]
+    if "starting_time" in body:
+        shift.starting_time = body["starting_time"]
+    if "ending_time" in body:
+        shift.ending_time = body["ending_time"]
+    
     db.session.commit()
     return jsonify(shift.serialize())
 
@@ -96,15 +138,9 @@ def update_single_shift_clock_in(shift_id):
     current_user_id_role = Profile.query.get(current_user_id)
     IST = pytz.timezone('America/New_York')
     UTC = pytz.utc
-    # print(current_user_id_role.id)
-    # print(current_user_id)
-    # print(shift.role_id)
 
     if shift is None:
         raise APIException('Shift not found', status_code=404)
-
-    # if shift.role_id is not current_user_id_role.employee.id:
-    #     return "Your role assigned doesn't match the on ein this shift", 401
 
     if shift.clock_in is not None:
         return 'Clock in already done', 400
@@ -128,21 +164,31 @@ def update_single_shift_clock_out(shift_id):
 
     if shift is None:
         raise APIException('Shift not found', status_code=404)
-    
-    # if shift.role_id is not current_user_id_role.employee.id:
-    #     return "Your role assigned doesn't match the one in this shift", 401
 
     if shift.clock_out is not None:
         return 'Clock out already done', 400
 
-
-    # if "clock_out" in body:
     shift.clock_out = datetime.datetime.now(UTC)
 
     db.session.commit()
     return jsonify(shift.serialize())
 
+@api.route('/shift/<int:shift_id>', methods=['DELETE'])
+def delete_shift(shift_id):
+    shift1 = Shift.query.get(shift_id)
+    
+    db.session.delete(shift1)
+    db.session.commit()
+
+    get_all_shifts = Shift.query.all()
+    mapped_shifts=[s.serialize() for s in get_all_shifts]
+    return jsonify(mapped_shifts)
+
+
+
 ##Employee
+
+
 
 @api.route('/employee', methods=['GET'])
 @jwt_required()
@@ -171,6 +217,7 @@ def create_employee():
         employee.role = role
     if hourly_rate:
         employee.hourly_rate = hourly_rate
+    
 
     db.session.add(employee)
     db.session.commit()
@@ -179,7 +226,7 @@ def create_employee():
 @api.route('/employee/<int:employee_id>', methods=['PUT'])
 def update_employee(employee_id):
     employee1 = Employee.query.get(employee_id)
-    if employee1 is None: 
+    if employee1 is None:
         raise APIException('User not found', status_code=404)
 
     if "role" in body:
@@ -194,10 +241,7 @@ def update_employee(employee_id):
 @api.route('/employee/<int:employee_id>', methods=['DELETE'])
 def delete_employee(employee_id):
     employee1 = Employee.query.get(employee_id)
-    # if employee1 is None:
-    #     raise APIException('GET OUT OF HERE!!', status_code=404)
     
-
     db.session.delete(employee1)
     db.session.commit()
 
@@ -205,7 +249,11 @@ def delete_employee(employee_id):
     mapped_employees=[e.serialize() for e in get_all_employees]
     return jsonify(mapped_employees)
 
+
+
 ##Login
+
+
 
 @api.route("/login", methods=["POST"])
 def create_token():
@@ -220,7 +268,11 @@ def create_token():
     access_token = create_access_token(identity=user.id)
     return jsonify({ "token": access_token, "user_id": user.id })
 
+
+
 ##Messages author
+
+
 
 @api.route('/messages-author', methods=['GET'])
 @jwt_required()

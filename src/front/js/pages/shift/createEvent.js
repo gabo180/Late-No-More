@@ -26,7 +26,20 @@ export const CreateEvent = () => {
 					<form className="d-flex flex-column mr-auto">
 						<div className="my-2 d-flex flex-column mr-auto">
 							<span className="mr-auto ml-2">Select employee for the shift</span>{" "}
-							<input className="ml-4 form-control" type="text" />
+							{/* <input className="ml-4 form-control" type="text" /> */}
+							<div className="input-group mb-3 ml-4 ">
+								<select className="custom-select" id="inputGroupSelect01">
+									<option selected>Choose...</option>
+									{store.employee &&
+										store.employee.map((item, index) => {
+											return (
+												<option key={index} value={item.id}>
+													{item.role}
+												</option>
+											);
+										})}
+								</select>
+							</div>
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
 							<span className="mr-auto ml-2">Select starting date and time:</span>{" "}

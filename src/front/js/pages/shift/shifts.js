@@ -12,19 +12,6 @@ export const Shifts = () => {
 	const [shift, setShift] = useState(null);
 	const params = useParams();
 
-	// useEffect(async () => {
-	// 	const shift = await actions.loadSingleShift(params.shift_id);
-	// 	setShift(shift);
-	// }, []);
-	// if (!shift)
-	// 	return (
-	// 		<div className="spinner-border" role="status">
-	// 			<span className="sr-only">Loading shift...</span>
-	// 		</div>
-	// 	);
-
-	// if(actions.loadSingleShift(params.shift_id) === actions.loadProfile(params.shift_id))
-
 	return (
 		<div className="text-center pb-5">
 			<div className="my-3">
@@ -43,11 +30,15 @@ export const Shifts = () => {
 								Timesheet
 							</button>
 						</Link>
-						<Link to="/shifts/create-event">
-							<button type="submit" className="btn btn-primary mb-2 px-4 my-2" value="Log in">
-								+ Create shift
-							</button>
-						</Link>
+						{store.profile.employer !== null ? (
+							<Link to="/shifts/create-event">
+								<button type="submit" className="btn btn-primary mb-2 px-4 my-2" value="Log in">
+									+ Create shift
+								</button>
+							</Link>
+						) : (
+							undefined
+						)}
 					</div>
 					<div>
 						<table className="table">
@@ -101,11 +92,21 @@ export const Shifts = () => {
 													</td>
 
 													<td>{hours < 0 ? hours + 24 : hours}</td>
-													<td>
-														<Link to={"/shifts/shift-info/" + item.id}>
-															<i className="text-success fas fa-arrow-right" />
-														</Link>
-													</td>
+													{store.profile.employer === null ? (
+														<td>
+															<Link to={"/shifts/shift-info/" + item.id}>
+																<i className="text-success fas fa-arrow-right" />
+															</Link>
+														</td>
+													) : (
+														<td>
+															<i className="text-success far fa-edit" />
+															<i
+																className="text-danger far fa-trash-alt"
+																onClick={() => actions.deleteSingleEmployee(item.id)}
+															/>
+														</td>
+													)}
 												</tr>
 											);
 										else null;
