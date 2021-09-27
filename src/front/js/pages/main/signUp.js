@@ -6,7 +6,7 @@ import "../../../styles/home.scss";
 export const SignUp = () => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
-	const [fields, handleFieldChange] = useState({
+	const [fields, setFields] = useState({
 		name: "",
 		last_name: "",
 		username: "",
@@ -15,9 +15,12 @@ export const SignUp = () => {
 		password: ""
 	});
 	const history = useHistory();
-	async function handleSubmit(event) {
+	const handleSubmit = event => {
+		console.log("ejecutando...");
 		event.preventDefault();
-	}
+		console.log("ejecutado!!");
+		actions.createProfile(fields, history);
+	};
 
 	return (
 		<div className="text-center">
@@ -32,7 +35,12 @@ export const SignUp = () => {
 						type="datetime"
 						className="form-control"
 						placeholder="First Name"
-						onChange={handleFieldChange}
+						onChange={e =>
+							setFields({
+								...fields,
+								name: e.target.value
+							})
+						}
 						value={fields.name}
 					/>
 				</div>
@@ -41,7 +49,12 @@ export const SignUp = () => {
 						type="text"
 						className="form-control"
 						placeholder="Last Name"
-						onChange={handleFieldChange}
+						onChange={e =>
+							setFields({
+								...fields,
+								last_name: e.target.value
+							})
+						}
 						value={fields.last_name}
 					/>
 				</div>
@@ -50,7 +63,12 @@ export const SignUp = () => {
 						type="text"
 						className="form-control"
 						placeholder="Phone Number"
-						onChange={handleFieldChange}
+						onChange={e =>
+							setFields({
+								...fields,
+								phone_number: e.target.value
+							})
+						}
 						value={fields.phone_number}
 					/>
 				</div>
@@ -59,7 +77,12 @@ export const SignUp = () => {
 						type="text"
 						className="form-control"
 						placeholder="Email"
-						onChange={handleFieldChange}
+						onChange={e =>
+							setFields({
+								...fields,
+								email: e.target.value
+							})
+						}
 						value={fields.email}
 					/>
 				</div>
@@ -68,7 +91,12 @@ export const SignUp = () => {
 						type="text"
 						className="form-control"
 						placeholder="Username"
-						onChange={handleFieldChange}
+						onChange={e =>
+							setFields({
+								...fields,
+								username: e.target.value
+							})
+						}
 						value={fields.username}
 					/>
 				</div>
@@ -77,27 +105,25 @@ export const SignUp = () => {
 						type="password"
 						className="form-control"
 						placeholder="Password"
-						onChange={handleFieldChange}
+						onChange={e =>
+							setFields({
+								...fields,
+								password: e.target.value
+							})
+						}
 						value={fields.password}
 					/>
 				</div>
-			</form>
-			<div>
 				<Link to="/">
 					<button type="button" className="btn btn-danger my-4 mx-2" value="Sign up">
 						Cancel
 					</button>
 				</Link>
 				{/* <Link to="/"> */}
-				<button
-					onClick={() => history.push("/")}
-					type="submit"
-					className="btn btn-info my-4 mx-2"
-					value="Sign up">
+				<button type="submit" className="btn btn-info my-4 mx-2" value="Sign up">
 					Submit
 				</button>
-				{/* </Link> */}
-			</div>
+			</form>
 		</div>
 	);
 };

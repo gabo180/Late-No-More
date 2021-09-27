@@ -39,7 +39,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			createProfile: async () => {
+			createProfile: async (profileCredentials, history) => {
 				const endPoint = "/profile";
 				const token = localStorage.getItem("jwt-token");
 				try {
@@ -48,12 +48,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							Authorization: "Bearer " + token,
 							"Content-Type": "application/json"
-						}
+						},
+						body: JSON.stringify(profileCredentials)
 					});
 					const data = await response.json();
-					if (data.ok) {
+					console.log(response);
+					if (response.ok) {
 						console.log(data);
-						setStore({ profile: data });
+						history.push("/");
 					}
 				} catch (error) {
 					throw new Error(error);
