@@ -40,13 +40,20 @@ export const Account = () => {
 									</button>
 								</Link>
 							</li>
-							<li>
-								<Link to="/account/roles">
-									<button type="submit" className="font-navbar text-dark btn my-2" value="Sign up">
-										<h2>Manage roles</h2>
-									</button>
-								</Link>
-							</li>
+							{store.profile.employer !== null ? (
+								<li>
+									<Link to="/account/roles">
+										<button
+											type="submit"
+											className="font-navbar text-dark btn my-2"
+											value="Sign up">
+											<h2>Manage roles</h2>
+										</button>
+									</Link>
+								</li>
+							) : (
+								undefined
+							)}
 						</ul>
 					</div>
 				</div>

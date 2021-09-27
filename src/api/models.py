@@ -13,7 +13,7 @@ class Profile(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     employee = db.relationship("Employee", backref="profile", uselist=False)
     shift = db.relationship('Shift', backref="profile", lazy=True)
-    employer = db.relationship("Employer", backref="profile", uselist=False)
+    employer = db.Column(db.String(100), db.ForeignKey('employer.company_name'))
     messages_author = db.relationship('Messages_author', backref="author", lazy=True)
     messages_recipient = db.relationship('Messages_recipient', backref="recipient", lazy=True)
     
@@ -28,14 +28,16 @@ class Profile(db.Model):
             "last_name": self.last_name,
             "username": self.username,
             "email": self.email,
-            "phone_number": self.phone_number
+            "phone_number": self.phone_number,
+            "employer": self.employer
         }
 
 class Employer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    company_name = db.Column(db.String(120), unique=False, nullable=False)
-    request_employer = db.relationship("Request", back_populates="employer")
-    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), nullable=False)
+    company_name = db.Column(db.String(120), unique=True, nullable=False)
+    request_employer = db.relationship("Request", back_populates="employer", lazy=True)
+    employee = db.relationship("Employee", backref="working for")
+    profile_id = db.relationship("Profile", backref="Company name", uselist=False)
     
 
     def __repr__(self):
@@ -45,7 +47,7 @@ class Employer(db.Model):
         return {
             "id": self.id,
             "role": self.role,
-            "company name": self.company_name
+            "company_name": self.company_name
         }
 
 class Employee(db.Model):
@@ -53,6 +55,7 @@ class Employee(db.Model):
     role = db.Column(db.String(120), unique=False, nullable=False)
     hourly_rate = db.Column(db.Float, unique=False, nullable=False)
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
+    employer_id = db.Column(db.String(100), db.ForeignKey('employer.company_name'))
     request_employee = db.relationship("Request", back_populates="employee")
     shift = db.relationship('Shift', backref="role", lazy=True)
     
@@ -63,12 +66,13 @@ class Employee(db.Model):
         return {
             "id": self.id,
             "role": self.role,
-            "hourly_rate": self.hourly_rate
+            "hourly_rate": self.hourly_rate,
+            "profile_id": self.profile_id,
+            "employer_id": self.employer_id
         }
 
 class Shift(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    hours = db.Column(db.Integer, unique=False, nullable=True)
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
     role_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
     starting_time = db.Column(db.DateTime(timezone=True), unique=False, nullable=False)
@@ -84,8 +88,6 @@ class Shift(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            
-            "hours": self.hours,
             "clock_in": self.clock_in, 
             "clock_out": self.clock_out,
             "role_id": self.role_id,
