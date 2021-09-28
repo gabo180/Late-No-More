@@ -195,7 +195,6 @@ def delete_shift(shift_id):
     return jsonify(mapped_shifts)
 
 
-
 ##  EMPLOYER
 
 
@@ -253,7 +252,7 @@ def delete_employer(employer_id):
     return jsonify(employer1.serialize())
 
 
-
+  
 ##Employee
 
 

@@ -88,7 +88,7 @@ class Shift(db.Model):
 
     def __repr__(self):
         return '<Shift %r>' % self.profile_id
-
+        
     def serialize(self):
         return {
             "id": self.id,
@@ -99,6 +99,7 @@ class Shift(db.Model):
             "ending_time": self.ending_time,
             "profile_id": self.profile_id,
             "employer_id": self.employer_id
+
         }
 
 class Request(db.Model):

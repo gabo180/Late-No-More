@@ -8,9 +8,21 @@ export const ShiftInfo = () => {
 	const { store, actions } = useContext(Context);
 	const history = useHistory();
 	const params = useParams();
+	const [shift, setShift] = useState("");
+
+	useEffect(() => {
+		actions.loadSingleShift(params.shift_id).then(shift => setShift(shift));
+	}, []);
+
+	if (!shift)
+		return (
+			<div className="spinner-border" role="status">
+				<span className="sr-only">Loading shift...</span>
+			</div>
+		);
 
 	const handleClock = () => {
-		if (store.isClockIn) {
+		if (shift.clock_in !== null) {
 			history.push("/confirm-CO/" + params.shift_id);
 		} else {
 			history.push("/confirm-CI/" + params.shift_id);
@@ -18,7 +30,7 @@ export const ShiftInfo = () => {
 	};
 
 	const ifHandleButton = () => {
-		if (store.isClockIn) {
+		if (shift.clock_in !== null) {
 			return (
 				<button type="button" className="btn btn-danger" onClick={handleClock}>
 					Clock Out

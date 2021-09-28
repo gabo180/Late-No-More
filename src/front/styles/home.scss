@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,500&family=Zilla+Slab:wght@300&display=swap');
 
-
 .font-size-xl {
     font-size: 8rem;
     color: rgb(253, 253, 253)
@@ -119,4 +118,39 @@
     100% {
         opacity: 1;
     }
+}
+
+.profile-container {
+    align-items: center;
+    // background: #984e4e;
+    height: 77%;
+    justify-content: space-between;
+    padding: 24px;
+}
+
+.info-container {
+    width: 80%;
+}
+
+.single-info-element {
+    margin-bottom: 12px;
+}
+
+.role-container {
+    margin-bottom: 8px;
+}
+
+.profile-name {
+    margin-right: 12px;
+    margin-left: 12px;
+    font-size: 24px;
+}
+
+.screen-info {
+    border-radius: 10px;
+    padding: 8px;
+    text-align: center;
+    align-self: center;
+    border-width: 2px;
+    border-style: solid;
 }

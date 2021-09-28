@@ -9,8 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			profile: {},
 			allProfiles: [],
 			employee: [],
-			employer: [],
-			isClockIn: false
+			employer: []
 		},
 
 		actions: {
@@ -319,9 +318,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw new Error(error);
 				}
 			},
-
+      
+      
 			//  EMPLOYEE
 
+      
 			loadEmployee: async () => {
 				const endPoint = "/employee";
 				const token = localStorage.getItem("jwt-token");

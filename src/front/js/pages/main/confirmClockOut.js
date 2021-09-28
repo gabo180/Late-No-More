@@ -3,16 +3,23 @@ import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import userImage from "../../../img/userImage.jpg";
+import moment from "moment";
 
 export const ConfirmClockOut = () => {
 	const { store, actions } = useContext(Context);
-	const [shift, setShift] = useState(null);
+	const [shift, setShift] = useState("");
 	const history = useHistory();
 	const params = useParams();
 
 	useEffect(() => {
 		actions.loadSingleShift(params.shift_id).then(shift => setShift(shift));
 	}, []);
+
+	const roleId = shift.role_id;
+
+	const targetEmployee = store.employee.find(employee => employee.id == roleId);
+
 	if (!shift)
 		return (
 			<div className="spinner-border" role="status">
@@ -20,62 +27,98 @@ export const ConfirmClockOut = () => {
 			</div>
 		);
 
+	const starting_time = moment(shift.clock_in);
+	const ending_time = moment();
+	const hours_done = ending_time.diff(starting_time, "hours", true);
+	const hours = Math.round(hours_done * 100) / 100;
+	const amount_earned = () => {
+		if (targetEmployee) {
+			return hours_done * targetEmployee.hourly_rate;
+		}
+	};
+
+	// useEffect(
+	// 	() => {
+	// 		if (shift && shift.clock_out) {
+	// 			const roleId = shift.role_id;
+	// 			console.log("ROLE ID", roleId);
+	// 			const targetEmployee = store.employee.find(employee => employee.id == roleId);
+	// 			console.log("TARGET EMPLOYEE", targetEmployee);
+	// 			const starting_time = moment(shift.clock_in);
+	// 			const ending_time = moment(shift.clock_out);
+	// 			console.log("HOURS DONE", ending_time.diff(starting_time, "hours", true));
+	// 			const hours_done = ending_time.diff(starting_time, "hours", true); //******** THIS ONE WORKS TO KNOW THE EXPECTED HOURS *******
+	// 			setHours(hours_done);
+	// 			if (targetEmployee) {
+	// 				setAmountEarned(amount_earned(hours_done, targetEmployee.hourly_rate));
+	// 			}
+	// 		}
+	// 	},
+	// 	[shift]
+	// );
+
+	// const amount_earned = (hours, hourly_rate) => {
+	// 	return hours * hourly_rate;
+	// };
+
 	return (
-		<>
-			<div className="container d-flex justify-content-center w-100">
-				<div className="row">
-					<div className="col">
-						<img
-							src="https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png"
-							className="img-thumbnail rounded-circle"
-							alt="..."
-						/>
+		<div className="text-center">
+			<div className="my-3">
+				<div className="fadein-animation d-flex flex-column">
+					<div className="d-flex justify-content-start mx-2">
+						<div>
+							<img className="user-img" src={userImage} />
+						</div>
+						<div>
+							<h4 className="justify-content-start my-auto">
+								<span className="pl-2">{store.profile.username}</span> <br />{" "}
+								<span className="pr-5">Role</span>
+							</h4>
+						</div>
 					</div>
-					<div className="col">
-						<h3>{store.profile.username}</h3>
-						<h3>roll</h3>
+					<div>
+						<div className="font-weight-bold mt-3">
+							<h2>CONFIRM CLOCK OUT</h2>
+						</div>
 					</div>
-					<div className="col">
-						<button type="button" className="btn btn-primary">
-							Clock In/Out
-						</button>
+					<div className="font-weight-bold mt-5">
+						<h4>HOURS DONE: {hours}</h4>
+						<br />
+						<h4>AMOUNT EARNED: {parseFloat(amount_earned()).toFixed(2)}</h4>
+						<br />
+						<h3>ROLE</h3>
+						<div className="font-weight-bold text-primary">
+							<h3>{targetEmployee.role}</h3>
+						</div>
+					</div>
+					<div className="font-weight-bold mt-5">
+						<h2>END SHIFT</h2>
+					</div>
+					<div className="d-flex justify-content-between mt-2">
+						<div>
+							<button
+								type="button"
+								className="btn btn-success ml-5"
+								onClick={() => {
+									actions.doClockOut(shift.id);
+									history.push("/home");
+								}}>
+								Yes
+							</button>
+						</div>
+						<div>
+							<button
+								type="button"
+								className="btn btn-danger mr-5"
+								onClick={() => {
+									history.push("/shift");
+								}}>
+								No
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div className="container border border-dark m-3">
-				<div className="row">
-					<div className="col-6">
-						<button
-							type="button"
-							className="btn btn-danger"
-							onClick={() => {
-								history.push("/home");
-								actions.setIsClockIn();
-								actions.doClockOut(shift.id);
-							}}>
-							Yes
-						</button>
-					</div>
-					<div className="col-6">
-						<button
-							type="button"
-							className="btn btn-danger"
-							onClick={() => {
-								history.push("/home");
-							}}>
-							No
-						</button>
-					</div>
-				</div>
-				<div className="row">
-					<div className="col-6">
-						<h3>Earned!</h3>
-					</div>
-					<div className="col-6">
-						<h3>Hours!</h3>
-					</div>
-				</div>
-			</div>
-		</>
+		</div>
 	);
 };
