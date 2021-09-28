@@ -7,6 +7,12 @@ import { useHistory } from "react-router-dom";
 export const Main = () => {
 	const { store, actions } = useContext(Context);
 	const history = useHistory();
+	const [shiftDate, setShiftDate] = useState("");
+	const cardPStyle = {
+		"border-bottom": "solid 5px red",
+		"padding-bottom": "25%"
+	};
+	const findShift = store.shift.find(shift => {});
 
 	return (
 		<>
@@ -17,33 +23,18 @@ export const Main = () => {
 						<span className="pl-2">{store.profile.username}</span> <br /> <span className="pr-5">Role</span>
 					</h4>
 				</div>
-			</div>
-			<div className="container border border-dark m-3">
-				<div className="row">
-					<div className="col-6">
-						<div className="progress">
-							<div
-								className="progress-bar progress-bar-striped"
-								role="progressbar"
-								style={{ width: "10%" }}
-								aria-valuenow="10"
-								aria-valuemin="0"
-								aria-valuemax="100"
-							/>
+				<div className="card text-center mt-5 ml-5" style={{ width: "18rem", height: "25rem" }}>
+					<input
+						className="form-control"
+						type="date"
+						onChange={e => setShiftDate(e.target.value)}
+						value={shiftDate}
+					/>
+					<div className="card-body">
+						<div className="card-text" style={cardPStyle}>
+							<h2 className="card-title">Hours Completed</h2>
 						</div>
-					</div>
-					<div className="col-6">
-						<button type="button" className="btn btn-primary">
-							Date
-						</button>
-					</div>
-				</div>
-				<div className="row">
-					<div className="col-6">
-						<h3>Earned!</h3>
-					</div>
-					<div className="col-6">
-						<h3>Hours!</h3>
+						<h2 className="mt-4">Total Earnings</h2>
 					</div>
 				</div>
 			</div>
