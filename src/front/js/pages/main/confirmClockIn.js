@@ -9,13 +9,21 @@ import moment from "moment";
 
 export const ConfirmClockIn = () => {
 	const { store, actions } = useContext(Context);
-	const [shift, setShift] = useState(null);
+	const [shift, setShift] = useState("");
 	const history = useHistory();
 	const params = useParams();
 
 	useEffect(() => {
 		actions.loadSingleShift(params.shift_id).then(shift => setShift(shift));
 	}, []);
+
+	const roleId = shift.role_id;
+	console.log("ESTE ES EL SHIFT", roleId);
+
+	const targetEmployee = store.employee.find(employee => employee.id == roleId);
+	console.log("Target Employee", targetEmployee);
+	// const { hourly_rate } = targetEmployee;
+	// console.log("Hourly Rate", hourly_rate);
 
 	if (!shift)
 		return (
@@ -27,13 +35,16 @@ export const ConfirmClockIn = () => {
 	console.log("ESTE ES EL SHIFT", shift);
 	const starting_time = moment(shift.starting_time);
 	const ending_time = moment(shift.ending_time);
-	console.log("MINUTOS", starting_time);
-	// const hours_ending_time = ending_time.getUTCHours() + ending_time.getUTCMinutes() / 60;
-	// const hours_starting_time = starting_time.getUTCHours() + starting_time.getUTCMinutes() / 60;
-	// const expected_hours = hours_ending_time - hours_starting_time;
 	console.log(ending_time.diff(starting_time, "hours", true));
 	const expected_hours = ending_time.diff(starting_time, "hours", true); //******** THIS ONE WORKS TO KNOW THE EXPECTED HOURS *******
-	console.log(ending_time.diff(starting_time, "minutes"));
+	const expected_earnings = () => {
+		if (targetEmployee) {
+			return expected_hours * targetEmployee.hourly_rate;
+		}
+	};
+	console.log("EXPECTED HOURS", expected_hours);
+	console.log("EXPECTED EARNINGS", expected_earnings());
+	// store.employee[role_id].hourly_rate;
 
 	return (
 		<div className="text-center">
@@ -53,7 +64,11 @@ export const ConfirmClockIn = () => {
 					<div>
 						<div className="font-weight-bold">CONFIRM SHIFT</div>
 					</div>
-					<div>EXPECTED HOURS {expected_hours}</div>
+					<div>
+						EXPECTED HOURS {expected_hours}
+						<br />
+						EXPECTED EARNINGS {expected_earnings()}
+					</div>
 					<div>START SHIFT</div>
 					<div className="d-flex justify-content-between">
 						<div>

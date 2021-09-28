@@ -185,7 +185,6 @@ def delete_shift(shift_id):
     return jsonify(mapped_shifts)
 
 
-
 ##Employee
 
 

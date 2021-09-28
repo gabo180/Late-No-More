@@ -73,8 +73,8 @@ class Employee(db.Model):
 
 class Shift(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
-    role_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
+    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'), nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey("employee.id"), nullable=False) ## Cambio nullable False
     starting_time = db.Column(db.DateTime(timezone=True), unique=False, nullable=False)
     ending_time = db.Column(db.DateTime(timezone=True), unique=False, nullable=False)
     clock_in = db.Column(db.DateTime(timezone=True), unique=False, nullable=True)
@@ -84,7 +84,7 @@ class Shift(db.Model):
 
     def __repr__(self):
         return '<Shift %r>' % self.profile_id
-
+        
     def serialize(self):
         return {
             "id": self.id,
@@ -93,7 +93,7 @@ class Shift(db.Model):
             "role_id": self.role_id,
             "starting_time": self.starting_time,
             "ending_time": self.ending_time,
-            "profile_id": self.profile_id,
+            "profile_id": self.profile_id
         }
 
 class Request(db.Model):
