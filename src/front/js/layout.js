@@ -43,6 +43,7 @@ import { CompanyProfile } from "./pages/account-info/companyProfile";
 import { Profile } from "./pages/account-info/profile";
 import { ProfileUpdate } from "./pages/account-info/profileUpdate";
 import { Roles } from "./pages/account-info/roles";
+import { CreateRole } from "./pages/account-info/createRole";
 
 {
 	/* settings imports */
@@ -166,6 +167,11 @@ const Layout = () => {
 						<Route exact path="/account/roles">
 							<NavbarLoggedIn />
 							<Roles />
+							<FooterLoggedIn />
+						</Route>
+						<Route exact path="/account/create-role">
+							<NavbarLoggedIn />
+							<CreateRole />
 							<FooterLoggedIn />
 						</Route>
 

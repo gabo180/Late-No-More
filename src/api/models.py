@@ -76,7 +76,7 @@ class Employee(db.Model):
 
 class Shift(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    profile_id = db.Column(db.String(100), db.ForeignKey('profile.id'))
+    profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
     role_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
     employer_id = db.Column(db.String(100), db.ForeignKey("employer.company_name"))
     starting_time = db.Column(db.String(100), unique=False, nullable=False)

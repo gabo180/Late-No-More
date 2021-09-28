@@ -102,6 +102,7 @@ export const ConfirmClockOut = () => {
 								onClick={() => {
 									actions.doClockOut(shift.id);
 									history.push("/home");
+									history.go(0);
 								}}>
 								Yes
 							</button>

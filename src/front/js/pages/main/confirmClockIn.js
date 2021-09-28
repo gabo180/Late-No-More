@@ -77,6 +77,7 @@ export const ConfirmClockIn = () => {
 								onClick={() => {
 									actions.doClockIn(shift.id);
 									history.push("/home");
+									history.go(0);
 								}}>
 								Yes
 							</button>

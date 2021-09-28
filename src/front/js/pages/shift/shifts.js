@@ -49,13 +49,14 @@ export const Shifts = () => {
 								</tr>
 							</thead>
 						</table>
-						<table className="table">
+						<table className="table container">
 							<thead>
 								<tr>
 									<th scope="col">Role</th>
-									<th scope="col">Starting time</th>
-									<th scope="col">Ending time</th>
-									<th scope="col">Hours</th>
+									<th scope="col">S/T</th>
+									<th scope="col">E/T</th>
+									<th scope="col">Hrs</th>
+									<th scope="col">Sts</th>
 									<th scope="col" />
 								</tr>
 							</thead>
@@ -68,12 +69,12 @@ export const Shifts = () => {
 											ending_time.getUTCHours() + (ending_time.getUTCMinutes() * 100) / 60;
 										const hours_starting_time =
 											starting_time.getUTCHours() + (starting_time.getUTCMinutes() * 100) / 60;
-										const hours = (hours_ending_time - hours_starting_time).toFixed(2);
+										const hours = Math.round((hours_ending_time - hours_starting_time) * 100) / 100;
 
 										if (item.clock_out !== null) return undefined;
 										else if (item.employer_id === store.profile.employer)
 											return (
-												<tr key={index}>
+												<tr scope="row" key={index}>
 													<td>
 														{store.employee.map((i, ind) => {
 															if (i.id === item.role_id) return i.role;
@@ -93,6 +94,15 @@ export const Shifts = () => {
 													</td>
 
 													<td>{hours < 0 ? hours + 24 : hours}</td>
+													{item.clock_in !== null ? (
+														<td>
+															<i className="text-success fas fa-check" />
+														</td>
+													) : (
+														<td>
+															<i className="text-gray fas fa-bed" />
+														</td>
+													)}
 													{store.profile.employer === null ? (
 														<td>
 															<Link to={"/shifts/shift-info/" + item.id}>
@@ -100,8 +110,8 @@ export const Shifts = () => {
 															</Link>
 														</td>
 													) : (
-														<td>
-															<i className="text-success far fa-edit" />
+														<td className="d-flex justify-content-around">
+															<i className="text-success far fa-edit mx-1" />
 															<i
 																className="text-danger far fa-trash-alt"
 																onClick={() =>
@@ -133,7 +143,7 @@ export const Shifts = () => {
 											);
 										else if (item.profile_id == store.profile.id)
 											return (
-												<tr key={index}>
+												<tr scope="row" key={index}>
 													<td>
 														{store.employee.map((i, ind) => {
 															if (i.id === item.role_id) return i.role;
@@ -153,6 +163,15 @@ export const Shifts = () => {
 													</td>
 
 													<td>{hours < 0 ? hours + 24 : hours}</td>
+													{item.clock_in !== null ? (
+														<td>
+															<i className="text-success fas fa-check" />
+														</td>
+													) : (
+														<td>
+															<i className="text-gray fas fa-bed" />
+														</td>
+													)}
 													{store.profile.employer === null ? (
 														<td>
 															<Link to={"/shifts/shift-info/" + item.id}>

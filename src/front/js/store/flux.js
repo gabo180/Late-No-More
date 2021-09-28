@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-azure-condor-gldw672u.ws-us18.gitpod.io/api",
+			myURL: "https://3001-salmon-orangutan-aj6rzwp9.ws-us18.gitpod.io/api",
 			messagesAuthor: [],
 			messagesRecipient: [],
 			shift: [],
@@ -86,7 +86,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(`${getStore().myURL}${endPoint}`, {
 						method: "PUT",
-						headers: { Authorization: "Bearer " + token },
+						headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" },
 						body: JSON.stringify(profileCredentials)
 					});
 					const data = await response.json();
@@ -223,11 +223,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			setIsClockIn: () => {
-				const clockIn = getStore().isClockIn;
-				setStore({ isClockIn: !clockIn });
-			},
-
 			//  EMPLOYER
 
 			loadEmployer: async () => {
@@ -292,7 +287,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(`${getStore().myURL}${endPoint}`, {
 						method: "PUT",
-						headers: { Authorization: "Bearer " + token }
+						headers: {
+							Authorization: "Bearer " + token,
+							"Content-Type": "application/json"
+						}
 					});
 					const data = await response.json();
 					if (data.ok) {
@@ -318,11 +316,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw new Error(error);
 				}
 			},
-      
-      
+
 			//  EMPLOYEE
 
-      
 			loadEmployee: async () => {
 				const endPoint = "/employee";
 				const token = localStorage.getItem("jwt-token");
@@ -371,7 +367,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.ok) {
 						// console.log(data);
 						history.push("/account/roles");
-						alert("Role created succesfully");
 						history.go(0);
 					}
 					return data;
@@ -386,7 +381,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(`${getStore().myURL}${endPoint}`, {
 						method: "PUT",
-						headers: { Authorization: "Bearer " + token }
+						headers: {
+							Authorization: "Bearer " + token,
+							"Content-Type": "application/json"
+						}
 					});
 					const data = await response.json();
 					if (data.ok) {
