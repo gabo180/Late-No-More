@@ -61,7 +61,7 @@ export const CreateEvent = () => {
 								</select>
 							</div>
 						</div>
-						{/* <div className="my-2 d-flex flex-column mr-auto">
+						<div className="my-2 d-flex flex-column mr-auto">
 							<span className="mr-auto ml-2">Select employee for the shift</span>{" "}
 							<div className="input-group mb-3 ml-4 ">
 								<select
@@ -73,19 +73,20 @@ export const CreateEvent = () => {
 											profile_id: e.target.value
 										})
 									}
-									value={fields.name}>
+									value={fields.profile_id}>
 									<option selected>Choose...</option>
-									{store.employee &&
-										store.employee.map((item, index) => {
-											return (
-												<option key={index} value={item.id}>
-													{item.role}
-												</option>
-											);
+									{store.allProfiles &&
+										store.allProfiles.map((item, index) => {
+											if (item.working_for === store.profile.employer)
+												return (
+													<option key={index} value={item.id}>
+														{item.name} {item.last_name}
+													</option>
+												);
 										})}
 								</select>
 							</div>
-						</div> */}
+						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
 							<span className="mr-auto ml-2">Select starting date and time:</span>{" "}
 							<input
