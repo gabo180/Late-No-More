@@ -3,17 +3,38 @@ import { Context } from "../../store/appContext";
 import userImage from "../../../img/userImage.jpg";
 import "../../../styles/home.scss";
 import { useHistory } from "react-router-dom";
+import moment from "moment";
 
 export const Main = () => {
 	const { store, actions } = useContext(Context);
 	const history = useHistory();
 	const [shiftDate, setShiftDate] = useState("");
+	const [hoursDone, setHoursDone] = useState("");
 	const cardPStyle = {
 		"border-bottom": "solid 5px red",
 		"padding-bottom": "25%"
 	};
-	const findShift = store.shift.find(shift => {});
 
+	const findShift = store.shift.find(shift => {
+		const clockOutFormat = moment(shift.clock_out).format("YYYY-MM-DD");
+		return clockOutFormat === shiftDate;
+	});
+
+	useEffect(
+		() => {
+			if (findShift) {
+				const starting_time = moment(findShift.clock_in);
+				console.log(starting_time);
+				const ending_time = moment(findShift.clock_out);
+				console.log(ending_time);
+				const hoursWorked = ending_time.diff(starting_time, "hours", true);
+				setHoursDone(hoursWorked);
+			}
+		},
+		[shiftDate]
+	);
+
+	console.log("HORAS", hoursDone);
 	return (
 		<>
 			<div className="fadein-animation d-flex flex-column">
@@ -32,7 +53,7 @@ export const Main = () => {
 					/>
 					<div className="card-body">
 						<div className="card-text" style={cardPStyle}>
-							<h2 className="card-title">Hours Completed</h2>
+							<h2 className="card-title">Hours Completed: {hoursDone}</h2>
 						</div>
 						<h2 className="mt-4">Total Earnings</h2>
 					</div>
