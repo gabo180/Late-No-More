@@ -39,42 +39,46 @@ export const Roles = () => {
 							<tbody>
 								{store.employee &&
 									store.employee.map((item, index) => {
-										return (
-											<tr key={index}>
-												<td>
-													<i className="text-success far fa-edit" />{" "}
-													<i
-														className="text-danger far fa-trash-alt"
-														onClick={() =>
-															swal({
-																title: "Are you sure?",
-																text:
-																	"Once deleted, you will not be able to recover this role!",
-																icon: "warning",
-																buttons: true,
-																dangerMode: true
-															}).then(willDelete => {
-																if (willDelete) {
-																	actions.deleteSingleEmployee(item.id);
-																	swal("Your role has been deleted succesfully!", {
-																		icon: "success"
-																	});
-																} else {
-																	swal("Your role file is safe!");
-																}
-															})
-														}
-													/>
-												</td>
-												<td>{item.role}</td>
-												<td>{item.hourly_rate}</td>
-											</tr>
-										);
+										if (item.employer_id === store.profile.employer)
+											return (
+												<tr key={index}>
+													<td>
+														<i className="text-success far fa-edit" />{" "}
+														<i
+															className="text-danger far fa-trash-alt"
+															onClick={() =>
+																swal({
+																	title: "Are you sure?",
+																	text:
+																		"Once deleted, you will not be able to recover this role!",
+																	icon: "warning",
+																	buttons: true,
+																	dangerMode: true
+																}).then(willDelete => {
+																	if (willDelete) {
+																		actions.deleteSingleEmployee(item.id);
+																		swal(
+																			"Your role has been deleted succesfully!",
+																			{
+																				icon: "success"
+																			}
+																		);
+																	} else {
+																		swal("Your role file is safe!");
+																	}
+																})
+															}
+														/>
+													</td>
+													<td>{item.role}</td>
+													<td>{item.hourly_rate}</td>
+												</tr>
+											);
 									})}
 							</tbody>
 						</table>
 						<div className="d-flex justify-content-around">
-							<Link to="/shifts/create-event">
+							<Link to="/account/create-role">
 								<button type="button" className="btn btn-primary mb-2 px-5 my-2">
 									{" "}
 									Create

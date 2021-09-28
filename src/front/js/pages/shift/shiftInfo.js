@@ -32,14 +32,14 @@ export const ShiftInfo = () => {
 	const ifHandleButton = () => {
 		if (shift.clock_in !== null) {
 			return (
-				<button type="button" className="btn btn-danger" onClick={handleClock}>
-					Clock Out
+				<button type="button" className="btn mx-auto text-white" onClick={handleClock}>
+					<i className="fas fa-sign-out-alt text-white btn-danger rounded-circle shadow rounded-sm px-4 py-4" />
 				</button>
 			);
 		} else {
 			return (
-				<button type="button" className="btn btn-success" onClick={handleClock}>
-					Clock In
+				<button type="button" className="btn mx-auto text-white" onClick={handleClock}>
+					<i className="fas fa-sign-in-alt text-white btn-success rounded-circle shadow rounded-sm px-4 py-4" />
 				</button>
 			);
 		}
@@ -50,7 +50,7 @@ export const ShiftInfo = () => {
 	return (
 		<>
 			<div className="fadein-animation d-flex flex-column">
-				<div className="d-flex justify-content-start mx-2">
+				<div className="d-flex justify-content-start mx-2 my-3">
 					<img className="user-img" src={userImage} />
 					<h4 className="justify-content-start my-auto">
 						<span className="pl-2">{store.profile.username}</span> <br /> <span className="pr-5">Role</span>

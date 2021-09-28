@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import userImage from "../../../img/userImage.jpg";
 import { Context } from "../../store/appContext";
@@ -6,17 +6,18 @@ import "../../../styles/home.scss";
 
 export const CompanyProfile = () => {
 	const { store, actions } = useContext(Context);
-	const [fields, setFields] = useState({
-		company_name: ""
-	});
-	const [profileUpdate, setProfileUpdate] = useState({
-		employer: ""
-	});
+	const [fields, setFields] = useState("");
+
 	const history = useHistory();
 	const handleSubmit = event => {
 		event.preventDefault();
-		actions.createEmployer(fields, history);
-		actions.updateProfile(profileUpdate);
+		actions.createEmployer({ company_name: fields }, history);
+		setTimeout(
+			() => {
+				actions.updateProfile({ employer: fields });
+			},
+			[1000]
+		);
 	};
 
 	return (
@@ -37,30 +38,12 @@ export const CompanyProfile = () => {
 			</div>
 			<form className="d-flex flex-column mr-auto" onSubmit={handleSubmit}>
 				<div className="mt-4 d-flex flex-column mr-5">
-					<span className="mr-auto ml-2">Select starting date and time:</span>{" "}
+					<span className="mr-auto ml-2">Select company name:</span>{" "}
 					<input
-						onChange={e =>
-							setFields({
-								company_name: e.target.value
-							})
-						}
-						value={fields.company_name}
+						onChange={e => setFields(e.target.value)}
+						value={fields}
 						className="ml-4 form-control"
 						type="text"
-					/>
-				</div>
-				<div className="form-group mb-2 invisible">
-					<input
-						type="text"
-						className="form-control"
-						placeholder="employer"
-						onChange={e =>
-							setProfileUpdate({
-								...profileUpdate,
-								employer: e.target.value
-							})
-						}
-						value={fields.company_name}
 					/>
 				</div>
 				<div className="justify-content-start my-auto">

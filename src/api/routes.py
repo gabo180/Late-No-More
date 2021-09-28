@@ -277,6 +277,7 @@ def create_employee():
     body = request.get_json()
     role = body["role"]
     hourly_rate = body["hourly_rate"]
+    employer_id = body["employer_id"]
 
     employee = Employee()
 
@@ -284,7 +285,8 @@ def create_employee():
         employee.role = role
     if hourly_rate:
         employee.hourly_rate = hourly_rate
-    
+    if employer_id:
+        employee.employer_id = employer_id
 
     db.session.add(employee)
     db.session.commit()
