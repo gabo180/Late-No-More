@@ -7,8 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			shift: [],
 			// TODO: rename shift to allShifts
 			profile: {},
-			employee: [],
-			isClockIn: false
+			employee: []
 		},
 
 		actions: {
@@ -161,11 +160,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					throw new Error(error);
 				}
-			},
-
-			setIsClockIn: () => {
-				const clockIn = getStore().isClockIn;
-				setStore({ isClockIn: !clockIn });
 			},
 
 			//  EMPLOYEE

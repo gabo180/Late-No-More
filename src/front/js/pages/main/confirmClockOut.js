@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
-import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import userImage from "../../../img/userImage.jpg";
 import moment from "moment";
 
@@ -12,18 +11,14 @@ export const ConfirmClockOut = () => {
 	const [shift, setShift] = useState("");
 	const history = useHistory();
 	const params = useParams();
-	// const [amountEarned, setAmountEarned] = useState(undefined);
-	// const [hours, setHours] = useState(undefined);
 
 	useEffect(() => {
 		actions.loadSingleShift(params.shift_id).then(shift => setShift(shift));
 	}, []);
 
 	const roleId = shift.role_id;
-	console.log("ESTE ES EL SHIFT", roleId);
 
 	const targetEmployee = store.employee.find(employee => employee.id == roleId);
-	console.log("Target Employee", targetEmployee);
 
 	if (!shift)
 		return (
@@ -32,19 +27,15 @@ export const ConfirmClockOut = () => {
 			</div>
 		);
 
-	console.log("ESTE ES EL SHIFT", shift);
 	const starting_time = moment(shift.clock_in);
 	const ending_time = moment();
-	console.log("ENDING TIME", ending_time);
-	console.log(ending_time.diff(starting_time, "hours", true));
 	const hours_done = ending_time.diff(starting_time, "hours", true);
+	const hours = Math.round(hours_done * 100) / 100;
 	const amount_earned = () => {
 		if (targetEmployee) {
 			return hours_done * targetEmployee.hourly_rate;
 		}
 	};
-	console.log("HOURS DONE", hours_done);
-	console.log("AMOUNT EARNED", amount_earned());
 
 	// useEffect(
 	// 	() => {
@@ -86,21 +77,29 @@ export const ConfirmClockOut = () => {
 						</div>
 					</div>
 					<div>
-						<div className="font-weight-bold">CONFIRM CLOCK OUT</div>
+						<div className="font-weight-bold mt-3">
+							<h2>CONFIRM CLOCK OUT</h2>
+						</div>
 					</div>
-					<div>
-						HOURS DONE {hours_done}
+					<div className="font-weight-bold mt-5">
+						<h4>HOURS DONE: {hours}</h4>
 						<br />
-						AMOUNT EARNED {amount_earned()}
+						<h4>AMOUNT EARNED: {parseFloat(amount_earned()).toFixed(2)}</h4>
+						<br />
+						<h3>ROLE</h3>
+						<div className="font-weight-bold text-primary">
+							<h3>{targetEmployee.role}</h3>
+						</div>
 					</div>
-					<div>END SHIFT</div>
-					<div className="d-flex justify-content-between">
+					<div className="font-weight-bold mt-5">
+						<h2>END SHIFT</h2>
+					</div>
+					<div className="d-flex justify-content-between mt-2">
 						<div>
 							<button
 								type="button"
-								className="btn btn-success"
+								className="btn btn-success ml-5"
 								onClick={() => {
-									actions.setIsClockIn();
 									actions.doClockOut(shift.id);
 									history.push("/home");
 								}}>
@@ -110,9 +109,9 @@ export const ConfirmClockOut = () => {
 						<div>
 							<button
 								type="button"
-								className="btn btn-danger"
+								className="btn btn-danger mr-5"
 								onClick={() => {
-									history.push("/home");
+									history.push("/shift");
 								}}>
 								No
 							</button>
