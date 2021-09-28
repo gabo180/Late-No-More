@@ -1,15 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import userImage from "../../../img/userImage.jpg";
-import { myVerticalModal } from "../account-info/myVerticalModal";
 import { Context } from "../../store/appContext";
+import { Link, useParams, useHistory } from "react-router-dom";
 import swal from "sweetalert";
-// import rigoImageUrl from "../../img/clock-(no-background).jpg";
 import "../../../styles/home.scss";
-import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
 
 export const Roles = () => {
 	const { store, actions } = useContext(Context);
-	const [modalShow, setModalShow] = React.useState(false);
+	const history = useHistory();
 
 	return (
 		<div className="text-center">
@@ -51,7 +49,7 @@ export const Roles = () => {
 															swal({
 																title: "Are you sure?",
 																text:
-																	"Once deleted, you will not be able to recover this imaginary file!",
+																	"Once deleted, you will not be able to recover this role!",
 																icon: "warning",
 																buttons: true,
 																dangerMode: true
@@ -66,7 +64,6 @@ export const Roles = () => {
 																}
 															})
 														}
-														//   () => actions.deleteSingleEmployee(item.id)
 													/>
 												</td>
 												<td>{item.role}</td>
@@ -77,15 +74,13 @@ export const Roles = () => {
 							</tbody>
 						</table>
 						<div className="d-flex justify-content-around">
-							<button
-								type="button"
-								onClick={() => setModalShow(true)}
-								className="btn btn-primary mb-2 px-5 my-2">
-								{" "}
-								Create
-							</button>
+							<Link to="/shifts/create-event">
+								<button type="button" className="btn btn-primary mb-2 px-5 my-2">
+									{" "}
+									Create
+								</button>
+							</Link>
 						</div>
-						<myVerticalModal show={true} onHide={() => setModalShow(false)} />
 					</div>
 				</div>
 			</div>

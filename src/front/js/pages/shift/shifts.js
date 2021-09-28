@@ -68,9 +68,10 @@ export const Shifts = () => {
 											ending_time.getUTCHours() + (ending_time.getUTCMinutes() * 100) / 60;
 										const hours_starting_time =
 											starting_time.getUTCHours() + (starting_time.getUTCMinutes() * 100) / 60;
-										const hours = hours_ending_time - hours_starting_time;
+										const hours = (hours_ending_time - hours_starting_time).toFixed(2);
 
-										if (item.profile_id == store.profile.id)
+										if (item.clock_out !== null) return undefined;
+										else if (item.employer_id === store.profile.employer)
 											return (
 												<tr key={index}>
 													<td>
@@ -103,7 +104,88 @@ export const Shifts = () => {
 															<i className="text-success far fa-edit" />
 															<i
 																className="text-danger far fa-trash-alt"
-																onClick={() => actions.deleteSingleEmployee(item.id)}
+																onClick={() =>
+																	swal({
+																		title: "Are you sure?",
+																		text:
+																			"Once deleted, you will not be able to recover this shift!",
+																		icon: "warning",
+																		buttons: true,
+																		dangerMode: true
+																	}).then(willDelete => {
+																		if (willDelete) {
+																			actions.deleteSingleShift(item.id);
+																			swal(
+																				"Your shift has been deleted succesfully!",
+																				{
+																					icon: "success"
+																				}
+																			);
+																		} else {
+																			swal("Your role file is safe!");
+																		}
+																	})
+																}
+															/>
+														</td>
+													)}
+												</tr>
+											);
+										else if (item.profile_id == store.profile.id)
+											return (
+												<tr key={index}>
+													<td>
+														{store.employee.map((i, ind) => {
+															if (i.id === item.role_id) return i.role;
+														})}
+													</td>
+													<td>
+														{starting_time.getUTCHours()}:
+														{starting_time.getUTCMinutes() < 10
+															? "0" + starting_time.getUTCMinutes()
+															: starting_time.getUTCMinutes()}
+													</td>
+													<td>
+														{ending_time.getUTCHours()}:
+														{ending_time.getUTCMinutes() < 10
+															? "0" + starting_time.getUTCMinutes()
+															: starting_time.getUTCMinutes()}
+													</td>
+
+													<td>{hours < 0 ? hours + 24 : hours}</td>
+													{store.profile.employer === null ? (
+														<td>
+															<Link to={"/shifts/shift-info/" + item.id}>
+																<i className="text-success fas fa-arrow-right" />
+															</Link>
+														</td>
+													) : (
+														<td>
+															<i className="text-success far fa-edit" />
+															<i
+																className="text-danger far fa-trash-alt"
+																onClick={() =>
+																	swal({
+																		title: "Are you sure?",
+																		text:
+																			"Once deleted, you will not be able to recover this shift!",
+																		icon: "warning",
+																		buttons: true,
+																		dangerMode: true
+																	}).then(willDelete => {
+																		if (willDelete) {
+																			actions.deleteSingleShift(item.id);
+																			swal(
+																				"Your shift has been deleted succesfully!",
+																				{
+																					icon: "success"
+																				}
+																			);
+																		} else {
+																			swal("Your role file is safe!");
+																		}
+																	})
+																}
 															/>
 														</td>
 													)}

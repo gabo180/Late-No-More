@@ -16,9 +16,7 @@ export const SignUp = () => {
 	});
 	const history = useHistory();
 	const handleSubmit = event => {
-		console.log("ejecutando...");
 		event.preventDefault();
-		console.log("ejecutado!!");
 		actions.createProfile(fields, history);
 	};
 

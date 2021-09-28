@@ -7,10 +7,11 @@ class Profile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=False, nullable=False)
     last_name = db.Column(db.String(120), unique=False, nullable=False)
-    username = db.Column(db.String(120), unique=False, nullable=False)
+    username = db.Column(db.String(120), unique=True, nullable=False)
     phone_number = db.Column(db.String(35), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+    working_for = db.Column(db.String(80), unique=False, nullable=True)
     employee = db.relationship("Employee", backref="profile", uselist=False)
     shift = db.relationship('Shift', backref="profile", lazy=True)
     employer = db.Column(db.String(100), db.ForeignKey('employer.company_name'))
@@ -22,6 +23,7 @@ class Profile(db.Model):
         return self.username
 
     def serialize(self):
+        
         return {
             "id": self.id,
             "name": self.name,
@@ -29,7 +31,8 @@ class Profile(db.Model):
             "username": self.username,
             "email": self.email,
             "phone_number": self.phone_number,
-            "employer": self.employer
+            "employer": self.employer,
+            "working_for": self.working_for
         }
 
 class Employer(db.Model):
@@ -38,6 +41,7 @@ class Employer(db.Model):
     request_employer = db.relationship("Request", back_populates="employer", lazy=True)
     employee = db.relationship("Employee", backref="working for")
     profile_id = db.relationship("Profile", backref="Company name", uselist=False)
+    shift = db.relationship('Shift', backref="company name", lazy=True)
     
 
     def __repr__(self):
@@ -46,7 +50,6 @@ class Employer(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "role": self.role,
             "company_name": self.company_name
         }
 
@@ -75,8 +78,9 @@ class Shift(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     profile_id = db.Column(db.Integer, db.ForeignKey('profile.id'))
     role_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
-    starting_time = db.Column(db.DateTime(timezone=True), unique=False, nullable=False)
-    ending_time = db.Column(db.DateTime(timezone=True), unique=False, nullable=False)
+    employer_id = db.Column(db.String(100), db.ForeignKey("employer.company_name"))
+    starting_time = db.Column(db.String(100), unique=False, nullable=False)
+    ending_time = db.Column(db.String(100), unique=False, nullable=False)
     clock_in = db.Column(db.DateTime(timezone=True), unique=False, nullable=True)
     clock_out = db.Column(db.DateTime(timezone=True), unique=False, nullable=True)
     request_shift = db.relationship("Request", back_populates="shift")
@@ -88,12 +92,13 @@ class Shift(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "clock_in": self.clock_in, 
+            "clock_in": self.clock_in,
             "clock_out": self.clock_out,
             "role_id": self.role_id,
             "starting_time": self.starting_time,
             "ending_time": self.ending_time,
             "profile_id": self.profile_id,
+            "employer_id": self.employer_id
         }
 
 class Request(db.Model):
