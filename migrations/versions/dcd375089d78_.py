@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: d502748386f9
+Revision ID: dcd375089d78
 Revises: 
-Create Date: 2021-09-28 03:32:39.789170
+Create Date: 2021-09-28 19:43:02.587765
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd502748386f9'
+revision = 'dcd375089d78'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -68,9 +68,9 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('profile_id', sa.Integer(), nullable=True),
     sa.Column('role_id', sa.Integer(), nullable=True),
-    sa.Column('employer_id', sa.String(length=100), nullable=False),
-    sa.Column('starting_time', sa.DateTime(timezone=True), nullable=False),
-    sa.Column('ending_time', sa.DateTime(timezone=True), nullable=False),
+    sa.Column('employer_id', sa.String(length=100), nullable=True),
+    sa.Column('starting_time', sa.String(length=100), nullable=False),
+    sa.Column('ending_time', sa.String(length=100), nullable=False),
     sa.Column('clock_in', sa.DateTime(timezone=True), nullable=True),
     sa.Column('clock_out', sa.DateTime(timezone=True), nullable=True),
     sa.ForeignKeyConstraint(['employer_id'], ['employer.company_name'], ),

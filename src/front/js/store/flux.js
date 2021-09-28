@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-azure-condor-gldw672u.ws-us18.gitpod.io/api",
+			myURL: "https://3001-indigo-carp-4vhokftj.ws-us18.gitpod.io/api",
 			messagesAuthor: [],
 			messagesRecipient: [],
 			shift: [],
@@ -318,11 +318,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw new Error(error);
 				}
 			},
-      
-      
+
 			//  EMPLOYEE
 
-      
 			loadEmployee: async () => {
 				const endPoint = "/employee";
 				const token = localStorage.getItem("jwt-token");
