@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Profile, Messages_author, Messages_recipient, Shift, Employee
+from api.models import db, Profile, Messages_author, Messages_recipient, Shift, Employee, Employer
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 import datetime
@@ -16,10 +16,16 @@ api = Blueprint('api', __name__)
 ##Profile
 
 
-
 @api.route('/profile', methods=['GET'])
 @jwt_required()
-def handle_profile():
+def handle_all_profiles():
+    profiles = Profile.query.all()
+    mapped_profiles=[p.serialize() for p in profiles]
+    return jsonify(mapped_profiles), 200
+
+@api.route('/profile/singleProfile', methods=['GET'])
+@jwt_required()
+def handle_single_profile():
     profile_id = get_jwt_identity()
     profile = Profile.query.get(profile_id)
     return jsonify(profile.serialize()), 200
@@ -47,7 +53,7 @@ def create_profile():
     db.session.commit()
     return jsonify(profile.serialize())
 
-@api.route('/profile/', methods=['PUT'])
+@api.route('/profile', methods=['PUT'])
 @jwt_required()
 def update_profile():
     profile_id = get_jwt_identity()
@@ -66,6 +72,8 @@ def update_profile():
         profile1.phone_number = body["phone_number"]
     if "email" in body:
         profile1.email = body["email"]
+    if "employer" in body:
+        profile1.employer = body["employer"]
     
     db.session.commit()
     return jsonify(profile1.serialize())
@@ -105,6 +113,8 @@ def post_shift():
         shift.starting_time = body["starting_time"]
     if "ending_time" in body:
         shift.ending_time = body["ending_time"]
+    if "employer_id" in body:
+        shift.employer_id = body["employer_id"]
     
     db.session.add(shift)
     db.session.commit()
@@ -185,6 +195,64 @@ def delete_shift(shift_id):
     return jsonify(mapped_shifts)
 
 
+##  EMPLOYER
+
+
+@api.route('/employer', methods=['GET'])
+@jwt_required()
+def handle_employer():
+    employer = Employer.query.all()
+    mapped_employers=[s.serialize() for s in employer]
+    return jsonify(mapped_employers), 200
+
+@api.route('/employer/<int:employer_id>', methods=['GET'])
+@jwt_required()
+def handle_single_employer(employer_id):
+    employers = Employer.query.get(employer_id)
+    employers = employers.serialize()
+    return jsonify(employers), 200
+
+@api.route('/employer', methods=['POST'])
+@jwt_required()
+def create_employer():
+    body = request.get_json()
+    company_name = body["company_name"]
+
+    employer = Employer()
+
+    if company_name:
+        employer.company_name = company_name
+    
+
+    db.session.add(employer)
+    db.session.commit()
+    return jsonify(employer.serialize())
+
+@api.route('/employer/<int:employer_id>', methods=['PUT'])
+@jwt_required()
+def update_employer(employer_id):
+    employer1 = Employer.query.get(employer_id)
+
+    if employer1 is None:
+        raise APIException('User not found', status_code=404)
+
+    if "company_name" in body:
+        employer1.company_name = body["company_name"]
+
+    db.session.commit()
+    return jsonify(employer1.serialize())
+
+@api.route('/employer/<int:employer_id>', methods=['DELETE'])
+def delete_employer(employer_id):
+    employer1 = Employer.query.get(employer_id)
+    
+    db.session.delete(employer1)
+    db.session.commit()
+
+    return jsonify(employer1.serialize())
+
+
+  
 ##Employee
 
 

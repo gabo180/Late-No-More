@@ -19,7 +19,7 @@ export const Settings = () => {
 							<span className="pl-2">{store.profile.username}</span> <br />{" "}
 							<span className="pr-5">Role</span>
 						</h4>
-						<h1 className="mx-2 my-2 font-weight-bold">Account</h1>
+						<h1 className="mx-2 my-2 font-weight-bold">Settings</h1>
 					</div>
 					<div className="position-try">
 						<ul className="text-primary mx-3">

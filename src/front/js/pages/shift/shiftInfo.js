@@ -2,9 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../../store/appContext";
 import userImage from "../../../img/userImage.jpg";
 import "../../../styles/home.scss";
-import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 
 export const ShiftInfo = () => {
 	const { store, actions } = useContext(Context);

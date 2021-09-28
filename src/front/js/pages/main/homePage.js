@@ -64,24 +64,19 @@ export const HomePage = () => {
 					</div>
 				</div>
 			</div>
-			{/* <div className="margin mx-auto d-flex justify-content-around text-white">
-				<div>
+			<div className="mx-auto d-flex flex-wrap text-white">
+				<div className="mx-auto my-2">
 					<Card style={{ width: "18rem" }} className="shade-color3 border-0 fadein-animation">
 						<Card.Body>
 							<Card.Title>
 								<i className="far fa-clock font-size-xl" />
 							</Card.Title>
-							<Card.Title>Card Title</Card.Title>
+							<Card.Title>Clock In/Out</Card.Title>
 							<Card.Text>
-								Some quick example text to build on the card title and make up the bulk of the card
-								{"'"}s content.
+								Be able to register when your employees make clock in and out from their shift and have
+								a .
 							</Card.Text>
 						</Card.Body>
-						<ListGroup className="list-group-flush">
-							<ListGroupItem className="bg-transparent">Cras justo odio</ListGroupItem>
-							<ListGroupItem className="bg-transparent">Dapibus ac facilisis in</ListGroupItem>
-							<ListGroupItem className="bg-transparent">Vestibulum at eros</ListGroupItem>
-						</ListGroup>
 						<Card.Body>
 							<Card.Link href="#" className="btn shade-button text-white">
 								Card Link
@@ -89,7 +84,7 @@ export const HomePage = () => {
 						</Card.Body>
 					</Card>
 				</div>
-				<div>
+				<div className="mx-auto my-2">
 					<Card style={{ width: "18rem" }} className="shade-color3 border-0 fadein-animation">
 						<Card.Body>
 							<Card.Title>
@@ -101,11 +96,6 @@ export const HomePage = () => {
 								{"'"}s content.
 							</Card.Text>
 						</Card.Body>
-						<ListGroup className="list-group-flush">
-							<ListGroupItem className="bg-transparent">Cras justo odio</ListGroupItem>
-							<ListGroupItem className="bg-transparent">Dapibus ac facilisis in</ListGroupItem>
-							<ListGroupItem className="bg-transparent">Vestibulum at eros</ListGroupItem>
-						</ListGroup>
 						<Card.Body>
 							<Card.Link href="#" className="btn shade-button text-white">
 								Card Link
@@ -113,7 +103,7 @@ export const HomePage = () => {
 						</Card.Body>
 					</Card>
 				</div>
-				<div>
+				<div className="mx-auto my-2">
 					<Card style={{ width: "18rem" }} className="shade-color3 border-0 fadein-animation">
 						<Card.Body>
 							<Card.Title>
@@ -125,11 +115,6 @@ export const HomePage = () => {
 								{"'"}s content.
 							</Card.Text>
 						</Card.Body>
-						<ListGroup className="list-group-flush">
-							<ListGroupItem className="bg-transparent">Cras justo odio</ListGroupItem>
-							<ListGroupItem className="bg-transparent">Dapibus ac facilisis in</ListGroupItem>
-							<ListGroupItem className="bg-transparent">Vestibulum at eros</ListGroupItem>
-						</ListGroup>
 						<Card.Body>
 							<Card.Link href="#" className="btn shade-button text-white">
 								Card Link
@@ -137,7 +122,7 @@ export const HomePage = () => {
 						</Card.Body>
 					</Card>
 				</div>
-				<div>
+				<div className="mx-auto my-2 mb-5">
 					<Card style={{ width: "18rem" }} className="shade-color3 border-0 fadein-animation">
 						<Card.Body>
 							<Card.Title>
@@ -149,11 +134,6 @@ export const HomePage = () => {
 								{"'"}s content.
 							</Card.Text>
 						</Card.Body>
-						<ListGroup className="list-group-flush">
-							<ListGroupItem className="bg-transparent">Cras justo odio</ListGroupItem>
-							<ListGroupItem className="bg-transparent">Dapibus ac facilisis in</ListGroupItem>
-							<ListGroupItem className="bg-transparent">Vestibulum at eros</ListGroupItem>
-						</ListGroup>
 						<Card.Body>
 							<Card.Link href="#" className="btn shade-button text-white">
 								Card Link
@@ -161,36 +141,7 @@ export const HomePage = () => {
 						</Card.Body>
 					</Card>
 				</div>
-			</div> */}
-			<div className="my-4 container">
-				<div>
-					<Card className="shade-color4 border-0 text-white">
-						<Card.Header>
-							<Nav variant="tabs" defaultActiveKey="#first">
-								<Nav.Item>
-									<Nav.Link href="#first">Active</Nav.Link>
-								</Nav.Item>
-								<Nav.Item>
-									<Nav.Link href="#link">Link</Nav.Link>
-								</Nav.Item>
-								<Nav.Item>
-									<Nav.Link href="#disabled">Disabled</Nav.Link>
-								</Nav.Item>
-							</Nav>
-						</Card.Header>
-						<Card.Body>
-							<Card.Title>Special title treatment</Card.Title>
-							<Card.Text>
-								With supporting text below as a natural lead-in to additional content.
-							</Card.Text>
-							<Button variant="primary" className="btn shade-button">
-								Go somewhere
-							</Button>
-						</Card.Body>
-					</Card>
-				</div>
 			</div>
-
 			<div />
 		</div>
 	);
