@@ -14,12 +14,14 @@ export const ConfirmClockOut = () => {
 	useEffect(() => {
 		actions.loadSingleShift(params.shift_id).then(shift => setShift(shift));
 	}, []);
+
 	if (!shift)
 		return (
 			<div className="spinner-border" role="status">
 				<span className="sr-only">Loading shift...</span>
 			</div>
 		);
+
 	const targetEmployee = store.employee.find(employee => employee.id == shift.role_id);
 	const starting_time = moment(shift.clock_in);
 	const ending_time = moment();
