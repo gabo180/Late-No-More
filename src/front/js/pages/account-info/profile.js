@@ -8,8 +8,6 @@ import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bo
 
 export const Profile = () => {
 	const { store, actions } = useContext(Context);
-	const params = useParams();
-
 	return (
 		<div className="text-center">
 			<div className="my-3">
@@ -17,7 +15,8 @@ export const Profile = () => {
 					<div className="d-flex justify-content-start mx-2">
 						<img className="user-img" src={userImage} />
 						<h4 className="justify-content-start my-auto">
-							<span className="pl-2">Username</span> <br /> <span className="pr-5">Role</span>
+							<span className="pl-2">{store.profile.username}</span> <br />{" "}
+							<span className="pr-5">Role</span>
 						</h4>
 						<h3 className="mx-2 my-2 font-weight-bold">
 							Update
@@ -30,7 +29,7 @@ export const Profile = () => {
 							<span className="mr-auto ml-2">Username</span>{" "}
 							<input
 								className="ml-4 form-control"
-								placeholder={store.profile[params.theid].username}
+								placeholder={store.profile.username}
 								type="text"
 								disabled
 							/>
@@ -39,7 +38,7 @@ export const Profile = () => {
 							<span className="mr-auto ml-2">First name</span>{" "}
 							<input
 								className="ml-4 form-control"
-								placeholder={store.profile[params.theid].name}
+								placeholder={store.profile.name}
 								type="text"
 								disabled
 							/>
@@ -48,7 +47,7 @@ export const Profile = () => {
 							<span className="mr-auto ml-2">Last name</span>{" "}
 							<input
 								className="ml-4 form-control"
-								placeholder={store.profile[params.theid].last_name}
+								placeholder={store.profile.last_name}
 								type="text"
 								disabled
 							/>
@@ -57,7 +56,7 @@ export const Profile = () => {
 							<span className="mr-auto ml-2">Email address</span>{" "}
 							<input
 								className="ml-4 form-control"
-								placeholder={store.profile[params.theid].email}
+								placeholder={store.profile.email}
 								type="text"
 								disabled
 							/>
@@ -70,7 +69,7 @@ export const Profile = () => {
 							<span className="mr-auto ml-2">Phone number</span>{" "}
 							<input
 								className="ml-4 form-control"
-								placeholder={store.profile[params.theid].phone_number}
+								placeholder={store.profile.phone_number}
 								type="text"
 								disabled
 							/>

@@ -2,41 +2,346 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Profile, Punch, Messages_author, Messages_recipient, Shift, Employee
+from api.models import db, Profile, Messages_author, Messages_recipient, Shift, Employee, Employer
 from api.utils import generate_sitemap, APIException
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import jwt_required
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 import datetime
+import pytz
 from api.emailSender import emailSender
 
 api = Blueprint('api', __name__)
 
+
+
 ##Profile
+
 
 @api.route('/profile', methods=['GET'])
 @jwt_required()
-def handle_profile():
+def handle_all_profiles():
     profiles = Profile.query.all()
     mapped_profiles=[p.serialize() for p in profiles]
     return jsonify(mapped_profiles), 200
 
-@api.route('/profile/<int:profile_id>', methods=['GET'])
+@api.route('/profile/singleProfile', methods=['GET'])
 @jwt_required()
-def handle_single_profile(profile_id):
-    profiles = Profile.query.get(profile_id)
-    profiles = profiles.serialize()
-    return jsonify(profiles), 200
+def handle_single_profile():
+    profile_id = get_jwt_identity()
+    profile = Profile.query.get(profile_id)
+    return jsonify(profile.serialize()), 200
 
 @api.route('/profile', methods=['POST'])
-def post_profile():
-    profile1 = Profile(name="my_super_name", last_name="my_super_last_name", username="my_super_height", email="my_super_weight", phone_number="000-000-0000")
-    db.session.add(profile1)
+def create_profile():
+    body = request.get_json()
+    profile = Profile()
+
+    if "name" in body:
+        profile.name = body["name"]
+    if "last_name" in body:
+        profile.last_name = body["last_name"]
+    if "username" in body:
+        profile.username = body["username"]
+    if "phone_number" in body:
+        profile.phone_number = body["phone_number"]
+    if "email" in body:
+        profile.email = body["email"]
+    if "password" in body:
+        profile.password = body["password"]
+    
+
+    db.session.add(profile)
+    db.session.commit()
+    return jsonify(profile.serialize())
+
+@api.route('/profile', methods=['PUT'])
+@jwt_required()
+def update_profile():
+    profile_id = get_jwt_identity()
+    profile1 = Profile.query.get(profile_id)
+    body = request.get_json()
+    if profile1 is None:
+        raise APIException('User not found', status_code=404)
+
+    if "name" in body:
+        profile1.name = body["name"]
+    if "last_name" in body:
+        profile1.last_name = body["last_name"]
+    if "username" in body:
+        profile1.username = body["username"]
+    if "phone_number" in body:
+        profile1.phone_number = body["phone_number"]
+    if "email" in body:
+        profile1.email = body["email"]
+    if "employer" in body:
+        profile1.employer = body["employer"]
+    
     db.session.commit()
     return jsonify(profile1.serialize())
 
+
+
+##Shift
+
+
+
+@api.route('/shift', methods=['GET'])
+@jwt_required()
+def handle_shift():
+    shifts = Shift.query.all()
+    mapped_shifts=[s.serialize() for s in shifts]
+    return jsonify(mapped_shifts), 200
+
+@api.route('/shift/<int:shift_id>', methods=['GET'])
+@jwt_required()
+def handle_single_shift(shift_id):
+    shifts = Shift.query.get(shift_id)
+    shifts = shifts.serialize()
+    return jsonify(shifts), 200
+
+@api.route('/shift', methods=['POST'])
+@jwt_required()
+def post_shift():
+    body = request.get_json()
+
+    shift = Shift()
+
+    if "role_id" in body:
+        shift.role_id = body["role_id"]
+    if "profile_id" in body:
+        shift.profile_id = body["profile_id"]
+    if "starting_time" in body:
+        shift.starting_time = body["starting_time"]
+    if "ending_time" in body:
+        shift.ending_time = body["ending_time"]
+    if "employer_id" in body:
+        shift.employer_id = body["employer_id"]
+    
+    db.session.add(shift)
+    db.session.commit()
+    get_all_shifts = Shift.query.all()
+    mapped_shifts=[s.serialize() for s in get_all_shifts]
+    return jsonify(mapped_shifts)
+
+@api.route('/shift/<int:shift_id>', methods=['PUT'])
+# @jwt_required()
+def put_shift(shift_id):
+    body = request.get_json()
+
+    shift = Shift.query.filter_by(id = shift_id)
+
+    if "role_id" in body:
+        shift.role_id = body["role_id"]
+    if "starting_time" in body:
+        shift.starting_time = body["starting_time"]
+    if "ending_time" in body:
+        shift.ending_time = body["ending_time"]
+    
+    db.session.commit()
+    return jsonify(shift.serialize())
+
+@api.route('/shift/<int:shift_id>/CI', methods=['PUT'])
+@jwt_required()
+def update_single_shift_clock_in(shift_id):
+    body = request.get_json()
+    shift = Shift.query.get(shift_id)
+    current_user_id = get_jwt_identity()
+    current_user_id_role = Profile.query.get(current_user_id)
+    IST = pytz.timezone('America/New_York')
+    UTC = pytz.utc
+
+    if shift is None:
+        raise APIException('Shift not found', status_code=404)
+
+    if shift.clock_in is not None:
+        return 'Clock in already done', 400
+
+    shift.clock_in = datetime.datetime.now(UTC)
+    
+    db.session.commit()
+    return jsonify(shift.serialize())
+
+@api.route('/shift/<int:shift_id>/CO', methods=['PUT'])
+@jwt_required()
+def update_single_shift_clock_out(shift_id):
+    body = request.get_json()
+    shift = Shift.query.get(shift_id)
+    current_user_id = get_jwt_identity()
+    current_user_id_role = Profile.query.get(current_user_id)
+    IST = pytz.timezone('America/New_York')
+    UTC = pytz.utc
+
+    print(datetime.datetime.now(IST))
+
+    if shift is None:
+        raise APIException('Shift not found', status_code=404)
+
+    if shift.clock_out is not None:
+        return 'Clock out already done', 400
+
+    shift.clock_out = datetime.datetime.now(UTC)
+
+    db.session.commit()
+    return jsonify(shift.serialize())
+
+@api.route('/shift/<int:shift_id>', methods=['DELETE'])
+def delete_shift(shift_id):
+    shift1 = Shift.query.get(shift_id)
+    
+    db.session.delete(shift1)
+    db.session.commit()
+
+    get_all_shifts = Shift.query.all()
+    mapped_shifts=[s.serialize() for s in get_all_shifts]
+    return jsonify(mapped_shifts)
+
+
+##  EMPLOYER
+
+
+@api.route('/employer', methods=['GET'])
+@jwt_required()
+def handle_employer():
+    employer = Employer.query.all()
+    mapped_employers=[s.serialize() for s in employer]
+    return jsonify(mapped_employers), 200
+
+@api.route('/employer/<int:employer_id>', methods=['GET'])
+@jwt_required()
+def handle_single_employer(employer_id):
+    employers = Employer.query.get(employer_id)
+    employers = employers.serialize()
+    return jsonify(employers), 200
+
+@api.route('/employer', methods=['POST'])
+@jwt_required()
+def create_employer():
+    body = request.get_json()
+    company_name = body["company_name"]
+
+    employer = Employer()
+
+    if company_name:
+        employer.company_name = company_name
+    
+
+    db.session.add(employer)
+    db.session.commit()
+    return jsonify(employer.serialize())
+
+@api.route('/employer/<int:employer_id>', methods=['PUT'])
+@jwt_required()
+def update_employer(employer_id):
+    employer1 = Employer.query.get(employer_id)
+
+    if employer1 is None:
+        raise APIException('User not found', status_code=404)
+
+    if "company_name" in body:
+        employer1.company_name = body["company_name"]
+
+    db.session.commit()
+    return jsonify(employer1.serialize())
+
+@api.route('/employer/<int:employer_id>', methods=['DELETE'])
+def delete_employer(employer_id):
+    employer1 = Employer.query.get(employer_id)
+    
+    db.session.delete(employer1)
+    db.session.commit()
+
+    return jsonify(employer1.serialize())
+
+
+  
+##Employee
+
+
+
+@api.route('/employee', methods=['GET'])
+@jwt_required()
+def handle_employee():
+    employees = Employee.query.all()
+    mapped_employees=[p.serialize() for p in employees]
+    return jsonify(mapped_employees), 200
+
+@api.route('/employee/<int:employee_id>', methods=['GET'])
+@jwt_required()
+def handle_single_employee(employee_id):
+    employees = Employee.query.get(employee_id)
+    employees = employees.serialize()
+    return jsonify(employees), 200
+
+@api.route('/employee', methods=['POST'])
+@jwt_required()
+def create_employee():
+    body = request.get_json()
+    role = body["role"]
+    hourly_rate = body["hourly_rate"]
+    employer_id = body["employer_id"]
+
+    employee = Employee()
+
+    if role:
+        employee.role = role
+    if hourly_rate:
+        employee.hourly_rate = hourly_rate
+    if employer_id:
+        employee.employer_id = employer_id
+
+    db.session.add(employee)
+    db.session.commit()
+    return jsonify(employee.serialize())
+
+@api.route('/employee/<int:employee_id>', methods=['PUT'])
+def update_employee(employee_id):
+    employee1 = Employee.query.get(employee_id)
+    if employee1 is None:
+        raise APIException('User not found', status_code=404)
+
+    if "role" in body:
+        employee1.username = body["role"]
+
+    if "hourly_rate" in body:
+        employee1.hourly_rate = body["hourly_rate"]
+
+    db.session.commit()
+    return jsonify(employee1.serialize())
+
+@api.route('/employee/<int:employee_id>', methods=['DELETE'])
+def delete_employee(employee_id):
+    employee1 = Employee.query.get(employee_id)
+    
+    db.session.delete(employee1)
+    db.session.commit()
+
+    get_all_employees = Employee.query.all()
+    mapped_employees=[e.serialize() for e in get_all_employees]
+    return jsonify(mapped_employees)
+
+
+
+##Login
+
+
+
+@api.route("/login", methods=["POST"])
+def create_token():
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+    user = Profile.query.filter_by(username=username, password=password).first()
+    if user is None:
+        return jsonify({"msg": "Bad username or password"}), 401
+    
+
+    emailSender(user.email)
+    access_token = create_access_token(identity=user.id)
+    return jsonify({ "token": access_token, "user_id": user.id })
+
+
+
 ##Messages author
+
+
 
 @api.route('/messages-author', methods=['GET'])
 @jwt_required()
@@ -67,126 +372,3 @@ def handle_single_message_recipient(messages_id):
     messages = Messages_recipient.query.get(messages_id)
     messages = messages.serialize()
     return jsonify(messages), 200
-
-##Shift
-
-@api.route('/shift', methods=['GET'])
-@jwt_required()
-def handle_shift():
-    shifts = Shift.query.all()
-    mapped_shifts=[s.serialize() for s in shifts]
-    return jsonify(mapped_shifts), 200
-
-@api.route('/shift/<int:shift_id>', methods=['GET'])
-@jwt_required()
-def handle_single_shift(shift_id):
-    shifts = Shift.query.get(shift_id)
-    shifts = shifts.serialize()
-    return jsonify(shifts), 200
-
-
-
-##Punch
-
-@api.route('/punch', methods=['GET'])
-@jwt_required()
-def handle_punch():
-    punches = Punch.query.all()
-    mapped_punches=[s.serialize() for s in punches]
-    return jsonify(mapped_punches), 200
-
-@api.route('/punch/<int:punch_id>', methods=['GET'])
-@jwt_required()
-def handle_single_punch(punch_id):
-    punches = Punch.query.get(punch_id)
-    punches = punches.serialize()
-    return jsonify(punches), 200
-
-# @api.route('/shift/<int:shift_id>', methods=['PUT'])
-# @jwt_required()
-# def update_shift(shift_id):
-#     request_data = request.data
-#     body = json.loads(request_data)
-#     shift1 = Shift.query.get(shift_id)
-#     if shift1 is None:
-#         raise APIException('Shift not found', status_code=404)
-#     if "username" in body:
-#         user1.username = body["username"]
-#     if "email" in body:
-#         user1.email = body["email"]
-#     db.session.commit()
-
-@api.route('/punch/<int:shift_id>', methods=['POST'])
-# @jwt_required()
-def post_punch(shift_id):
-    body = request.get_json()
-    punch1 = Punch(
-        time_stamp=datetime.datetime.now(),
-        shift_id = shift_id
-        )
-    db.session.add(punch1)
-    db.session.commit()
-    return jsonify(punch1.serialize())
-
-##Employee
-
-@api.route('/employee', methods=['GET'])
-@jwt_required()
-def handle_employee():
-    employees = Employee.query.all()
-    mapped_employees=[p.serialize() for p in employees]
-    return jsonify(mapped_employees), 200
-
-@api.route('/employee/<int:employee_id>', methods=['GET'])
-@jwt_required()
-def handle_single_employee(employee_id):
-    employees = Employee.query.get(employee_id)
-    employees = employees.serialize()
-    return jsonify(employees), 200
-
-@api.route('/employee', methods=['PUT'])
-def update_employee(employee_id):
-    employee1 = Employee.query.get(employee_id)
-    if employee1 is None:
-        raise APIException('User not found', status_code=404)
-
-    if "role" in body:
-        employee1.username = body["role"]
-    db.session.commit()
-    return jsonify(employee1.serialize())
-
-##Login
-
-@api.route("/login", methods=["POST"])
-def create_token():
-    username = request.json.get("username", None)
-    password = request.json.get("password", None)
-    # Query your database for username and password
-    user = Profile.query.filter_by(username=username, password=password).first()
-    if user is None:
-        # the user was not found on the database
-        return jsonify({"msg": "Bad username or password"}), 401
-    
-    # create a new token with the user id inside
-    emailSender(user.email)
-    access_token = create_access_token(identity=user.id)
-    return jsonify({ "token": access_token, "user_id": user.id })
-
-
-##POST Shift
-
-# @api.route('/shift', methods=['POST'])
-# def post_shift():
-#     body = request.get_json()
-#     shift = Shift(
-#         hours=body["hours"], 
-#         role=body["role"],
-#         starting_time=datetime.datetime.now(),
-#         ending_time=datetime.datetime.now()
-#         )
-#     db.session.add(shift)
-#     db.session.commit()
-#     return jsonify(shift.serialize())
-
-
- 

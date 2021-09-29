@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import userImage from "../../../img/userImage.jpg";
-import { Link } from "react-router-dom";
 import { Context } from "../../store/appContext";
-// import rigoImageUrl from "../../img/clock-(no-background).jpg";
+import { Link, useParams, useHistory } from "react-router-dom";
+import swal from "sweetalert";
 import "../../../styles/home.scss";
-import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
 
 export const Roles = () => {
 	const { store, actions } = useContext(Context);
+	const history = useHistory();
 
 	return (
 		<div className="text-center">
@@ -16,7 +16,10 @@ export const Roles = () => {
 					<div className="d-flex justify-content-start mx-2">
 						<img className="user-img" src={userImage} />
 						<h4 className="justify-content-start my-auto">
-							<span className="pl-2">Username</span> <br /> <span className="pr-5">Role</span>
+							<span className="pl-2">{store.profile.username}</span> <br />{" "}
+							<span className="mr-5">
+								{store.profile.employer === null ? "Employee" : store.profile.employer}
+							</span>
 						</h4>
 						<h2 className="ml-4 my-2 font-weight-bold">
 							Manage
@@ -34,23 +37,50 @@ export const Roles = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{store.employee.map((item, index) => {
-									return (
-										<tr key={index}>
-											<td>
-												<i className="text-success far fa-edit" />{" "}
-												<i className="text-danger far fa-trash-alt" />
-											</td>
-											<td>{item.role}</td>
-											<td>{item.hourly_rate}</td>
-										</tr>
-									);
-								})}
+								{store.employee &&
+									store.employee.map((item, index) => {
+										if (item.employer_id === store.profile.employer)
+											return (
+												<tr key={index}>
+													<td>
+														<i className="text-success far fa-edit" />{" "}
+														<i
+															className="text-danger far fa-trash-alt"
+															onClick={() =>
+																swal({
+																	title: "Are you sure?",
+																	text:
+																		"Once deleted, you will not be able to recover this role!",
+																	icon: "warning",
+																	buttons: true,
+																	dangerMode: true
+																}).then(willDelete => {
+																	if (willDelete) {
+																		actions.deleteSingleEmployee(item.id);
+																		swal(
+																			"Your role has been deleted succesfully!",
+																			{
+																				icon: "success"
+																			}
+																		);
+																	} else {
+																		swal("Your role file is safe!");
+																	}
+																})
+															}
+														/>
+													</td>
+													<td>{item.role}</td>
+													<td>{item.hourly_rate}</td>
+												</tr>
+											);
+									})}
 							</tbody>
 						</table>
 						<div className="d-flex justify-content-around">
-							<Link to="/account/profile/update">
-								<button type="submit" className="btn btn-primary mb-2 px-5 my-2" value="Log in">
+							<Link to="/account/create-role">
+								<button type="button" className="btn btn-primary mb-2 px-5 my-2">
+									{" "}
 									Create
 								</button>
 							</Link>
