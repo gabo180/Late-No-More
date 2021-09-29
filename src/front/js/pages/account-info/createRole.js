@@ -12,7 +12,6 @@ export const CreateRole = () => {
 		hourly_rate: "",
 		employer_id: store.profile.employer
 	});
-	console.log(fields);
 	const history = useHistory();
 	const handleSubmit = event => {
 		event.preventDefault();

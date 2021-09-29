@@ -47,6 +47,8 @@ def create_profile():
         profile.email = body["email"]
     if "password" in body:
         profile.password = body["password"]
+    if "working_for" in body:
+        profile.working_for = body["working_for"]
     
 
     db.session.add(profile)
@@ -74,6 +76,8 @@ def update_profile():
         profile1.email = body["email"]
     if "employer" in body:
         profile1.employer = body["employer"]
+    if "working_for" in body:
+        profile.working_for = body["working_for"]
     
     db.session.commit()
     return jsonify(profile1.serialize())
@@ -199,7 +203,6 @@ def delete_shift(shift_id):
 
 
 @api.route('/employer', methods=['GET'])
-@jwt_required()
 def handle_employer():
     employer = Employer.query.all()
     mapped_employers=[s.serialize() for s in employer]

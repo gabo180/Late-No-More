@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-salmon-orangutan-aj6rzwp9.ws-us18.gitpod.io/api",
+			myURL: "https://3001-apricot-manatee-i2ceo4yy.ws-us18.gitpod.io/api",
 			messagesAuthor: [],
 			messagesRecipient: [],
 			shift: [],
@@ -17,6 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().loadAllProfile();
 				getActions().loadProfile();
 				getActions().loadShift();
+				getActions().loadEmployer();
 				getActions().loadEmployee();
 				getActions().loadMessageAuthor();
 				getActions().loadMessageRecipient();

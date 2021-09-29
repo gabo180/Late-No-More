@@ -12,9 +12,11 @@ export const SignUp = () => {
 		username: "",
 		phone_number: "",
 		email: "",
-		password: ""
+		password: "",
+		working_for: null
 	});
 	const history = useHistory();
+	console.log(fields);
 	const handleSubmit = event => {
 		event.preventDefault();
 		actions.createProfile(fields, history);
@@ -111,6 +113,29 @@ export const SignUp = () => {
 						}
 						value={fields.password}
 					/>
+				</div>
+				<span className="mr-auto ml-2">Select the company to work for:</span>{" "}
+				<div className="input-group mb-3 ml-4 ">
+					<select
+						className="custom-select"
+						id="inputGroupSelect01"
+						onChange={e =>
+							setFields({
+								...fields,
+								working_for: e.target.value
+							})
+						}
+						value={fields.working_for}>
+						<option selected>Choose...</option>
+						{store.employer &&
+							store.employer.map((item, index) => {
+								return (
+									<option key={index} value={item.company_name}>
+										{item.company_name}
+									</option>
+								);
+							})}
+					</select>
 				</div>
 				<Link to="/">
 					<button type="button" className="btn btn-danger my-4 mx-2" value="Sign up">
