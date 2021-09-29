@@ -15,18 +15,29 @@ export const Main = () => {
 		"padding-bottom": "25%"
 	};
 
-	const findShift = store.shift.find(shift => {
+	const allHourlyRates = [];
+	const allEmployees = store.employee.filter(employee => {
+		return employee;
+	});
+	console.log(allEmployees);
+
+	// const findShift = () => {
+	// 	store.shift.filter(shift => {
+	// 		const clockOutFormat = moment(shift.clock_out).format("YYYY-MM-DD");
+	// 		return clockOutFormat === shiftDate;
+	// 	});
+	// };
+	const findShift = store.shift.filter(shift => {
 		const clockOutFormat = moment(shift.clock_out).format("YYYY-MM-DD");
 		return clockOutFormat === shiftDate;
 	});
+	console.log("SHIFT", findShift);
 
 	useEffect(
 		() => {
 			if (findShift) {
 				const starting_time = moment(findShift.clock_in);
-				console.log(starting_time);
 				const ending_time = moment(findShift.clock_out);
-				console.log(ending_time);
 				const hoursWorked = ending_time.diff(starting_time, "hours", true);
 				setHoursDone(hoursWorked);
 			}
@@ -34,7 +45,41 @@ export const Main = () => {
 		[shiftDate]
 	);
 
-	console.log("HORAS", hoursDone);
+	// if (findShift) {
+	// 	const findRoleId = store.employee.filter(employee => {
+	// 		employee.id == findShift.role_id;
+	// 	});
+	// 	console.log("ROLE ID", findRoleId);
+	// }
+
+	let sTime;
+	let eTime;
+	let allHours;
+	const hoursArray = [];
+
+	findShift.map(anObjectMapped => {
+		(sTime = moment(anObjectMapped.clock_in)),
+			(eTime = moment(anObjectMapped.clock_out)),
+			(allHours = eTime.diff(sTime, "hours", true));
+		hoursArray.push(allHours);
+		return <p key={`${anObjectMapped.clock_in} ${anObjectMapped.clock_out}`}>{allHours}</p>;
+	});
+
+	// if (findRoleId) {
+	// 	console.log("ALL ROLES", findRoleId);
+	// }
+
+	console.log("Hours Array", hoursArray);
+	const hoursArrayToNumber = hoursArray.map(i => Number(i));
+	console.log("Hours Array Numbers", hoursArrayToNumber);
+
+	let sum = 0;
+
+	for (let i = 0; i < hoursArrayToNumber.length; i++) {
+		sum += hoursArrayToNumber[i];
+	}
+	console.log("SUMA TODAS LAS HORAS", sum);
+
 	return (
 		<>
 			<div className="fadein-animation d-flex flex-column">
@@ -53,9 +98,11 @@ export const Main = () => {
 					/>
 					<div className="card-body">
 						<div className="card-text" style={cardPStyle}>
-							<h2 className="card-title">Hours Completed: {hoursDone}</h2>
+							<h2 className="card-title">
+								Hours Completed: <h3 className="text-success mt-2">{sum.toFixed(2)}</h3>
+							</h2>
 						</div>
-						<h2 className="mt-4">Total Earnings</h2>
+						<h2 className="mt-4">Total Earnings: </h2>
 					</div>
 				</div>
 			</div>

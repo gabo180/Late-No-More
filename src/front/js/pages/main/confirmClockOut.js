@@ -8,17 +8,13 @@ import moment from "moment";
 
 export const ConfirmClockOut = () => {
 	const { store, actions } = useContext(Context);
-	const [shift, setShift] = useState("");
+	const [shift, setShift] = useState(undefined);
 	const history = useHistory();
 	const params = useParams();
 
 	useEffect(() => {
 		actions.loadSingleShift(params.shift_id).then(shift => setShift(shift));
 	}, []);
-
-	const roleId = shift.role_id;
-
-	const targetEmployee = store.employee.find(employee => employee.id == roleId);
 
 	if (!shift)
 		return (
@@ -27,41 +23,15 @@ export const ConfirmClockOut = () => {
 			</div>
 		);
 
+	const targetEmployee = store.employee.find(employee => employee.id == shift.role_id);
 	const starting_time = moment(shift.clock_in);
 	const ending_time = moment();
 	const hours_done = ending_time.diff(starting_time, "hours", true);
-	console.log(clockInNewFormat);
-	console.log(typeof hours_done);
-	// const hours = Math.round(hours_done * 100) / 100;
 	const amount_earned = () => {
 		if (targetEmployee) {
 			return hours_done * targetEmployee.hourly_rate;
 		}
 	};
-
-	// useEffect(
-	// 	() => {
-	// 		if (shift && shift.clock_out) {
-	// 			const roleId = shift.role_id;
-	// 			console.log("ROLE ID", roleId);
-	// 			const targetEmployee = store.employee.find(employee => employee.id == roleId);
-	// 			console.log("TARGET EMPLOYEE", targetEmployee);
-	// 			const starting_time = moment(shift.clock_in);
-	// 			const ending_time = moment(shift.clock_out);
-	// 			console.log("HOURS DONE", ending_time.diff(starting_time, "hours", true));
-	// 			const hours_done = ending_time.diff(starting_time, "hours", true); //******** THIS ONE WORKS TO KNOW THE EXPECTED HOURS *******
-	// 			setHours(hours_done);
-	// 			if (targetEmployee) {
-	// 				setAmountEarned(amount_earned(hours_done, targetEmployee.hourly_rate));
-	// 			}
-	// 		}
-	// 	},
-	// 	[shift]
-	// );
-
-	// const amount_earned = (hours, hourly_rate) => {
-	// 	return hours * hourly_rate;
-	// };
 
 	return (
 		<div className="text-center">
@@ -90,7 +60,7 @@ export const ConfirmClockOut = () => {
 						<br />
 						<h3>ROLE</h3>
 						<div className="font-weight-bold text-primary">
-							<h3>{targetEmployee.role}</h3>
+							<h3>{targetEmployee && targetEmployee.role}</h3>
 						</div>
 					</div>
 					<div className="font-weight-bold mt-5">
@@ -103,8 +73,13 @@ export const ConfirmClockOut = () => {
 								className="btn btn-success ml-5"
 								onClick={() => {
 									actions.doClockOut(shift.id);
-									history.push("/home");
-									history.go(0);
+									setTimeout(
+										() => {
+											history.push("/home");
+											history.go(0);
+										},
+										[200]
+									);
 								}}>
 								Yes
 							</button>
@@ -114,7 +89,7 @@ export const ConfirmClockOut = () => {
 								type="button"
 								className="btn btn-danger mr-5"
 								onClick={() => {
-									history.push("/shift");
+									history.push("/shifts");
 								}}>
 								No
 							</button>

@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-salmon-orangutan-aj6rzwp9.ws-us18.gitpod.io/api",
+			myURL: "https://3001-amaranth-owl-ez193lku.ws-us18.gitpod.io/api",
 			messagesAuthor: [],
 			messagesRecipient: [],
 			shift: [],
@@ -199,7 +199,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					const data = await response.json();
 					if (data.ok) {
-						// console.log(data);
+						console.log(data);
 						setStore({ shift: data });
 					}
 					return data;
@@ -216,7 +216,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { Authorization: "Bearer " + token }
 					});
 					const data = await response.json();
-					// console.log(data);
+					console.log(data);
 					setStore({ shift: data });
 				} catch (error) {
 					throw new Error(error);

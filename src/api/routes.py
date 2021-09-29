@@ -142,7 +142,7 @@ def put_shift(shift_id):
 @api.route('/shift/<int:shift_id>/CI', methods=['PUT'])
 @jwt_required()
 def update_single_shift_clock_in(shift_id):
-    body = request.get_json()
+    # body = request.get_json()
     shift = Shift.query.get(shift_id)
     current_user_id = get_jwt_identity()
     current_user_id_role = Profile.query.get(current_user_id)
