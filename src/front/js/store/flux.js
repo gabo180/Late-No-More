@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-salmon-orangutan-aj6rzwp9.ws-us18.gitpod.io/api",
+			myURL: "https://3001-apricot-manatee-i2ceo4yy.ws-us18.gitpod.io/api",
 			messagesAuthor: [],
 			messagesRecipient: [],
 			shift: [],
@@ -17,6 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().loadAllProfile();
 				getActions().loadProfile();
 				getActions().loadShift();
+				getActions().loadEmployer();
 				getActions().loadEmployee();
 				getActions().loadMessageAuthor();
 				getActions().loadMessageRecipient();
@@ -34,7 +35,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { Authorization: "Bearer " + token }
 					});
 					const data = await response.json();
-					console.log(data);
 					setStore({ allProfiles: data });
 				} catch (error) {
 					throw new Error(error);
@@ -50,7 +50,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { Authorization: "Bearer " + token }
 					});
 					const data = await response.json();
-					// console.log(data);
 					setStore({ profile: data });
 				} catch (error) {
 					throw new Error(error);
@@ -70,9 +69,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(profileCredentials)
 					});
 					const data = await response.json();
-					console.log(response);
 					if (response.ok) {
-						// console.log(data);
 						history.push("/");
 					}
 				} catch (error) {
@@ -91,8 +88,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					const data = await response.json();
 					if (data.ok) {
-						// console.log(data);
 						setStore({ profile: data });
+					}
+				} catch (error) {
+					throw new Error(error);
+				}
+			},
+
+			updateEmployeeProfile: async (profile_id, profileCredentials, history) => {
+				const endPoint = "/profile/" + profile_id;
+				const token = localStorage.getItem("jwt-token");
+				try {
+					const response = await fetch(`${getStore().myURL}${endPoint}`, {
+						method: "PUT",
+						headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" },
+						body: JSON.stringify(profileCredentials)
+					});
+					const data = await response.json();
+					if (data.ok) {
+						setStore({ allProfiles: data });
+						history.push("/account");
+						history.go(0);
 					}
 				} catch (error) {
 					throw new Error(error);
@@ -110,7 +126,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { Authorization: "Bearer " + token }
 					});
 					const data = await response.json();
-					// console.log(data);
 					setStore({ shift: data });
 					return data;
 				} catch (error) {
@@ -146,9 +161,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(shiftCredentials)
 					});
 					const data = await response.json();
-					console.log(response);
 					if (response.ok) {
-						console.log(data);
 						history.push("/shifts");
 						history.go(0);
 					}
@@ -170,7 +183,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					const data = await response.json();
 					if (data.ok) {
-						// console.log(data);
 						setStore({ shift: data });
 					}
 				} catch (error) {
@@ -202,7 +214,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					const data = await response.json();
 					if (data.ok) {
-						// console.log(data);
 						setStore({ shift: data });
 					}
 					return data;
@@ -219,7 +230,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { Authorization: "Bearer " + token }
 					});
 					const data = await response.json();
-					console.log(data);
 					setStore({ shift: data });
 				} catch (error) {
 					throw new Error(error);
@@ -242,7 +252,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { Authorization: "Bearer " + token }
 					});
 					const data = await response.json();
-					// console.log(data);
 					setStore({ employer: data });
 				} catch (error) {
 					throw new Error(error);
@@ -277,9 +286,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(employerCredentials)
 					});
 					const data = await response.json();
-					console.log(response);
 					if (response.ok) {
-						// console.log(data);
 						setTimeout(
 							() => {
 								history.push("/account");
@@ -307,7 +314,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					const data = await response.json();
 					if (data.ok) {
-						// console.log(data);
 						setStore({ employer: data });
 					}
 				} catch (error) {
@@ -315,7 +321,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			deleteSingleEmployer: async employer_id => {
+			deleteSingleEmployer: async (employer_id, history) => {
 				const endPoint = "/employer/" + employer_id;
 				const token = localStorage.getItem("jwt-token");
 				try {
@@ -325,6 +331,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					const data = await response.json();
 					setStore({ employer: data });
+					setTimeout(
+						() => {
+							history.go(0);
+						},
+						[200]
+					);
 				} catch (error) {
 					throw new Error(error);
 				}
@@ -341,7 +353,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { Authorization: "Bearer " + token }
 					});
 					const data = await response.json();
-					// console.log(data);
 					setStore({ employee: data });
 				} catch (error) {
 					throw new Error(error);
@@ -376,9 +387,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(employeeCredentials)
 					});
 					const data = await response.json();
-					console.log(response);
 					if (response.ok) {
-						// console.log(data);
 						history.push("/account/roles");
 						history.go(0);
 					}
@@ -401,7 +410,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					const data = await response.json();
 					if (data.ok) {
-						// console.log(data);
 						setStore({ employee: data });
 					}
 				} catch (error) {
@@ -435,7 +443,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { Authorization: "Bearer " + token }
 					});
 					const data = await response.json();
-					// console.log(data);
 					setStore({ messagesAuthor: data });
 				} catch (error) {
 					throw new Error(error);
@@ -451,7 +458,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { Authorization: "Bearer " + token }
 					});
 					const data = await response.json();
-					// console.log(data);
 					setStore({ messagesRecipient: data });
 				} catch (error) {
 					throw new Error(error);

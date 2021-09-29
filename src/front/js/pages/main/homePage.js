@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Context } from "../../store/appContext";
-// import rigoImageUrl from "../../img/clock-(no-background).jpg";
 import "../../../styles/home.scss";
-import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 export const HomePage = () => {
-	const { store, actions } = useContext(Context);
+	const { actions } = useContext(Context);
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const history = useHistory();

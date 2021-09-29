@@ -8,31 +8,22 @@ import moment from "moment";
 
 export const ConfirmClockOut = () => {
 	const { store, actions } = useContext(Context);
-	const [shift, setShift] = useState("");
+	const [shift, setShift] = useState(undefined);
 	const history = useHistory();
 	const params = useParams();
-
 	useEffect(() => {
 		actions.loadSingleShift(params.shift_id).then(shift => setShift(shift));
 	}, []);
-
-	const roleId = shift.role_id;
-
-	const targetEmployee = store.employee.find(employee => employee.id == roleId);
-
 	if (!shift)
 		return (
 			<div className="spinner-border" role="status">
 				<span className="sr-only">Loading shift...</span>
 			</div>
 		);
-
+	const targetEmployee = store.employee.find(employee => employee.id == shift.role_id);
 	const starting_time = moment(shift.clock_in);
 	const ending_time = moment();
 	const hours_done = ending_time.diff(starting_time, "hours", true);
-	console.log(clockInNewFormat);
-	console.log(typeof hours_done);
-	// const hours = Math.round(hours_done * 100) / 100;
 	const amount_earned = () => {
 		if (targetEmployee) {
 			return hours_done * targetEmployee.hourly_rate;
@@ -71,13 +62,13 @@ export const ConfirmClockOut = () => {
 							</div>
 						</div>
 						<div className="font-weight-bold mt-5">
-							<h4>HOURS DONE: {hours}</h4>
+							<h4>HOURS DONE: {parseFloat(hours_done).toFixed(2)}</h4>
 							<br />
 							<h4>AMOUNT EARNED: {parseFloat(amount_earned()).toFixed(2)}</h4>
 							<br />
 							<h3>ROLE</h3>
 							<div className="font-weight-bold text-primary">
-								<h3>{targetEmployee.role}</h3>
+								<h3>{targetEmployee && targetEmployee.role}</h3>
 							</div>
 						</div>
 						<div className="d-flex justify-content-between mt-5">
