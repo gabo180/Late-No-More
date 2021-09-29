@@ -142,7 +142,7 @@ def post_shift():
 def put_shift(shift_id):
     body = request.get_json()
 
-    shift = Shift.query.filter_by(id = shift_id)
+    shift = Shift.query.get(shift_id)
 
     if "role_id" in body:
         shift.role_id = body["role_id"]

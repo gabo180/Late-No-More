@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-apricot-manatee-i2ceo4yy.ws-us18.gitpod.io/api",
+			myURL: "https://3001-white-meadowlark-3gtmxpkt.ws-us18.gitpod.io/api",
 			messagesAuthor: [],
 			messagesRecipient: [],
 			shift: [],
@@ -170,7 +170,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			updateShift: async shift_id => {
+			updateShift: async (shiftCredentials, shift_id) => {
 				const endPoint = "/shift/" + shift_id;
 				const token = localStorage.getItem("jwt-token");
 				try {
@@ -179,7 +179,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							Authorization: "Bearer " + token,
 							"Content-Type": "application/json"
-						}
+						},
+						body: JSON.stringify(shiftCredentials)
 					});
 					const data = await response.json();
 					if (data.ok) {

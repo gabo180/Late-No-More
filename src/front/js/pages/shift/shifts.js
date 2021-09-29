@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import userImage from "../../../img/userImage.jpg";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import moment from "moment";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
 
 export const Shifts = () => {
 	const { store, actions } = useContext(Context);
+	const history = useHistory();
 
 	return (
 		<div className="text-center pb-5">
@@ -45,14 +46,14 @@ export const Shifts = () => {
 								</tr>
 							</thead>
 						</table>
-						<table className="table container table-striped">
+						<table className="table table-striped">
 							<thead>
 								<tr>
 									<th scope="col">Role</th>
 									<th scope="col">S/T</th>
 									<th scope="col">E/T</th>
 									<th scope="col">Hrs</th>
-									<th scope="col">Stts</th>
+									<th scope="col">Sts</th>
 									<th scope="col" />
 								</tr>
 							</thead>
@@ -72,7 +73,7 @@ export const Shifts = () => {
 											return (
 												<tr scope="row" key={index}>
 													<td>
-														{store.employee.map((i, ind) => {
+														{store.employee.map(i => {
 															if (i.id === item.role_id) return i.role;
 														})}
 													</td>
@@ -112,7 +113,12 @@ export const Shifts = () => {
 														</td>
 													) : (
 														<td className="d-flex justify-content-around">
-															<i className="text-success far fa-edit mx-1" />
+															<i
+																onClick={() => {
+																	history.push("/shifts/edit-shift/" + item.id);
+																}}
+																className="text-success far fa-edit mx-1"
+															/>
 															<i
 																className="text-danger far fa-trash-alt"
 																onClick={() =>
