@@ -30,7 +30,9 @@ export const ConfirmClockOut = () => {
 	const starting_time = moment(shift.clock_in);
 	const ending_time = moment();
 	const hours_done = ending_time.diff(starting_time, "hours", true);
-	const hours = Math.round(hours_done * 100) / 100;
+	console.log(clockInNewFormat);
+	console.log(typeof hours_done);
+	// const hours = Math.round(hours_done * 100) / 100;
 	const amount_earned = () => {
 		if (targetEmployee) {
 			return hours_done * targetEmployee.hourly_rate;
