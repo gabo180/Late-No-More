@@ -89,13 +89,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json();
 					if (data.ok) {
 						setStore({ profile: data });
-						setTimeout(
-							() => {
-								history.push("/account");
-								history.go(0);
-							},
-							[200]
-						);
 					}
 				} catch (error) {
 					throw new Error(error);
@@ -114,13 +107,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const data = await response.json();
 					if (data.ok) {
 						setStore({ allProfiles: data });
-						setTimeout(
-							() => {
-								history.push("/account");
-								history.go(0);
-							},
-							[200]
-						);
+						history.push("/account");
+						history.go(0);
 					}
 				} catch (error) {
 					throw new Error(error);

@@ -140,7 +140,19 @@ export const ProfileUpdate = () => {
 							})}
 					</select>
 				</div>
-				<button type="submit" className="btn btn-primary mb-2 px-5 my-2" value="edit">
+				<button
+					onClick={() => {
+						setTimeout(
+							() => {
+								history.push("/account");
+								history.go(0);
+							},
+							[200]
+						);
+					}}
+					type="submit"
+					className="btn btn-primary mb-2 px-5 my-2"
+					value="edit">
 					Submit
 				</button>
 			</form>

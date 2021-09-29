@@ -120,13 +120,12 @@ export const CompanyProfile = () => {
 																			{ working_for: null },
 																			history
 																		);
-																		swal(
-																			`${item.name +
-																				" " +
-																				item.last_name} has been deleted succesfully!`,
-																			{
-																				icon: "success"
-																			}
+																		setTimeout(
+																			() => {
+																				history.push("/account");
+																				history.go(0);
+																			},
+																			[200]
 																		);
 																	} else {
 																		swal(
