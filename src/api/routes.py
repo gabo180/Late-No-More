@@ -1,6 +1,3 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, Profile, Messages_author, Messages_recipient, Shift, Employee, Employer
 from api.utils import generate_sitemap, APIException
@@ -77,10 +74,24 @@ def update_profile():
     if "employer" in body:
         profile1.employer = body["employer"]
     if "working_for" in body:
-        profile.working_for = body["working_for"]
+        profile1.working_for = body["working_for"]
     
     db.session.commit()
     return jsonify(profile1.serialize())
+
+@api.route('/profile/<int:profile_id>', methods=['PUT'])
+@jwt_required()
+def update_employee_profile(profile_id):
+    employee_profile = Profile.query.get(profile_id)
+    body = request.get_json()
+    if employee_profile is None:
+        raise APIException('User not found', status_code=404)
+
+    if "working_for" in body:
+        employee_profile.working_for = body["working_for"]
+    
+    db.session.commit()
+    return jsonify(employee_profile.serialize())
 
 
 
@@ -159,7 +170,7 @@ def update_single_shift_clock_in(shift_id):
     if shift.clock_in is not None:
         return 'Clock in already done', 400
 
-    shift.clock_in = datetime.datetime.now(UTC)
+    shift.clock_in = datetime.datetime.now()
     
     db.session.commit()
     return jsonify(shift.serialize())
@@ -174,15 +185,13 @@ def update_single_shift_clock_out(shift_id):
     IST = pytz.timezone('America/New_York')
     UTC = pytz.utc
 
-    print(datetime.datetime.now(IST))
-
     if shift is None:
         raise APIException('Shift not found', status_code=404)
 
     if shift.clock_out is not None:
         return 'Clock out already done', 400
 
-    shift.clock_out = datetime.datetime.now(UTC)
+    shift.clock_out = datetime.datetime.now()
 
     db.session.commit()
     return jsonify(shift.serialize())
@@ -342,9 +351,11 @@ def create_token():
 
 
 
+##MESSAGES
+
+
+
 ##Messages author
-
-
 
 @api.route('/messages-author', methods=['GET'])
 @jwt_required()

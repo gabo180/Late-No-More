@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../../store/appContext";
 import userImage from "../../../img/userImage.jpg";
 import "../../../styles/home.scss";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 export const ShiftInfo = () => {
 	const { store, actions } = useContext(Context);
@@ -53,7 +53,8 @@ export const ShiftInfo = () => {
 				<div className="d-flex justify-content-start mx-2 my-3">
 					<img className="user-img" src={userImage} />
 					<h4 className="justify-content-start my-auto">
-						<span className="pl-2">{store.profile.username}</span> <br /> <span className="pr-5">Role</span>
+						<span className="pl-2">{store.profile.username}</span> <br />{" "}
+						<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
 					</h4>
 				</div>
 			</div>

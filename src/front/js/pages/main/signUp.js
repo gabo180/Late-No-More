@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
 
 export const SignUp = () => {
 	const { store, actions } = useContext(Context);
-	const params = useParams();
-	const [fields, setFields] = useState({
+	const [createProfile, setCreateProfile] = useState({
 		name: "",
 		last_name: "",
 		username: "",
@@ -16,10 +15,9 @@ export const SignUp = () => {
 		working_for: null
 	});
 	const history = useHistory();
-	console.log(fields);
 	const handleSubmit = event => {
 		event.preventDefault();
-		actions.createProfile(fields, history);
+		actions.createProfile(createProfile, history);
 	};
 
 	return (
@@ -36,12 +34,12 @@ export const SignUp = () => {
 						className="form-control"
 						placeholder="First Name"
 						onChange={e =>
-							setFields({
-								...fields,
+							setCreateProfile({
+								...createProfile,
 								name: e.target.value
 							})
 						}
-						value={fields.name}
+						value={createProfile.name}
 					/>
 				</div>
 				<div className="form-group mx-sm-3 mb-2">
@@ -50,12 +48,12 @@ export const SignUp = () => {
 						className="form-control"
 						placeholder="Last Name"
 						onChange={e =>
-							setFields({
-								...fields,
+							setCreateProfile({
+								...createProfile,
 								last_name: e.target.value
 							})
 						}
-						value={fields.last_name}
+						value={createProfile.last_name}
 					/>
 				</div>
 				<div className="form-group mx-sm-3 mb-2">
@@ -64,12 +62,12 @@ export const SignUp = () => {
 						className="form-control"
 						placeholder="Phone Number"
 						onChange={e =>
-							setFields({
-								...fields,
+							setCreateProfile({
+								...createProfile,
 								phone_number: e.target.value
 							})
 						}
-						value={fields.phone_number}
+						value={createProfile.phone_number}
 					/>
 				</div>
 				<div className="form-group mx-sm-3 mb-2">
@@ -78,12 +76,12 @@ export const SignUp = () => {
 						className="form-control"
 						placeholder="Email"
 						onChange={e =>
-							setFields({
-								...fields,
+							setCreateProfile({
+								...createProfile,
 								email: e.target.value
 							})
 						}
-						value={fields.email}
+						value={createProfile.email}
 					/>
 				</div>
 				<div className="form-group mx-sm-3 mb-2">
@@ -92,12 +90,12 @@ export const SignUp = () => {
 						className="form-control"
 						placeholder="Username"
 						onChange={e =>
-							setFields({
-								...fields,
+							setCreateProfile({
+								...createProfile,
 								username: e.target.value
 							})
 						}
-						value={fields.username}
+						value={createProfile.username}
 					/>
 				</div>
 				<div className="form-group mx-sm-3 mb-2">
@@ -106,26 +104,26 @@ export const SignUp = () => {
 						className="form-control"
 						placeholder="Password"
 						onChange={e =>
-							setFields({
-								...fields,
+							setCreateProfile({
+								...createProfile,
 								password: e.target.value
 							})
 						}
-						value={fields.password}
+						value={createProfile.password}
 					/>
 				</div>
 				<span className="mr-auto ml-2">Select the company to work for:</span>{" "}
-				<div className="input-group mb-3 ml-4 ">
+				<div className="input-group mb-3 mr-4 px-4">
 					<select
 						className="custom-select"
 						id="inputGroupSelect01"
 						onChange={e =>
-							setFields({
-								...fields,
+							setCreateProfile({
+								...createProfile,
 								working_for: e.target.value
 							})
 						}
-						value={fields.working_for}>
+						value={createProfile.working_for}>
 						<option selected>Choose...</option>
 						{store.employer &&
 							store.employer.map((item, index) => {
