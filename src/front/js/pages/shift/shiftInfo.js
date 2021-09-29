@@ -55,7 +55,6 @@ export const ShiftInfo = () => {
 					<h4 className="justify-content-start my-auto">
 						<span className="pl-2">{store.profile.username}</span> <br /> <span className="pr-5">Role</span>
 					</h4>
-					{handleButton}
 				</div>
 			</div>
 			<div className="container border border-dark m-3">

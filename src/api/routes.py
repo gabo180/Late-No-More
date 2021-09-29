@@ -155,7 +155,7 @@ def update_single_shift_clock_in(shift_id):
     if shift.clock_in is not None:
         return 'Clock in already done', 400
 
-    shift.clock_in = datetime.datetime.utcnow()
+    shift.clock_in = datetime.datetime.now(UTC)
     
     db.session.commit()
     return jsonify(shift.serialize())

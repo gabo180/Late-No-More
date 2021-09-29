@@ -163,7 +163,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(`${getStore().myURL}${endPoint}`, {
 						method: "PUT",
-						headers: { Authorization: "Bearer " + token }
+						headers: {
+							Authorization: "Bearer " + token,
+							"Content-Type": "application/json"
+						}
 					});
 					const data = await response.json();
 					if (data.ok) {
@@ -216,11 +219,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { Authorization: "Bearer " + token }
 					});
 					const data = await response.json();
-					// console.log(data);
+					console.log(data);
 					setStore({ shift: data });
 				} catch (error) {
 					throw new Error(error);
 				}
+			},
+
+			setIsClockIn: () => {
+				const clockIn = getStore().isClockIn;
+				setStore({ isClockIn: !clockIn });
 			},
 
 			//  EMPLOYER
@@ -272,8 +280,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response);
 					if (response.ok) {
 						// console.log(data);
-						history.push("/account");
-						history.go(0);
+						setTimeout(
+							() => {
+								history.push("/account");
+								history.go(0);
+							},
+							[500]
+						);
 					}
 					return data;
 				} catch (error) {

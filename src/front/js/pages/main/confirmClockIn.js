@@ -37,20 +37,30 @@ export const ConfirmClockIn = () => {
 	};
 
 	return (
-		<div className="text-center">
-			<div className="my-3">
-				<div className="fadein-animation d-flex flex-column">
-					<div className="d-flex justify-content-start mx-2">
-						<div>
-							<img className="user-img" src={userImage} />
-						</div>
-						<div>
-							<h4 className="justify-content-start my-auto">
-								<span className="pl-2">{store.profile.username}</span> <br />{" "}
-								<span className="pr-5">Role</span>
-							</h4>
-						</div>
-					</div>
+		<div className="fadein-animation d-flex flex-column">
+			<div className="d-flex justify-content-start mx-2 my-3">
+				<img className="user-img" src={userImage} />
+				<h4 className="justify-content-start my-auto">
+					<span className="pl-2">{store.profile.username}</span> <br /> <span className="pr-5">Role</span>
+				</h4>
+				<button
+					type="button"
+					className="btn mx-auto text-white"
+					onClick={() => {
+						actions.doClockIn(shift.id);
+						setTimeout(
+							() => {
+								history.push("/home");
+								history.go(0);
+							},
+							[500]
+						);
+					}}>
+					<i className="fas fa-sign-in-alt text-white btn-success rounded-circle shadow rounded-sm px-4 py-4" />
+				</button>
+			</div>
+			<div className="text-center">
+				<div className="my-3">
 					<div>
 						<div className="font-weight-bold mt-3">
 							<h2>CONFIRM SHIFT</h2>
@@ -66,30 +76,15 @@ export const ConfirmClockIn = () => {
 							<h3>{targetEmployee.role}</h3>
 						</div>
 					</div>
-					<div className="font-weight-bold mt-5">
-						<h2>START SHIFT</h2>
-					</div>
-					<div className="d-flex justify-content-between mt-2">
-						<div>
+					<div className="d-flex justify-content-between mt-5">
+						<div className="mx-auto">
 							<button
 								type="button"
-								className="btn btn-success ml-5"
-								onClick={() => {
-									actions.doClockIn(shift.id);
-									history.push("/home");
-									history.go(0);
-								}}>
-								Yes
-							</button>
-						</div>
-						<div>
-							<button
-								type="button"
-								className="btn btn-danger mr-5"
+								className="btn btn-info"
 								onClick={() => {
 									history.push("/shifts");
 								}}>
-								No
+								GO BACK
 							</button>
 						</div>
 					</div>

@@ -56,7 +56,7 @@ export const Shifts = () => {
 									<th scope="col">S/T</th>
 									<th scope="col">E/T</th>
 									<th scope="col">Hrs</th>
-									<th scope="col">Sts</th>
+									<th scope="col">Stts</th>
 									<th scope="col" />
 								</tr>
 							</thead>
@@ -105,7 +105,12 @@ export const Shifts = () => {
 													)}
 													{store.profile.employer === null ? (
 														<td>
-															<Link to={"/shifts/shift-info/" + item.id}>
+															<Link
+																to={
+																	item.clock_in !== null
+																		? "/confirm-CO/" + item.id
+																		: "/confirm-CI/" + item.id
+																}>
 																<i className="text-success fas fa-arrow-right" />
 															</Link>
 														</td>
@@ -174,7 +179,12 @@ export const Shifts = () => {
 													)}
 													{store.profile.employer === null ? (
 														<td>
-															<Link to={"/shifts/shift-info/" + item.id}>
+															<Link
+																to={
+																	item.clock_in !== null
+																		? "/confirm-CO/" + item.id
+																		: "/confirm-CI/" + item.id
+																}>
 																<i className="text-success fas fa-arrow-right" />
 															</Link>
 														</td>

@@ -37,89 +37,62 @@ export const ConfirmClockOut = () => {
 		}
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		if (shift && shift.clock_out) {
-	// 			const roleId = shift.role_id;
-	// 			console.log("ROLE ID", roleId);
-	// 			const targetEmployee = store.employee.find(employee => employee.id == roleId);
-	// 			console.log("TARGET EMPLOYEE", targetEmployee);
-	// 			const starting_time = moment(shift.clock_in);
-	// 			const ending_time = moment(shift.clock_out);
-	// 			console.log("HOURS DONE", ending_time.diff(starting_time, "hours", true));
-	// 			const hours_done = ending_time.diff(starting_time, "hours", true); //******** THIS ONE WORKS TO KNOW THE EXPECTED HOURS *******
-	// 			setHours(hours_done);
-	// 			if (targetEmployee) {
-	// 				setAmountEarned(amount_earned(hours_done, targetEmployee.hourly_rate));
-	// 			}
-	// 		}
-	// 	},
-	// 	[shift]
-	// );
-
-	// const amount_earned = (hours, hourly_rate) => {
-	// 	return hours * hourly_rate;
-	// };
-
 	return (
-		<div className="text-center">
-			<div className="my-3">
-				<div className="fadein-animation d-flex flex-column">
-					<div className="d-flex justify-content-start mx-2">
-						<div>
-							<img className="user-img" src={userImage} />
-						</div>
-						<div>
-							<h4 className="justify-content-start my-auto">
-								<span className="pl-2">{store.profile.username}</span> <br />{" "}
-								<span className="pr-5">Role</span>
-							</h4>
-						</div>
-					</div>
-					<div>
-						<div className="font-weight-bold mt-3">
-							<h2>CONFIRM CLOCK OUT</h2>
-						</div>
-					</div>
-					<div className="font-weight-bold mt-5">
-						<h4>HOURS DONE: {hours}</h4>
-						<br />
-						<h4>AMOUNT EARNED: {parseFloat(amount_earned()).toFixed(2)}</h4>
-						<br />
-						<h3>ROLE</h3>
-						<div className="font-weight-bold text-primary">
-							<h3>{targetEmployee.role}</h3>
-						</div>
-					</div>
-					<div className="font-weight-bold mt-5">
-						<h2>END SHIFT</h2>
-					</div>
-					<div className="d-flex justify-content-between mt-2">
-						<div>
-							<button
-								type="button"
-								className="btn btn-success ml-5"
-								onClick={() => {
-									actions.doClockOut(shift.id);
+		<>
+			<div className="fadein-animation d-flex flex-column">
+				<div className="d-flex justify-content-start mx-2 my-3">
+					<img className="user-img" src={userImage} />
+					<h4 className="justify-content-start my-auto">
+						<span className="pl-2">{store.profile.username}</span> <br /> <span className="pr-5">Role</span>
+					</h4>
+					<button
+						type="button"
+						className="btn mx-auto text-white"
+						onClick={() => {
+							actions.doClockOut(shift.id);
+							setTimeout(
+								() => {
 									history.push("/home");
 									history.go(0);
-								}}>
-								Yes
-							</button>
-						</div>
+								},
+								[500]
+							);
+						}}>
+						<i className="fas fa-sign-out-alt text-white btn-danger rounded-circle shadow rounded-sm px-4 py-4" />
+					</button>
+				</div>
+				<div className="text-center">
+					<div className="my-3">
 						<div>
-							<button
-								type="button"
-								className="btn btn-danger mr-5"
-								onClick={() => {
-									history.push("/shift");
-								}}>
-								No
-							</button>
+							<div className="font-weight-bold mt-3">
+								<h2>CONFIRM CLOCK OUT</h2>
+							</div>
+						</div>
+						<div className="font-weight-bold mt-5">
+							<h4>HOURS DONE: {hours}</h4>
+							<br />
+							<h4>AMOUNT EARNED: {parseFloat(amount_earned()).toFixed(2)}</h4>
+							<br />
+							<h3>ROLE</h3>
+							<div className="font-weight-bold text-primary">
+								<h3>{targetEmployee.role}</h3>
+							</div>
+						</div>
+						<div className="d-flex justify-content-between mt-5">
+							<div className="mx-auto">
+								<button
+									type="button"
+									className="btn btn-info"
+									onClick={() => {
+										history.push("/shifts");
+									}}>
+									GO BACK
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };

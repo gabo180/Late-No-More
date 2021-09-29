@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 export const FooterLoggedIn = () => (
-	<footer className="fixed-bottom py-1 shade-color-footer text-white mt-5">
+	<footer className="fixed-bottom py-1 shade-color-footer text-white mt-5 py-2">
 		<div className="d-flex justify-content-around">
 			<Link to="/account">
 				<button className="btn text-white font-body">
@@ -24,7 +24,7 @@ export const FooterLoggedIn = () => (
 );
 
 export const FooterPublicUser = () => (
-	<footer className="fixed-bottom py-1 shade-color-footer text-white">
+	<footer className="fixed-bottom py-2 shade-color-footer text-white">
 		<div className="text-center py-3">
 			Made with <i className="text-danger fas fa-palette" /> by{" "}
 			<a className="text-white text-decoration-none" href="https://github.com/marcoescmont">

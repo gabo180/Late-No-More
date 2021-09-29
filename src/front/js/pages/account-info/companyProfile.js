@@ -16,29 +16,29 @@ export const CompanyProfile = () => {
 			() => {
 				actions.updateProfile({ employer: fields });
 			},
-			[1000]
+			[200]
 		);
 	};
 
 	return (
 		<div className="text-center fadein-animation">
-			<div className="d-flex mx-2">
+			<div className="d-flex mx-2 my-3">
 				<img className="user-img" src={userImage} />
 				<h4 className="justify-content-start my-auto">
 					<span className="pl-2">{store.profile.username}</span> <br />{" "}
-					<span className="mr-5">
+					<span className="ml-3">
 						{store.profile.employer === null ? "Employee" : store.profile.employer}
 					</span>
 				</h4>
-				<h2 className="ml-4 my-2 font-weight-bold">
+				<h2 className="ml-3 my-2 font-weight-bold">
 					Manage
 					<br />
 					Company
 				</h2>
 			</div>
 			<form className="d-flex flex-column mr-auto" onSubmit={handleSubmit}>
-				<div className="mt-4 d-flex flex-column mr-5">
-					<span className="mr-auto ml-2">Select company name:</span>{" "}
+				<div className="mt-2 d-flex flex-column mr-5 mb-5">
+					<span className="mr-auto ml-2">Create company name:</span>{" "}
 					<input
 						onChange={e => setFields(e.target.value)}
 						value={fields}
@@ -46,7 +46,7 @@ export const CompanyProfile = () => {
 						type="text"
 					/>
 				</div>
-				<div className="justify-content-start my-auto">
+				<div className="justify-content-start my-auto my-4">
 					<Link to="/">
 						<button type="button" className="btn btn-danger mx-2" value="Sign up">
 							Cancel
