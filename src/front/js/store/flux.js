@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+
 			myURL: "https://3001-apricot-manatee-i2ceo4yy.ws-us18.gitpod.io/api",
 			messagesAuthor: [],
 			messagesRecipient: [],

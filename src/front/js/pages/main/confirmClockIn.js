@@ -8,17 +8,13 @@ import moment from "moment";
 
 export const ConfirmClockIn = () => {
 	const { store, actions } = useContext(Context);
-	const [shift, setShift] = useState("");
+	const [shift, setShift] = useState(undefined);
 	const history = useHistory();
 	const params = useParams();
 
 	useEffect(() => {
 		actions.loadSingleShift(params.shift_id).then(shift => setShift(shift));
 	}, []);
-
-	const roleId = shift.role_id;
-
-	const targetEmployee = store.employee.find(employee => employee.id == roleId);
 
 	if (!shift)
 		return (
@@ -27,6 +23,7 @@ export const ConfirmClockIn = () => {
 			</div>
 		);
 
+	const targetEmployee = store.employee.find(employee => employee.id == shift.role_id);
 	const starting_time = moment(shift.starting_time);
 	const ending_time = moment(shift.ending_time);
 	const expected_hours = ending_time.diff(starting_time, "hours", true);
@@ -67,13 +64,13 @@ export const ConfirmClockIn = () => {
 						</div>
 					</div>
 					<div className="font-weight-bold mt-5">
-						<h4>EXPECTED HOURS: {expected_hours}</h4>
+						<h4>EXPECTED HOURS: {parseFloat(expected_hours).toFixed(2)}</h4>
 						<br />
-						<h4>EXPECTED EARNINGS: {expected_earnings()}</h4>
+						<h4>EXPECTED EARNINGS: {parseFloat(expected_earnings()).toFixed(2)}</h4>
 						<br />
 						<h3>ROLE</h3>
 						<div className="font-weight-bold text-primary">
-							<h3>{targetEmployee.role}</h3>
+							<h3>{targetEmployee && targetEmployee.role}</h3>
 						</div>
 					</div>
 					<div className="d-flex justify-content-between mt-5">
