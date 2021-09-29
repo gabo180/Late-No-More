@@ -1,84 +1,52 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../../store/appContext";
 import userImage from "../../../img/userImage.jpg";
 import "../../../styles/home.scss";
-import { useHistory } from "react-router-dom";
 import moment from "moment";
 
 export const Main = () => {
-	const { store, actions } = useContext(Context);
-	const history = useHistory();
+	const { store } = useContext(Context);
 	const [shiftDate, setShiftDate] = useState("");
-	const [hoursDone, setHoursDone] = useState("");
 	const cardPStyle = {
 		"border-bottom": "solid 5px red",
 		"padding-bottom": "25%"
 	};
 
-	const allHourlyRates = [];
-	const allEmployees = store.employee.filter(employee => {
-		return employee;
-	});
-	console.log(allEmployees);
-
-	// const findShift = () => {
-	// 	store.shift.filter(shift => {
-	// 		const clockOutFormat = moment(shift.clock_out).format("YYYY-MM-DD");
-	// 		return clockOutFormat === shiftDate;
-	// 	});
-	// };
-	const findShift = store.shift.filter(shift => {
-		const clockOutFormat = moment(shift.clock_out).format("YYYY-MM-DD");
-		return clockOutFormat === shiftDate;
-	});
-	console.log("SHIFT", findShift);
-
-	useEffect(
-		() => {
-			if (findShift) {
-				const starting_time = moment(findShift.clock_in);
-				const ending_time = moment(findShift.clock_out);
-				const hoursWorked = ending_time.diff(starting_time, "hours", true);
-				setHoursDone(hoursWorked);
-			}
-		},
-		[shiftDate]
-	);
-
-	// if (findShift) {
-	// 	const findRoleId = store.employee.filter(employee => {
-	// 		employee.id == findShift.role_id;
-	// 	});
-	// 	console.log("ROLE ID", findRoleId);
-	// }
+	const findShift =
+		store.shift.length > 0 &&
+		store.shift.filter(shift => {
+			const clockOutFormat = moment(shift.clock_out).format("YYYY-MM-DD");
+			return clockOutFormat === shiftDate;
+		});
 
 	let sTime;
 	let eTime;
 	let allHours;
+	let amountEarned;
 	const hoursArray = [];
+	const amountEarnedArray = [];
 
-	findShift.map(anObjectMapped => {
-		(sTime = moment(anObjectMapped.clock_in)),
-			(eTime = moment(anObjectMapped.clock_out)),
-			(allHours = eTime.diff(sTime, "hours", true));
-		hoursArray.push(allHours);
-		return <p key={`${anObjectMapped.clock_in} ${anObjectMapped.clock_out}`}>{allHours}</p>;
-	});
+	findShift &&
+		findShift.map(item => {
+			(sTime = moment(item.clock_in)),
+				(eTime = moment(item.clock_out)),
+				(allHours = eTime.diff(sTime, "hours", true)),
+				hoursArray.push(allHours);
+			amountEarned = parseFloat(item.earned);
+			amountEarnedArray.push(amountEarned);
+		});
 
-	// if (findRoleId) {
-	// 	console.log("ALL ROLES", findRoleId);
-	// }
-
-	console.log("Hours Array", hoursArray);
 	const hoursArrayToNumber = hoursArray.map(i => Number(i));
-	console.log("Hours Array Numbers", hoursArrayToNumber);
 
-	let sum = 0;
-
+	let sumHours = 0;
 	for (let i = 0; i < hoursArrayToNumber.length; i++) {
-		sum += hoursArrayToNumber[i];
+		sumHours += hoursArrayToNumber[i];
 	}
-	console.log("SUMA TODAS LAS HORAS", sum);
+
+	let sumEarnings = 0;
+	for (let i = 0; i < amountEarnedArray.length; i++) {
+		sumEarnings += amountEarnedArray[i];
+	}
 
 	return (
 		<>
@@ -99,10 +67,11 @@ export const Main = () => {
 					<div className="card-body">
 						<div className="card-text" style={cardPStyle}>
 							<h2 className="card-title">
-								Hours Completed: <h3 className="text-success mt-2">{sum.toFixed(2)}</h3>
+								Hours Completed: <h2 className="text-success mt-2">{sumHours.toFixed(2)}</h2>
 							</h2>
 						</div>
-						<h2 className="mt-4">Total Earnings: </h2>
+						<h2>Total Earnings: </h2>
+						<h2 className="mt-4 text-success">{`${sumEarnings.toFixed(2)} $`}</h2>
 					</div>
 				</div>
 			</div>

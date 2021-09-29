@@ -83,6 +83,7 @@ class Shift(db.Model):
     ending_time = db.Column(db.String(100), unique=False, nullable=False)
     clock_in = db.Column(db.DateTime(timezone=True), unique=False, nullable=True)
     clock_out = db.Column(db.DateTime(timezone=True), unique=False, nullable=True)
+    earned = db.Column(db.String(100), unique=False, nullable=True)
     request_shift = db.relationship("Request", back_populates="shift")
 
 
@@ -98,8 +99,8 @@ class Shift(db.Model):
             "starting_time": self.starting_time,
             "ending_time": self.ending_time,
             "profile_id": self.profile_id,
-            "employer_id": self.employer_id
-
+            "employer_id": self.employer_id,
+            "earned": self.earned
         }
 
 class Request(db.Model):

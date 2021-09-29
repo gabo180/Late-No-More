@@ -7,6 +7,7 @@ from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 import datetime
 import pytz
+import math
 from api.emailSender import emailSender
 
 api = Blueprint('api', __name__)
@@ -178,7 +179,14 @@ def update_single_shift_clock_out(shift_id):
     if shift.clock_out is not None:
         return 'Clock out already done', 400
 
-    shift.clock_out = datetime.datetime.now(UTC)
+    date_clock_out = datetime.datetime.now(UTC)
+    shift.clock_out = date_clock_out
+    role = Employee.query.filter_by(id = shift.role_id).first()
+    total_hours = date_clock_out - shift.clock_in
+    diff_hours = total_hours.total_seconds() / 3600
+    print(diff_hours * role.hourly_rate)
+    print(diff_hours)
+    shift.earned = diff_hours * role.hourly_rate
 
     db.session.commit()
     return jsonify(shift.serialize())
