@@ -1,16 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import userImage from "../../../img/userImage.jpg";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import moment from "moment";
 import { Context } from "../../store/appContext";
-// import rigoImageUrl from "../../img/clock-(no-background).jpg";
 import "../../../styles/home.scss";
-import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
 
 export const Shifts = () => {
 	const { store, actions } = useContext(Context);
-	const [shift, setShift] = useState(null);
-	const params = useParams();
 
 	return (
 		<div className="text-center pb-5">
@@ -20,7 +16,7 @@ export const Shifts = () => {
 						<img className="user-img" src={userImage} />
 						<h4 className="justify-content-start my-auto">
 							<span className="pl-2">{store.profile.username}</span> <br />{" "}
-							<span className="pr-5">Role</span>
+							<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
 						</h4>
 						<h1 className="mx-auto my-2 font-weight-bold">Shifts</h1>
 					</div>
@@ -49,14 +45,14 @@ export const Shifts = () => {
 								</tr>
 							</thead>
 						</table>
-						<table className="table container">
+						<table className="table container table-striped">
 							<thead>
 								<tr>
 									<th scope="col">Role</th>
 									<th scope="col">S/T</th>
 									<th scope="col">E/T</th>
 									<th scope="col">Hrs</th>
-									<th scope="col">Sts</th>
+									<th scope="col">Stts</th>
 									<th scope="col" />
 								</tr>
 							</thead>
@@ -66,10 +62,10 @@ export const Shifts = () => {
 										const starting_time = new Date(item.starting_time);
 										const ending_time = new Date(item.ending_time);
 										const hours_ending_time =
-											ending_time.getUTCHours() + (ending_time.getUTCMinutes() * 100) / 60;
+											ending_time.getHours() + ending_time.getMinutes() / 60;
 										const hours_starting_time =
-											starting_time.getUTCHours() + (starting_time.getUTCMinutes() * 100) / 60;
-										const hours = Math.round((hours_ending_time - hours_starting_time) * 100) / 100;
+											starting_time.getHours() + starting_time.getMinutes() / 60;
+										const hours = hours_ending_time - hours_starting_time;
 
 										if (item.clock_out !== null) return undefined;
 										else if (item.employer_id === store.profile.employer)
@@ -81,19 +77,19 @@ export const Shifts = () => {
 														})}
 													</td>
 													<td>
-														{starting_time.getUTCHours()}:
-														{starting_time.getUTCMinutes() < 10
-															? "0" + starting_time.getUTCMinutes()
-															: starting_time.getUTCMinutes()}
+														{starting_time.getHours()}:
+														{starting_time.getMinutes() < 10
+															? "0" + starting_time.getMinutes()
+															: starting_time.getMinutes()}
 													</td>
 													<td>
-														{ending_time.getUTCHours()}:
-														{ending_time.getUTCMinutes() < 10
-															? "0" + starting_time.getUTCMinutes()
-															: starting_time.getUTCMinutes()}
+														{ending_time.getHours()}:
+														{ending_time.getMinutes() < 10
+															? "0" + ending_time.getMinutes()
+															: ending_time.getMinutes()}
 													</td>
 
-													<td>{hours < 0 ? hours + 24 : hours}</td>
+													<td>{hours < 0 ? (hours + 24).toFixed(2) : hours.toFixed(2)}</td>
 													{item.clock_in !== null ? (
 														<td>
 															<i className="text-success fas fa-check" />
@@ -105,7 +101,12 @@ export const Shifts = () => {
 													)}
 													{store.profile.employer === null ? (
 														<td>
-															<Link to={"/shifts/shift-info/" + item.id}>
+															<Link
+																to={
+																	item.clock_in !== null
+																		? "/confirm-CO/" + item.id
+																		: "/confirm-CI/" + item.id
+																}>
 																<i className="text-success fas fa-arrow-right" />
 															</Link>
 														</td>
@@ -150,16 +151,16 @@ export const Shifts = () => {
 														})}
 													</td>
 													<td>
-														{starting_time.getUTCHours()}:
-														{starting_time.getUTCMinutes() < 10
-															? "0" + starting_time.getUTCMinutes()
-															: starting_time.getUTCMinutes()}
+														{starting_time.getHours()}:
+														{starting_time.getMinutes() < 10
+															? "0" + starting_time.getMinutes()
+															: starting_time.getMinutes()}
 													</td>
 													<td>
-														{ending_time.getUTCHours()}:
-														{ending_time.getUTCMinutes() < 10
-															? "0" + starting_time.getUTCMinutes()
-															: starting_time.getUTCMinutes()}
+														{ending_time.getHours()}:
+														{ending_time.getMinutes() < 10
+															? "0" + ending_time.getMinutes()
+															: ending_time.getMinutes()}
 													</td>
 
 													<td>{hours < 0 ? hours + 24 : hours}</td>
@@ -174,7 +175,12 @@ export const Shifts = () => {
 													)}
 													{store.profile.employer === null ? (
 														<td>
-															<Link to={"/shifts/shift-info/" + item.id}>
+															<Link
+																to={
+																	item.clock_in !== null
+																		? "/confirm-CO/" + item.id
+																		: "/confirm-CI/" + item.id
+																}>
 																<i className="text-success fas fa-arrow-right" />
 															</Link>
 														</td>

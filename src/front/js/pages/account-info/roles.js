@@ -1,13 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import userImage from "../../../img/userImage.jpg";
 import { Context } from "../../store/appContext";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import "../../../styles/home.scss";
 
 export const Roles = () => {
 	const { store, actions } = useContext(Context);
-	const history = useHistory();
 
 	return (
 		<div className="text-center">
@@ -17,9 +16,7 @@ export const Roles = () => {
 						<img className="user-img" src={userImage} />
 						<h4 className="justify-content-start my-auto">
 							<span className="pl-2">{store.profile.username}</span> <br />{" "}
-							<span className="mr-5">
-								{store.profile.employer === null ? "Employee" : store.profile.employer}
-							</span>
+							<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
 						</h4>
 						<h2 className="ml-4 my-2 font-weight-bold">
 							Manage

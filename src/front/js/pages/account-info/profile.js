@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { Context } from "../../store/appContext";
 import userImage from "../../../img/userImage.jpg";
-import PropTypes from "prop-types";
 import "../../../styles/home.scss";
-import { Container, Card, Button, Nav, ListGroup, ListGroupItem } from "react-bootstrap";
 
 export const Profile = () => {
-	const { store, actions } = useContext(Context);
+	const { store } = useContext(Context);
 	return (
 		<div className="text-center">
 			<div className="my-3">
@@ -16,7 +14,7 @@ export const Profile = () => {
 						<img className="user-img" src={userImage} />
 						<h4 className="justify-content-start my-auto">
 							<span className="pl-2">{store.profile.username}</span> <br />{" "}
-							<span className="pr-5">Role</span>
+							<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
 						</h4>
 						<h3 className="mx-2 my-2 font-weight-bold">
 							Update

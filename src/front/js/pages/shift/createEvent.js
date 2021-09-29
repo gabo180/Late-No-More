@@ -1,23 +1,21 @@
 import React, { useContext, useState } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import userImage from "../../../img/userImage.jpg";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
 
 export const CreateEvent = () => {
 	const { store, actions } = useContext(Context);
-	const params = useParams();
-	const [fields, setFields] = useState({
+	const [createShift, setCreateShift] = useState({
 		role_id: "",
 		starting_time: "",
 		ending_time: "",
 		employer_id: store.profile.employer
 	});
-	console.log(fields);
 	const history = useHistory();
 	const handleSubmit = event => {
 		event.preventDefault();
-		actions.createShift(fields, history);
+		actions.createShift(createShift, history);
 	};
 
 	return (
@@ -28,7 +26,7 @@ export const CreateEvent = () => {
 						<img className="user-img" src={userImage} />
 						<h4 className="justify-content-start my-auto">
 							<span className="pl-2">{store.profile.username}</span> <br />{" "}
-							<span className="pr-5">Role</span>
+							<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
 						</h4>
 						<h2 className="mx-auto my-auto font-weight-bold">
 							Create <br /> Shift
@@ -42,12 +40,12 @@ export const CreateEvent = () => {
 									className="custom-select"
 									id="inputGroupSelect01"
 									onChange={e =>
-										setFields({
-											...fields,
+										setCreateShift({
+											...createShift,
 											role_id: e.target.value
 										})
 									}
-									value={fields.role_id}>
+									value={createShift.role_id}>
 									<option selected>Choose...</option>
 									{store.employee &&
 										store.employee.map((item, index) => {
@@ -68,12 +66,12 @@ export const CreateEvent = () => {
 									className="custom-select"
 									id="inputGroupSelect01"
 									onChange={e =>
-										setFields({
-											...fields,
+										setCreateShift({
+											...createShift,
 											profile_id: e.target.value
 										})
 									}
-									value={fields.profile_id}>
+									value={createShift.profile_id}>
 									<option selected>Choose...</option>
 									{store.allProfiles &&
 										store.allProfiles.map((item, index) => {
@@ -93,12 +91,12 @@ export const CreateEvent = () => {
 								className="ml-4 form-control"
 								type="datetime-local"
 								onChange={e =>
-									setFields({
-										...fields,
+									setCreateShift({
+										...createShift,
 										starting_time: e.target.value
 									})
 								}
-								value={fields.starting_time}
+								value={createShift.starting_time}
 							/>
 						</div>
 						<div className="my-2 d-flex flex-column mx-auto">
@@ -107,12 +105,12 @@ export const CreateEvent = () => {
 								className="ml-4 form-control"
 								type="datetime-local"
 								onChange={e =>
-									setFields({
-										...fields,
+									setCreateShift({
+										...createShift,
 										ending_time: e.target.value
 									})
 								}
-								value={fields.ending_time}
+								value={createShift.ending_time}
 							/>
 						</div>
 						<div className="ml-5 d-flex justify-content-around">
