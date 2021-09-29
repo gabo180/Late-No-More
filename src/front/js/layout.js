@@ -24,7 +24,7 @@ import { SignUp } from "./pages/main/signUp";
 
 import { Shifts } from "./pages/shift/shifts";
 import { CreateEvent } from "./pages/shift/createEvent";
-import { ShiftInfo } from "./pages/shift/shiftInfo";
+import { ShiftEdit } from "./pages/shift/shiftInfo";
 import { Timesheet } from "./pages/shift/timesheet";
 
 {
@@ -123,9 +123,9 @@ const Layout = () => {
 							<Timesheet />
 							<FooterLoggedIn />
 						</Route>
-						<Route exact path="/shifts/shift-info/:shift_id">
+						<Route exact path="/shifts/edit-shift/:shift_id">
 							<NavbarLoggedIn />
-							<ShiftInfo />
+							<ShiftEdit />
 							<FooterLoggedIn />
 						</Route>
 
