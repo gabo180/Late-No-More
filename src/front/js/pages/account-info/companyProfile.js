@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import userImage from "../../../img/userImage.jpg";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
+import empty_profile from "../../../img/empty_profile.jpg";
 
 export const CompanyProfile = () => {
 	const { store, actions } = useContext(Context);
@@ -26,14 +27,17 @@ export const CompanyProfile = () => {
 				<div className="my-3 mb-5 pb-5">
 					<div className="text-center fadein-animation">
 						<div className="d-flex justify-content-start mx-2 my-3">
-							<img className="user-img" src={userImage} />
+							<img
+								className="user-img"
+								src={store.profile.employer !== null ? userImage : empty_profile}
+							/>
 							<h4 className="justify-content-start my-auto">
 								<span className="pl-2">{store.profile.username}</span> <br />{" "}
 								<span className="pl-2">
 									{store.profile.employer === null ? "Employee" : "Employer"}
 								</span>
 							</h4>
-							<h2 className="mx-2 my-2 font-weight-bold">
+							<h2 className="mx-auto my-2 font-weight-bold">
 								Manage
 								<br />
 								Company
@@ -67,8 +71,8 @@ export const CompanyProfile = () => {
 		);
 	else
 		return (
-			<div className="text-center">
-				<div className="my-3">
+			<div className="text-center mb-5 pb-5">
+				<div className="my-3 mb-5 pb-5">
 					<div className="text-center fadein-animation">
 						<div className="d-flex justify-content-start mx-2">
 							<img className="user-img" src={userImage} />
@@ -78,12 +82,14 @@ export const CompanyProfile = () => {
 									{store.profile.employer === null ? "Employee" : "Employer"}
 								</span>
 							</h4>
-							<h2 className="mx-2 my-2 font-weight-bold">
+							<h2 className="mx-auto my-2 font-weight-bold">
 								Manage
 								<br />
 								Company
 							</h2>
 						</div>
+
+						<h2 className="mx-auto mt-4 mb-3">{store.profile.employer}</h2>
 
 						<table className="table container">
 							<thead>
@@ -144,7 +150,7 @@ export const CompanyProfile = () => {
 							</tbody>
 						</table>
 
-						<spam className="d-flex justify-content-start ml-3 mt-5">
+						<spam className="d-flex justify-content-start mt-5">
 							<button
 								onClick={() =>
 									swal({
@@ -170,7 +176,7 @@ export const CompanyProfile = () => {
 									})
 								}
 								type="submit"
-								className="font-navbar text-danger btn mt-4"
+								className="font-navbar text-danger btn mt-4 mx-auto"
 								value="Sign up">
 								<h2>DELETE COMPANY</h2>
 							</button>

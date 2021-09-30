@@ -3,12 +3,11 @@ import { useHistory } from "react-router-dom";
 import { Context } from "../../store/appContext";
 import userImage from "../../../img/userImage.jpg";
 import "../../../styles/home.scss";
+import empty_profile from "../../../img/empty_profile.jpg";
 
 export const ProfileUpdate = () => {
 	const { store, actions } = useContext(Context);
-	const rgb = {
-		boxShadow: "0px 4px 4px rgb(0 0 0 / 25%)"
-	};
+
 	const [updateProfile, setUpdateProfile] = useState({
 		name: store.profile.name,
 		last_name: store.profile.last_name,
@@ -18,7 +17,6 @@ export const ProfileUpdate = () => {
 		working_for: store.profile.working_for
 	});
 	const history = useHistory();
-	console.log(updateProfile);
 	const handleSubmit = event => {
 		event.preventDefault();
 		actions.updateProfile(updateProfile, history);
@@ -26,21 +24,21 @@ export const ProfileUpdate = () => {
 
 	return (
 		<div className="text-center mb-5 pb-5">
-			<div className="fadein-animation d-flex flex-column profile-container mb-5 pb-5">
-				<div className="d-flex justify-content-start mx-2">
-					<img className="user-img" src={userImage} />
+			<div className="fadein-animation d-flex flex-column mb-5 pb-5">
+				<div className="d-flex justify-content-start mx-2 my-3">
+					<img className="user-img" src={store.profile.employer !== null ? userImage : empty_profile} />
 					<h4 className="justify-content-start my-auto">
 						<span className="pl-2">{store.profile.username}</span> <br />{" "}
 						<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
 					</h4>
-					<h2 className="ml-4 my-2 font-weight-bold">
+					<h2 className="mx-auto my-2 font-weight-bold">
 						Update
 						<br />
 						Profile
 					</h2>
 				</div>
-				<form className="d-flex flex-column info-container" onSubmit={handleSubmit}>
-					<div className="d-flex flex-column single-info-element">
+				<form className="d-flex flex-column mr-auto" onSubmit={handleSubmit}>
+					<div className="my-2 d-flex flex-column mx-auto">
 						<span className="mr-auto ml-2">Username</span>{" "}
 						<input
 							onChange={e =>
@@ -50,12 +48,12 @@ export const ProfileUpdate = () => {
 								})
 							}
 							value={updateProfile.username}
-							className="form-control"
+							className="ml-4 form-control"
 							placeholder={store.profile.username}
 							type="text"
 						/>
 					</div>
-					<div className="d-flex flex-column single-info-element">
+					<div className="my-2 d-flex flex-column mx-auto">
 						<span className="mr-auto ml-2">First name</span>{" "}
 						<input
 							onChange={e =>
@@ -65,12 +63,12 @@ export const ProfileUpdate = () => {
 								})
 							}
 							value={updateProfile.name}
-							className="form-control"
+							className="ml-4 form-control"
 							placeholder={store.profile.name}
 							type="text"
 						/>
 					</div>
-					<div className="d-flex flex-column single-info-element">
+					<div className="my-2 d-flex flex-column mx-auto">
 						<span className="mr-auto ml-2">Last name</span>{" "}
 						<input
 							onChange={e =>
@@ -80,12 +78,12 @@ export const ProfileUpdate = () => {
 								})
 							}
 							value={updateProfile.last_name}
-							className="form-control"
+							className="ml-4 form-control"
 							placeholder={store.profile.last_name}
 							type="text"
 						/>
 					</div>
-					<div className="d-flex flex-column single-info-element">
+					<div className="my-2 d-flex flex-column mx-auto">
 						<span className="mr-auto ml-2">Email address</span>{" "}
 						<input
 							onChange={e =>
@@ -95,12 +93,12 @@ export const ProfileUpdate = () => {
 								})
 							}
 							value={updateProfile.email}
-							className="form-control"
+							className="ml-4 form-control"
 							placeholder={store.profile.email}
 							type="text"
 						/>
 					</div>
-					<div className="d-flex flex-column single-info-element">
+					<div className="my-2 d-flex flex-column mx-auto">
 						<span className="mr-auto ml-2">Phone number</span>{" "}
 						<input
 							onChange={e =>
@@ -110,20 +108,19 @@ export const ProfileUpdate = () => {
 								})
 							}
 							value={updateProfile.phone_number}
-							className="form-control"
+							className="ml-4 form-control"
 							placeholder={store.profile.phone_number}
 							type="text"
 						/>
 					</div>
-					<div>
+					<div className="my-2 d-flex flex-column mx-auto">
 						<span className="mr-auto ml-2">
 							Update the company you
 							{"'"}
 							re working for:
 						</span>{" "}
 						<select
-							className="custom-select"
-							id="inputGroupSelect01"
+							className="ml-4 form-control"
 							onChange={e =>
 								setUpdateProfile({
 									...updateProfile,
@@ -153,7 +150,7 @@ export const ProfileUpdate = () => {
 							);
 						}}
 						type="submit"
-						className="btn btn-primary mb-2 px-5 my-2"
+						className="btn btn-primary mb-2 my-5 ml-auto px-5 mr-2"
 						value="edit">
 						Submit
 					</button>

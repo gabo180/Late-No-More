@@ -4,6 +4,7 @@ import "../../../styles/home.scss";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import userImage from "../../../img/userImage.jpg";
+import empty_profile from "../../../img/empty_profile.jpg";
 import moment from "moment";
 
 export const ConfirmClockOut = () => {
@@ -17,7 +18,7 @@ export const ConfirmClockOut = () => {
 
 	if (!shift)
 		return (
-			<div className="spinner-border" role="status">
+			<div className="spinner-border mx-auto my-auto" role="status">
 				<span className="sr-only">Loading shift...</span>
 			</div>
 		);
@@ -36,13 +37,14 @@ export const ConfirmClockOut = () => {
 		<>
 			<div className="fadein-animation d-flex flex-column mb-5 pb-5">
 				<div className="d-flex justify-content-start mx-2 my-3">
-					<img className="user-img" src={userImage} />
-					<h4 className="justify-content-start my-auto">
-						<span className="pl-2">{store.profile.username}</span> <br /> <span className="pr-5">Role</span>
+					<img className="user-img" src={store.profile.employer !== null ? userImage : empty_profile} />
+					<h4 className="justify-content-start mt-2">
+						<span className="ml-3">{store.profile.username}</span> <br />{" "}
+						<span className="ml-3">{store.profile.employer === null ? "Employee" : "Employer"}</span>
 					</h4>
 					<button
 						type="button"
-						className="btn mx-auto text-white"
+						className="btn ml-auto mr-2 my-auto text-white icon-size"
 						onClick={() => {
 							actions.doClockOut(shift.id);
 							setTimeout(
@@ -50,7 +52,7 @@ export const ConfirmClockOut = () => {
 									history.push("/home");
 									history.go(0);
 								},
-								[500]
+								[1000]
 							);
 						}}>
 						<i className="fas fa-sign-out-alt text-white btn-danger rounded-circle shadow rounded-sm px-4 py-4" />

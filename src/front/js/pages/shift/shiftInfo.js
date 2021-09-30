@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import userImage from "../../../img/userImage.jpg";
+import empty_profile from "../../../img/empty_profile.jpg";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
 
@@ -11,6 +12,18 @@ export const ShiftEdit = () => {
 		starting_time: "store.shift[params.shift_id - 1].starting_time",
 		ending_time: "store.shift[params.shift_id - 1].ending_time"
 	});
+
+	useEffect(() => {
+		actions.loadSingleShift(params.shift_id).then(shift => setShift(shift));
+	}, []);
+
+	if (!shift)
+		return (
+			<div className="spinner-border mx-auto my-auto" role="status">
+				<span className="sr-only">Loading shift...</span>
+			</div>
+		);
+
 	console.log("single shift", updateSingleShift);
 	const params = useParams();
 
@@ -24,7 +37,7 @@ export const ShiftEdit = () => {
 			<div className="my-3">
 				<div className="fadein-animation d-flex flex-column">
 					<div className="d-flex justify-content-start mx-2">
-						<img className="user-img" src={userImage} />
+						<img className="user-img" src={store.profile.employer !== null ? userImage : empty_profile} />
 						<h4 className="justify-content-start my-auto">
 							<span className="pl-2">{store.profile.username}</span> <br />{" "}
 							<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
@@ -33,7 +46,7 @@ export const ShiftEdit = () => {
 							Update <br /> Shift
 						</h2>
 					</div>
-					<form className="d-flex flex-column mr-auto" onSubmit={handleSubmit}>
+					<form className="d-flex flex-column mx-auto" onSubmit={handleSubmit}>
 						<div className="my-2 d-flex flex-column mr-auto">
 							<span className="mr-auto ml-2">Change role for the shift</span>{" "}
 							<div className="input-group mb-3 ml-4 ">
@@ -114,14 +127,14 @@ export const ShiftEdit = () => {
 								value={updateSingleShift.ending_time}
 							/>
 						</div>
-						<div className="ml-5 d-flex justify-content-around">
+						<div className="ml-2 d-flex justify-content-around">
 							<Link to="/shifts">
-								<button type="submit" className="btn btn-primary mb-2 px-4 my-2" value="Log in">
+								<button type="submit" className="btn btn-primary mb-2 px-4 my-2 mx-3" value="Log in">
 									Cancel
 								</button>
 							</Link>
 							{/* <Link to="/shifts"> */}
-							<button type="submit" className="btn btn-success mb-2 px-4 my-2" value="Log in">
+							<button type="submit" className="btn btn-success mb-2 px-4 my-2 mx-3" value="Log in">
 								Submit
 							</button>
 							{/* </Link> */}

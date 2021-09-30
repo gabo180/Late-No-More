@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import userImage from "../../../img/userImage.jpg";
+import empty_profile from "../../../img/empty_profile.jpg";
 import { Link, useHistory } from "react-router-dom";
 import moment from "moment";
 import { Context } from "../../store/appContext";
@@ -10,18 +11,18 @@ export const Shifts = () => {
 	const history = useHistory();
 
 	return (
-		<div className="text-center  mb-5 pb-5">
+		<div className="text-center mb-5 pb-5">
 			<div className="my-3">
-				<div className="fadein-animation d-flex flex-column mb-5">
+				<div className="fadein-animation d-flex flex-column mb-5 pb-5">
 					<div className="d-flex justify-content-start mx-2">
-						<img className="user-img" src={userImage} />
-						<h4 className="justify-content-start my-auto">
-							<span className="pl-2">{store.profile.username}</span> <br />{" "}
-							<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
+						<img className="user-img" src={store.profile.employer !== null ? userImage : empty_profile} />
+						<h4 className="justify-content-start mt-2 ml-3">
+							<span className="">{store.profile.username}</span> <br />{" "}
+							<span className="">{store.profile.employer === null ? "Employee" : "Employer"}</span>
 						</h4>
 						<h1 className="mx-auto my-2 font-weight-bold">Shifts</h1>
 					</div>
-					<div className="d-flex justify-content-around">
+					<div className="d-flex justify-content-around my-4">
 						<Link to="/shifts/timesheet">
 							<button type="submit" className="btn btn-primary mb-2 px-4 my-2" value="Log in">
 								Timesheet
@@ -53,7 +54,7 @@ export const Shifts = () => {
 									<th scope="col">S/T</th>
 									<th scope="col">E/T</th>
 									<th scope="col">Hrs</th>
-									<th scope="col">Sts</th>
+									<th scope="col">Stts</th>
 									<th scope="col" />
 								</tr>
 							</thead>

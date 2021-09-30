@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../store/appContext";
 import userImage from "../../../img/userImage.jpg";
+import empty_profile from "../../../img/empty_profile.jpg";
 import "../../../styles/home.scss";
 import moment from "moment";
 
@@ -52,7 +53,7 @@ export const Main = () => {
 		<>
 			<div className="fadein-animation d-flex flex-column mb-5 pb-5">
 				<div className="d-flex justify-content-start mx-2">
-					<img className="user-img" src={userImage} />
+					<img className="user-img" src={store.profile.employer !== null ? userImage : empty_profile} />
 					<h4 className="justify-content-start my-auto">
 						<span className="pl-2">{store.profile.username}</span> <br />{" "}
 						<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
