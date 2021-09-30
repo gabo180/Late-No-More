@@ -12,12 +12,19 @@ export const CompanyProfile = () => {
 	const history = useHistory();
 	const handleSubmit = event => {
 		event.preventDefault();
-		actions.createEmployer({ company_name: fields }, history);
+		actions.createEmployer({ company_name: fields });
 		setTimeout(
 			() => {
 				actions.updateProfile({ employer: fields });
+				setTimeout(
+					() => {
+						history.push("/account");
+						history.go(0);
+					},
+					[100]
+				);
 			},
-			[200]
+			[100]
 		);
 	};
 
@@ -54,7 +61,7 @@ export const CompanyProfile = () => {
 								/>
 							</div>
 							<div className="justify-content-start my-auto my-4">
-								<Link to="/">
+								<Link to="/account">
 									<button type="button" className="btn btn-danger mx-2" value="Sign up">
 										Cancel
 									</button>

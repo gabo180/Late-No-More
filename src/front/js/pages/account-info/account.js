@@ -34,7 +34,7 @@ export const Account = () => {
 										type="submit"
 										className="font-navbar text-dark btn my-2 border-bottom border-top"
 										value="Sign up">
-										<h2>Manage or crate company</h2>
+										<h2>{store.profile.employer !== null ? "Manage company" : "Create company"}</h2>
 									</button>
 								</Link>
 							</li>

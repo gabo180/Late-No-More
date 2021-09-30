@@ -19,7 +19,7 @@ export const ConfirmClockIn = () => {
 
 	if (!shift)
 		return (
-			<div className="spinner-border mx-auto my-auto" role="status">
+			<div className="spinner-border mx-auto my-auto text-primary" role="status">
 				<span className="sr-only">Loading shift...</span>
 			</div>
 		);

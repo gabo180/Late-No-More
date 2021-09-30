@@ -1,17 +1,33 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import userImage from "../../../img/userImage.jpg";
 import empty_profile from "../../../img/empty_profile.jpg";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
+import swal from "sweetalert";
 
 export const ShiftEdit = () => {
 	const { store, actions } = useContext(Context);
+	const [shift, setShift] = useState(undefined);
 	const [updateSingleShift, setUpdateSingleShift] = useState({
-		role_id: "store.shift[params.shift_id - 1].role_id",
-		starting_time: "store.shift[params.shift_id - 1].starting_time",
-		ending_time: "store.shift[params.shift_id - 1].ending_time"
+		profile_id: "Choose...",
+		role_id: "Choose...",
+		starting_time: "Choose...",
+		ending_time: "Choose..."
 	});
+	const params = useParams();
+	const history = useHistory();
+
+	console.log("single shift", updateSingleShift);
+
+	const handleSubmit = event => {
+		event.preventDefault();
+		if (updateSingleShift.role_id === "Choose...") return swal("Missing role!");
+		else if (updateSingleShift.profile_id === "Choose...") return swal("Missing employee!");
+		else if (updateSingleShift.starting_time === "Choose...") return swal("Missing starting time!");
+		else if (updateSingleShift.ending_time === "Choose...") return swal("Missing ending time!");
+		else return actions.updateShift(updateSingleShift, history, store.shift[params.shift_id - 1].id);
+	};
 
 	useEffect(() => {
 		actions.loadSingleShift(params.shift_id).then(shift => setShift(shift));
@@ -19,22 +35,13 @@ export const ShiftEdit = () => {
 
 	if (!shift)
 		return (
-			<div className="spinner-border mx-auto my-auto" role="status">
+			<div className="spinner-border mx-auto my-auto text-primary mb-5" role="status">
 				<span className="sr-only">Loading shift...</span>
 			</div>
 		);
-
-	console.log("single shift", updateSingleShift);
-	const params = useParams();
-
-	const handleSubmit = event => {
-		event.preventDefault();
-		// actions.updateShift(updateSingleShift, store.shift[params.shift_id - 1].id);
-	};
-
 	return (
 		<div className="text-center mb-5 pb-5">
-			<div className="my-3">
+			<div className="my-3 mb-5 pb-5">
 				<div className="fadein-animation d-flex flex-column">
 					<div className="d-flex justify-content-start mx-2">
 						<img className="user-img" src={store.profile.employer !== null ? userImage : empty_profile} />
@@ -46,6 +53,7 @@ export const ShiftEdit = () => {
 							Update <br /> Shift
 						</h2>
 					</div>
+					<h2 className="my-3 text-danger">Make sure to place all the information</h2>
 					<form className="d-flex flex-column mx-auto" onSubmit={handleSubmit}>
 						<div className="my-2 d-flex flex-column mr-auto">
 							<span className="mr-auto ml-2">Change role for the shift</span>{" "}

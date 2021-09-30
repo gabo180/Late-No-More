@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-bronze-kite-kwk4aclh.ws-us18.gitpod.io/api",
+			myURL: "https://3001-blush-guppy-hre3jijq.ws-us18.gitpod.io/api",
 
 			messagesAuthor: [],
 			messagesRecipient: [],
@@ -171,7 +171,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			updateShift: async (shiftCredentials, shift_id) => {
+			updateShift: async (shiftCredentials, history, shift_id) => {
 				const endPoint = "/shift/" + shift_id;
 				const token = localStorage.getItem("jwt-token");
 				try {
@@ -184,8 +184,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(shiftCredentials)
 					});
 					const data = await response.json();
-					if (data.ok) {
+					if (response.ok) {
 						setStore({ shift: data });
+						setTimeout(
+							() => {
+								setTimeout(
+									() => {
+										history.go(0);
+									},
+									[100]
+								);
+								history.push("/shifts");
+							},
+							[300]
+						);
 					}
 				} catch (error) {
 					throw new Error(error);

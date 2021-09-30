@@ -59,172 +59,170 @@ export const Shifts = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{store.shift &&
-									store.shift.map((item, index) => {
-										const starting_time = new Date(item.starting_time);
-										const ending_time = new Date(item.ending_time);
-										const hours_ending_time =
-											ending_time.getHours() + ending_time.getMinutes() / 60;
-										const hours_starting_time =
-											starting_time.getHours() + starting_time.getMinutes() / 60;
-										const hours = hours_ending_time - hours_starting_time;
+								{store.shift.map((item, index) => {
+									const starting_time = new Date(item.starting_time);
+									const ending_time = new Date(item.ending_time);
+									const hours_ending_time = ending_time.getHours() + ending_time.getMinutes() / 60;
+									const hours_starting_time =
+										starting_time.getHours() + starting_time.getMinutes() / 60;
+									const hours = hours_ending_time - hours_starting_time;
 
-										if (item.clock_out !== null) return undefined;
-										else if (item.employer_id === store.profile.employer)
-											return (
-												<tr scope="row" key={index}>
-													<td>
-														{store.employee.map(i => {
-															if (i.id === item.role_id) return i.role;
-														})}
-													</td>
-													<td>
-														{starting_time.getHours()}:
-														{starting_time.getMinutes() < 10
-															? "0" + starting_time.getMinutes()
-															: starting_time.getMinutes()}
-													</td>
-													<td>
-														{ending_time.getHours()}:
-														{ending_time.getMinutes() < 10
-															? "0" + ending_time.getMinutes()
-															: ending_time.getMinutes()}
-													</td>
+									if (item.clock_out !== null) return undefined;
+									else if (item.employer_id === store.profile.employer)
+										return (
+											<tr scope="row" key={index}>
+												<td>
+													{store.employee.map(i => {
+														if (i.id === item.role_id) return i.role;
+													})}
+												</td>
+												<td>
+													{starting_time.getHours()}:
+													{starting_time.getMinutes() < 10
+														? "0" + starting_time.getMinutes()
+														: starting_time.getMinutes()}
+												</td>
+												<td>
+													{ending_time.getHours()}:
+													{ending_time.getMinutes() < 10
+														? "0" + ending_time.getMinutes()
+														: ending_time.getMinutes()}
+												</td>
 
-													<td>{hours < 0 ? (hours + 24).toFixed(2) : hours.toFixed(2)}</td>
-													{item.clock_in !== null ? (
-														<td>
-															<i className="text-success fas fa-check" />
-														</td>
-													) : (
-														<td>
-															<i className="text-gray fas fa-bed" />
-														</td>
-													)}
-													{store.profile.employer === null ? (
-														<td>
-															<Link
-																to={
-																	item.clock_in !== null
-																		? "/confirm-CO/" + item.id
-																		: "/confirm-CI/" + item.id
-																}>
-																<i className="text-success fas fa-arrow-right" />
-															</Link>
-														</td>
-													) : (
-														<td className="d-flex justify-content-around">
-															<i
-																onClick={() => {
-																	history.push("/shifts/edit-shift/" + item.id);
-																}}
-																className="text-success far fa-edit mx-1"
-															/>
-															<i
-																className="text-danger far fa-trash-alt"
-																onClick={() =>
-																	swal({
-																		title: "Are you sure?",
-																		text:
-																			"Once deleted, you will not be able to recover this shift!",
-																		icon: "warning",
-																		buttons: true,
-																		dangerMode: true
-																	}).then(willDelete => {
-																		if (willDelete) {
-																			actions.deleteSingleShift(item.id);
-																			swal(
-																				"Your shift has been deleted succesfully!",
-																				{
-																					icon: "success"
-																				}
-																			);
-																		} else {
-																			swal("Your role file is safe!");
-																		}
-																	})
-																}
-															/>
-														</td>
-													)}
-												</tr>
-											);
-										else if (item.profile_id == store.profile.id)
-											return (
-												<tr scope="row" key={index}>
+												<td>{hours < 0 ? (hours + 24).toFixed(1) : hours.toFixed(1)}</td>
+												{item.clock_in !== null ? (
 													<td>
-														{store.employee.map((i, ind) => {
-															if (i.id === item.role_id) return i.role;
-														})}
+														<i className="text-success fas fa-check" />
 													</td>
+												) : (
 													<td>
-														{starting_time.getHours()}:
-														{starting_time.getMinutes() < 10
-															? "0" + starting_time.getMinutes()
-															: starting_time.getMinutes()}
+														<i className="text-gray fas fa-bed" />
 													</td>
+												)}
+												{store.profile.employer === null ? (
 													<td>
-														{ending_time.getHours()}:
-														{ending_time.getMinutes() < 10
-															? "0" + ending_time.getMinutes()
-															: ending_time.getMinutes()}
+														<Link
+															to={
+																item.clock_in !== null
+																	? "/confirm-CO/" + item.id
+																	: "/confirm-CI/" + item.id
+															}>
+															<i className="text-success fas fa-arrow-right" />
+														</Link>
 													</td>
+												) : (
+													<td className="d-flex justify-content-around">
+														<i
+															onClick={() => {
+																history.push("/shifts/edit-shift/" + item.id);
+															}}
+															className="text-success far fa-edit mx-1"
+														/>
+														<i
+															className="text-danger far fa-trash-alt"
+															onClick={() =>
+																swal({
+																	title: "Are you sure?",
+																	text:
+																		"Once deleted, you will not be able to recover this shift!",
+																	icon: "warning",
+																	buttons: true,
+																	dangerMode: true
+																}).then(willDelete => {
+																	if (willDelete) {
+																		actions.deleteSingleShift(item.id);
+																		swal(
+																			"Your shift has been deleted succesfully!",
+																			{
+																				icon: "success"
+																			}
+																		);
+																	} else {
+																		swal("Your role file is safe!");
+																	}
+																})
+															}
+														/>
+													</td>
+												)}
+											</tr>
+										);
+									else if (item.profile_id == store.profile.id)
+										return (
+											<tr scope="row" key={index}>
+												<td>
+													{store.employee.map((i, ind) => {
+														if (i.id === item.role_id) return i.role;
+													})}
+												</td>
+												<td>
+													{starting_time.getHours()}:
+													{starting_time.getMinutes() < 10
+														? "0" + starting_time.getMinutes()
+														: starting_time.getMinutes()}
+												</td>
+												<td>
+													{ending_time.getHours()}:
+													{ending_time.getMinutes() < 10
+														? "0" + ending_time.getMinutes()
+														: ending_time.getMinutes()}
+												</td>
 
-													<td>{hours < 0 ? hours + 24 : hours}</td>
-													{item.clock_in !== null ? (
-														<td>
-															<i className="text-success fas fa-check" />
-														</td>
-													) : (
-														<td>
-															<i className="text-gray fas fa-bed" />
-														</td>
-													)}
-													{store.profile.employer === null ? (
-														<td>
-															<Link
-																to={
-																	item.clock_in !== null
-																		? "/confirm-CO/" + item.id
-																		: "/confirm-CI/" + item.id
-																}>
-																<i className="text-success fas fa-arrow-right" />
-															</Link>
-														</td>
-													) : (
-														<td>
-															<i className="text-success far fa-edit" />
-															<i
-																className="text-danger far fa-trash-alt"
-																onClick={() =>
-																	swal({
-																		title: "Are you sure?",
-																		text:
-																			"Once deleted, you will not be able to recover this shift!",
-																		icon: "warning",
-																		buttons: true,
-																		dangerMode: true
-																	}).then(willDelete => {
-																		if (willDelete) {
-																			actions.deleteSingleShift(item.id);
-																			swal(
-																				"Your shift has been deleted succesfully!",
-																				{
-																					icon: "success"
-																				}
-																			);
-																		} else {
-																			swal("Your role file is safe!");
-																		}
-																	})
-																}
-															/>
-														</td>
-													)}
-												</tr>
-											);
-										else null;
-									})}
+												<td>{hours < 0 ? (hours + 24).toFixed(1) : hours.toFixed(1)}</td>
+												{item.clock_in !== null ? (
+													<td>
+														<i className="text-success fas fa-check" />
+													</td>
+												) : (
+													<td>
+														<i className="text-gray fas fa-bed" />
+													</td>
+												)}
+												{store.profile.employer === null ? (
+													<td>
+														<Link
+															to={
+																item.clock_in !== null
+																	? "/confirm-CO/" + item.id
+																	: "/confirm-CI/" + item.id
+															}>
+															<i className="text-success fas fa-arrow-right" />
+														</Link>
+													</td>
+												) : (
+													<td>
+														<i className="text-success far fa-edit" />
+														<i
+															className="text-danger far fa-trash-alt"
+															onClick={() =>
+																swal({
+																	title: "Are you sure?",
+																	text:
+																		"Once deleted, you will not be able to recover this shift!",
+																	icon: "warning",
+																	buttons: true,
+																	dangerMode: true
+																}).then(willDelete => {
+																	if (willDelete) {
+																		actions.deleteSingleShift(item.id);
+																		swal(
+																			"Your shift has been deleted succesfully!",
+																			{
+																				icon: "success"
+																			}
+																		);
+																	} else {
+																		swal("Your role file is safe!");
+																	}
+																})
+															}
+														/>
+													</td>
+												)}
+											</tr>
+										);
+									else null;
+								})}
 							</tbody>
 						</table>
 					</div>
