@@ -8,6 +8,7 @@ import swal from "sweetalert";
 
 export const ShiftEdit = () => {
 	const { store, actions } = useContext(Context);
+	const params = useParams();
 	const [shift, setShift] = useState(undefined);
 	const [updateSingleShift, setUpdateSingleShift] = useState({
 		profile_id: "Choose...",
@@ -15,7 +16,6 @@ export const ShiftEdit = () => {
 		starting_time: "Choose...",
 		ending_time: "Choose..."
 	});
-	const params = useParams();
 	const history = useHistory();
 
 	console.log("single shift", updateSingleShift);
@@ -26,7 +26,7 @@ export const ShiftEdit = () => {
 		else if (updateSingleShift.profile_id === "Choose...") return swal("Missing employee!");
 		else if (updateSingleShift.starting_time === "Choose...") return swal("Missing starting time!");
 		else if (updateSingleShift.ending_time === "Choose...") return swal("Missing ending time!");
-		else return actions.updateShift(updateSingleShift, history, store.shift[params.shift_id - 1].id);
+		else return actions.updateShift(updateSingleShift, history, shift.id);
 	};
 
 	useEffect(() => {
@@ -39,6 +39,7 @@ export const ShiftEdit = () => {
 				<span className="sr-only">Loading shift...</span>
 			</div>
 		);
+	console.log("shift credentials", shift);
 	return (
 		<div className="text-center mb-5 pb-5">
 			<div className="my-3 mb-5 pb-5">
@@ -100,7 +101,7 @@ export const ShiftEdit = () => {
 											if (item.working_for === store.profile.employer)
 												return (
 													<option key={index} value={item.id}>
-														{item.name} {item.last_name}
+														{item.name + " " + item.last_name}
 													</option>
 												);
 										})}

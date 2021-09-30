@@ -4,19 +4,25 @@ import userImage from "../../../img/userImage.jpg";
 import empty_profile from "../../../img/empty_profile.jpg";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
+import swal from "sweetalert";
 
 export const CreateEvent = () => {
 	const { store, actions } = useContext(Context);
 	const [createShift, setCreateShift] = useState({
-		role_id: "",
-		starting_time: "",
-		ending_time: "",
+		profile_id: "Choose...",
+		role_id: "Choose...",
+		starting_time: "Choose...",
+		ending_time: "Choose...",
 		employer_id: store.profile.employer
 	});
 	const history = useHistory();
 	const handleSubmit = event => {
 		event.preventDefault();
-		actions.createShift(createShift, history);
+		if (createShift.role_id === "Choose...") return swal("Missing role!");
+		else if (createShift.profile_id === "Choose...") return swal("Missing employee!");
+		else if (createShift.starting_time === "Choose...") return swal("Missing starting time!");
+		else if (createShift.ending_time === "Choose...") return swal("Missing ending time!");
+		else return actions.createShift(createShift, history);
 	};
 
 	return (

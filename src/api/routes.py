@@ -145,6 +145,8 @@ def put_shift(shift_id):
 
     shift = Shift.query.get(shift_id)
 
+    if "profile_id" in body:
+        shift.profile_id = body["profile_id"]
     if "role_id" in body:
         shift.role_id = body["role_id"]
     if "starting_time" in body:
@@ -312,6 +314,7 @@ def create_employee():
 
 @api.route('/employee/<int:employee_id>', methods=['PUT'])
 def update_employee(employee_id):
+    body = request.get_json()
     employee1 = Employee.query.get(employee_id)
     if employee1 is None:
         raise APIException('User not found', status_code=404)
@@ -322,8 +325,13 @@ def update_employee(employee_id):
     if "hourly_rate" in body:
         employee1.hourly_rate = body["hourly_rate"]
 
+    if "employer_id" in body:
+        employee1.employer_id = body["employer_id"]
+
     db.session.commit()
-    return jsonify(employee1.serialize())
+    get_all_employees = Employee.query.all()
+    mapped_employees=[e.serialize() for e in get_all_employees]
+    return jsonify(mapped_employees)
 
 @api.route('/employee/<int:employee_id>', methods=['DELETE'])
 def delete_employee(employee_id):

@@ -116,7 +116,7 @@ export const Shifts = () => {
 															onClick={() => {
 																history.push("/shifts/edit-shift/" + item.id);
 															}}
-															className="text-success far fa-edit mx-1"
+															className="text-success far fa-edit mx-1 icon-hover"
 														/>
 														<i
 															className="text-danger far fa-trash-alt"

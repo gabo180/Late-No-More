@@ -1,10 +1,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-blush-guppy-hre3jijq.ws-us18.gitpod.io/api",
+			myURL: "https://3001-aquamarine-canidae-rs0bxt2w.ws-us18.gitpod.io/api",
 
-			messagesAuthor: [],
-			messagesRecipient: [],
+			// messagesAuthor: [],
+			// messagesRecipient: [],
 			shift: [],
 			// TODO: rename shift to allShifts
 			profile: {},
@@ -20,8 +20,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().loadShift();
 				getActions().loadEmployer();
 				getActions().loadEmployee();
-				getActions().loadMessageAuthor();
-				getActions().loadMessageRecipient();
+				// getActions().loadMessageAuthor();
+				// getActions().loadMessageRecipient();
 			},
 			//TODO: add return to all asyncs fucntions
 
@@ -411,7 +411,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			updateEmployee: async employee_id => {
+			updateEmployee: async (employee_id, employeeCredentials) => {
 				const endPoint = "/employee/" + employee_id;
 				const token = localStorage.getItem("jwt-token");
 				try {
@@ -420,10 +420,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							Authorization: "Bearer " + token,
 							"Content-Type": "application/json"
-						}
+						},
+						body: JSON.stringify(employeeCredentials)
 					});
 					const data = await response.json();
-					if (data.ok) {
+					if (response.ok) {
 						setStore({ employee: data });
 					}
 				} catch (error) {
