@@ -22,8 +22,8 @@ export const CompanyProfile = () => {
 
 	if (store.profile.employer === null)
 		return (
-			<div className="text-center">
-				<div className="my-3">
+			<div className="text-center mb-5 pb-5">
+				<div className="my-3 mb-5 pb-5">
 					<div className="text-center fadein-animation">
 						<div className="d-flex justify-content-start mx-2 my-3">
 							<img className="user-img" src={userImage} />

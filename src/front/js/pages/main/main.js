@@ -48,10 +48,9 @@ export const Main = () => {
 		sumEarnings += amountEarnedArray[i];
 	}
 
-
 	return (
 		<>
-			<div className="fadein-animation d-flex flex-column">
+			<div className="fadein-animation d-flex flex-column mb-5 pb-5">
 				<div className="d-flex justify-content-start mx-2">
 					<img className="user-img" src={userImage} />
 					<h4 className="justify-content-start my-auto">

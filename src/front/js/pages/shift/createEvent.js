@@ -19,7 +19,7 @@ export const CreateEvent = () => {
 	};
 
 	return (
-		<div className="text-center">
+		<div className="text-center mb-5 pb-5">
 			<div className="my-3">
 				<div className="fadein-animation d-flex flex-column">
 					<div className="d-flex justify-content-start mx-2">
@@ -32,7 +32,7 @@ export const CreateEvent = () => {
 							Create <br /> Shift
 						</h2>
 					</div>
-					<form className="d-flex flex-column mr-auto" onSubmit={handleSubmit}>
+					<form className="d-flex flex-column mx-auto" onSubmit={handleSubmit}>
 						<div className="my-2 d-flex flex-column mr-auto">
 							<span className="mr-auto ml-2">Select role for the shift</span>{" "}
 							<div className="input-group mb-3 ml-4 ">
@@ -113,14 +113,14 @@ export const CreateEvent = () => {
 								value={createShift.ending_time}
 							/>
 						</div>
-						<div className="ml-5 d-flex justify-content-around">
+						<div className=" d-flex justify-content-around">
 							<Link to="/shifts">
-								<button type="submit" className="btn btn-primary mb-2 px-4 my-2" value="Log in">
+								<button type="submit" className="btn btn-primary mb-2 px-4 my-2 mx-2" value="Log in">
 									Cancel
 								</button>
 							</Link>
 							{/* <Link to="/shifts"> */}
-							<button type="submit" className="btn btn-success mb-2 px-4 my-2" value="Log in">
+							<button type="submit" className="btn btn-success mb-2 px-4 my-2 mx-2" value="Log in">
 								Submit
 							</button>
 							{/* </Link> */}

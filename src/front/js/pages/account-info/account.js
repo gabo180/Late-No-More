@@ -8,7 +8,7 @@ export const Account = () => {
 	const { store } = useContext(Context);
 	return (
 		<div className="text-center">
-			<div className="my-3">
+			<div className="my-3 mb-5 pb-5">
 				<div className="fadein-animation d-flex flex-column">
 					<div>
 						<div className="d-flex justify-content-start">

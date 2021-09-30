@@ -11,7 +11,7 @@ export const HomePage = () => {
 	const history = useHistory();
 
 	return (
-		<div className="pb-5 mb-5 text-center">
+		<div className="pb-5 mb-5 text-center mb-5 pb-5">
 			<div className="d-flex justify-content-end mx-1 my-1">
 				<form
 					className="d-flex justify-content-around"

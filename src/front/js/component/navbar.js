@@ -10,11 +10,11 @@ export const NavbarLoggedIn = () => {
 					LateNoMore <img src={latenomoreLogo} />
 				</span>
 			</Link>
-			<Link to="/messages">
-				<button className="btn btn-lg text-white font-navbar">
-					<i className="fas fa-inbox" />
-				</button>
-			</Link>
+			{/* <Link to="/messages"> */}
+			<button className="btn btn-lg text-white font-navbar">
+				<i className="fas fa-inbox" />
+			</button>
+			{/* </Link> */}
 		</nav>
 	);
 };
