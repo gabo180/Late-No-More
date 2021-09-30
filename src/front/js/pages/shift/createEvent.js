@@ -1,21 +1,28 @@
 import React, { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import userImage from "../../../img/userImage.jpg";
+import empty_profile from "../../../img/empty_profile.jpg";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
+import swal from "sweetalert";
 
 export const CreateEvent = () => {
 	const { store, actions } = useContext(Context);
 	const [createShift, setCreateShift] = useState({
-		role_id: "",
-		starting_time: "",
-		ending_time: "",
+		profile_id: "Choose...",
+		role_id: "Choose...",
+		starting_time: "Choose...",
+		ending_time: "Choose...",
 		employer_id: store.profile.employer
 	});
 	const history = useHistory();
 	const handleSubmit = event => {
 		event.preventDefault();
-		actions.createShift(createShift, history);
+		if (createShift.role_id === "Choose...") return swal("Missing role!");
+		else if (createShift.profile_id === "Choose...") return swal("Missing employee!");
+		else if (createShift.starting_time === "Choose...") return swal("Missing starting time!");
+		else if (createShift.ending_time === "Choose...") return swal("Missing ending time!");
+		else return actions.createShift(createShift, history);
 	};
 
 	return (
@@ -23,7 +30,7 @@ export const CreateEvent = () => {
 			<div className="my-3">
 				<div className="fadein-animation d-flex flex-column">
 					<div className="d-flex justify-content-start mx-2">
-						<img className="user-img" src={userImage} />
+						<img className="user-img" src={store.profile.employer !== null ? userImage : empty_profile} />
 						<h4 className="justify-content-start my-auto">
 							<span className="pl-2">{store.profile.username}</span> <br />{" "}
 							<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
@@ -113,14 +120,14 @@ export const CreateEvent = () => {
 								value={createShift.ending_time}
 							/>
 						</div>
-						<div className=" d-flex justify-content-around">
+						<div className="ml-2 d-flex justify-content-around">
 							<Link to="/shifts">
-								<button type="submit" className="btn btn-primary mb-2 px-4 my-2 mx-2" value="Log in">
+								<button type="submit" className="btn btn-primary mb-2 px-4 my-2 mx-3" value="Log in">
 									Cancel
 								</button>
 							</Link>
 							{/* <Link to="/shifts"> */}
-							<button type="submit" className="btn btn-success mb-2 px-4 my-2 mx-2" value="Log in">
+							<button type="submit" className="btn btn-success mb-2 px-4 my-2 mx-3" value="Log in">
 								Submit
 							</button>
 							{/* </Link> */}

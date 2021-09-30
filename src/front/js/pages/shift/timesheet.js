@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import userImage from "../../../img/userImage.jpg";
+import empty_profile from "../../../img/empty_profile.jpg";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
 
@@ -11,10 +12,10 @@ export const Timesheet = () => {
 			<div className="my-3 mb-5 pb-5">
 				<div className="fadein-animation d-flex flex-column mb-4">
 					<div className="d-flex justify-content-start mx-2 my-2">
-						<img className="user-img" src={userImage} />
+						<img className="user-img" src={store.profile.employer !== null ? userImage : empty_profile} />
 						<h4 className="justify-content-start my-auto">
 							<span className="pl-2">{store.profile.username}</span> <br />{" "}
-							<span className="pr-5">Role</span>
+							<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
 						</h4>
 						<h2 className="mx-auto my-auto font-weight-bold">Timesheet</h2>
 					</div>
@@ -30,7 +31,7 @@ export const Timesheet = () => {
 						</div>
 					</form> */}
 					<div className="">
-						<table className="table container table-striped">
+						<table className="table container table-striped mt-3">
 							<thead>
 								<tr>
 									<th scope="col">Date</th>
@@ -64,11 +65,11 @@ export const Timesheet = () => {
 															if (i.id === item.role_id) return i.role;
 														})}
 													</td>
-													<td>{totalHours}</td>
+													<td>{totalHours.toFixed(1)}</td>
 													<td>
 														{store.employee.map((i, ind) => {
 															if (i.id === item.role_id)
-																return (totalHours * i.hourly_rate).toFixed(2);
+																return (totalHours * i.hourly_rate).toFixed(1);
 														})}
 													</td>
 												</tr>
@@ -88,11 +89,11 @@ export const Timesheet = () => {
 															if (i.id === item.role_id) return i.role;
 														})}
 													</td>
-													<td>{totalHours}</td>
+													<td>{totalHours.toFixed(1)}</td>
 													<td>
 														{store.employee.map((i, ind) => {
 															if (i.id === item.role_id)
-																return (totalHours * i.hourly_rate).toFixed(2);
+																return (totalHours * i.hourly_rate).toFixed(1);
 														})}
 													</td>
 												</tr>
