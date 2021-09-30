@@ -21,7 +21,7 @@ export const SignUp = () => {
 	};
 
 	return (
-		<div className="text-center">
+		<div className="text-center mb-5 pb-5">
 			<h2>
 				Welcome and thank you for choosing us!
 				<br />

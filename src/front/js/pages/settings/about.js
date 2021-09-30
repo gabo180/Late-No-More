@@ -8,7 +8,7 @@ export const About = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="text-center">
+		<div className="text-center mb-5 pb-5">
 			<div className="my-3">
 				<div className="fadein-animation d-flex">
 					<div className="position-try">

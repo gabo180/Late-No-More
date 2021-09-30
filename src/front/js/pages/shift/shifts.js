@@ -10,7 +10,7 @@ export const Shifts = () => {
 	const history = useHistory();
 
 	return (
-		<div className="text-center pb-5">
+		<div className="text-center  mb-5 pb-5">
 			<div className="my-3">
 				<div className="fadein-animation d-flex flex-column mb-5">
 					<div className="d-flex justify-content-start mx-2">

@@ -9,8 +9,8 @@ export const Roles = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="text-center">
-			<div className="my-3">
+		<div className="text-center mb-5 pb-5">
+			<div className="my-3 mb-5 pb-5">
 				<div className="fadein-animation d-flex flex-column">
 					<div className="d-flex justify-content-start mx-2">
 						<img className="user-img" src={userImage} />
