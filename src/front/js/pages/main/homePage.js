@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
 import { Card } from "react-bootstrap";
+import logo from "../../../img/logo.png";
 
 export const HomePage = () => {
 	const { actions } = useContext(Context);
@@ -11,7 +12,7 @@ export const HomePage = () => {
 	const history = useHistory();
 
 	return (
-		<div className="pb-5 mb-5 text-center mb-5 pb-5">
+		<div className="pb-5 mb-5 text-center mb-5 pb-5 fadein-animation">
 			<div className="d-flex flex-column mx-1 mt-3">
 				<form
 					className="d-flex justify-content-around"
@@ -43,6 +44,7 @@ export const HomePage = () => {
 					</button>
 					{/* </Link> */}
 				</form>
+				<img src="" />
 				<div>
 					<span>Dont have an account?</span>
 					<Link to="/sign-up">
@@ -52,11 +54,12 @@ export const HomePage = () => {
 					</Link>
 				</div>
 			</div>
-			<div className="my-3">
-				<div className="fadein-animation d-flex flex-column">
+			<img src={logo} />
+			<div className="mb-3">
+				<div className="d-flex flex-column">
 					<div className="position-try">
 						<br />
-						<sapn className="font-body text-justify">
+						<sapn className=" text-dark font-body text-justify">
 							LateNoMore APP has been brought to you to ensure that your workers feel on a safe place
 							regarding their job, you can control clock-in and clock-out and manage payments and wages so
 							they can be aware of what
