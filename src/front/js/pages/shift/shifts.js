@@ -39,14 +39,13 @@ export const Shifts = () => {
 						)}
 					</div>
 					<div>
-						<table className="table">
+						{/* <table className="table">
 							<thead>
 								<tr>
 									<th scope="rowgroup">{moment().format("ll")}</th>
-									{/* TODO: change the format so it gives the date of the shifts */}
 								</tr>
 							</thead>
-						</table>
+						</table> */}
 						<table className="table table-striped">
 							<thead>
 								<tr>
@@ -62,6 +61,14 @@ export const Shifts = () => {
 								{store.shift.map((item, index) => {
 									const starting_time = new Date(item.starting_time);
 									const ending_time = new Date(item.ending_time);
+									const monthST = starting_time.getUTCMonth() + 1;
+									const dayST = starting_time.getUTCDate();
+									const yearST = starting_time.getUTCFullYear();
+									const fullDateST = monthST + "/" + dayST;
+									const monthET = ending_time.getUTCMonth() + 1;
+									const dayET = ending_time.getUTCDate();
+									const yearET = ending_time.getUTCFullYear();
+									const fullDateET = monthET + "/" + dayET;
 									const hours_ending_time = ending_time.getHours() + ending_time.getMinutes() / 60;
 									const hours_starting_time =
 										starting_time.getHours() + starting_time.getMinutes() / 60;
@@ -77,12 +84,16 @@ export const Shifts = () => {
 													})}
 												</td>
 												<td>
+													{fullDateST}
+													<br />
 													{starting_time.getHours()}:
 													{starting_time.getMinutes() < 10
 														? "0" + starting_time.getMinutes()
 														: starting_time.getMinutes()}
 												</td>
 												<td>
+													{fullDateET}
+													<br />
 													{ending_time.getHours()}:
 													{ending_time.getMinutes() < 10
 														? "0" + ending_time.getMinutes()
@@ -156,12 +167,16 @@ export const Shifts = () => {
 													})}
 												</td>
 												<td>
+													{fullDateST}
+													<br />
 													{starting_time.getHours()}:
 													{starting_time.getMinutes() < 10
 														? "0" + starting_time.getMinutes()
 														: starting_time.getMinutes()}
 												</td>
 												<td>
+													{fullDateET}
+													<br />
 													{ending_time.getHours()}:
 													{ending_time.getMinutes() < 10
 														? "0" + ending_time.getMinutes()

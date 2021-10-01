@@ -3,9 +3,10 @@ import userImage from "../../../img/userImage.jpg";
 import empty_profile from "../../../img/empty_profile.jpg";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
+import moment from "moment";
 
 export const Timesheet = () => {
-	const { store, actions } = useContext(Context);
+	const { store } = useContext(Context);
 
 	return (
 		<div className="text-center mb-5 pb-5">
@@ -44,18 +45,15 @@ export const Timesheet = () => {
 							<tbody>
 								{store.shift &&
 									store.shift.map((item, index) => {
-										const startingTime = new Date(item.clock_in);
-										const endingTime = new Date(item.clock_out);
-										const month = startingTime.getUTCMonth();
-										const day = startingTime.getUTCDate();
-										const year = startingTime.getUTCFullYear();
+										const dateShow = new Date(item.clock_in);
+										const startingTime = moment(item.clock_in);
+										const endingTime = moment(item.clock_out);
+										const month = dateShow.getUTCMonth() + 1;
+										const day = dateShow.getUTCDate();
+										const year = dateShow.getUTCFullYear();
 										const date = month + "/" + day + "/" + year;
-										const hoursStartingTime =
-											startingTime.getUTCHours() + startingTime.getUTCMinutes() / 60;
-										const hoursEndingTime =
-											endingTime.getUTCHours() + endingTime.getUTCMinutes() / 60;
-										const totalHours =
-											Math.round((hoursEndingTime - hoursStartingTime) * 100) / 100;
+										const totalHours = endingTime.diff(startingTime, "hours", true);
+
 										if (item.profile_id === store.profile.id && item.clock_out !== null)
 											return (
 												<tr key={index}>
@@ -65,11 +63,11 @@ export const Timesheet = () => {
 															if (i.id === item.role_id) return i.role;
 														})}
 													</td>
-													<td>{totalHours.toFixed(1)}</td>
+													<td>{totalHours.toFixed(2)}</td>
 													<td>
 														{store.employee.map((i, ind) => {
 															if (i.id === item.role_id)
-																return (totalHours * i.hourly_rate).toFixed(1);
+																return (totalHours * i.hourly_rate).toFixed(2);
 														})}
 													</td>
 												</tr>
@@ -79,21 +77,21 @@ export const Timesheet = () => {
 												<tr key={index}>
 													<td scope="row">{date}</td>
 													<td scope="row">
-														{store.allProfiles.map((i, ind) => {
+														{store.allProfiles.map(i => {
 															if (i.id === item.profile_id)
 																return `${i.name + " " + i.last_name}`;
 														})}
 													</td>
 													<td>
-														{store.employee.map((i, ind) => {
+														{store.employee.map(i => {
 															if (i.id === item.role_id) return i.role;
 														})}
 													</td>
-													<td>{totalHours.toFixed(1)}</td>
+													<td>{totalHours.toFixed(2)}</td>
 													<td>
-														{store.employee.map((i, ind) => {
+														{store.employee.map(i => {
 															if (i.id === item.role_id)
-																return (totalHours * i.hourly_rate).toFixed(1);
+																return (totalHours * i.hourly_rate).toFixed(2);
 														})}
 													</td>
 												</tr>
