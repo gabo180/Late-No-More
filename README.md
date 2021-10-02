@@ -1,6 +1,6 @@
 # LateNoMore App
 
-#!! FOR BETTER USE, OPEN IN CELLPHONES!!
+# !! FOR BETTER USE, OPEN IN CELLPHONES!!
 
 ## LateNoMore App is a brought to you as an micromanagement mobile first app to take control of your company so you can track the clock in/out of your employes and have a database of the shifts that they have done.
 
