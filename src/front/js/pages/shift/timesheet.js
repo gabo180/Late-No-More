@@ -1,20 +1,22 @@
 import React, { useContext } from "react";
 import userImage from "../../../img/userImage.jpg";
+import empty_profile from "../../../img/empty_profile.jpg";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
+import moment from "moment";
 
 export const Timesheet = () => {
-	const { store, actions } = useContext(Context);
+	const { store } = useContext(Context);
 
 	return (
-		<div className="text-center">
-			<div className="my-3">
+		<div className="text-center mb-5 pb-5">
+			<div className="my-3 mb-5 pb-5">
 				<div className="fadein-animation d-flex flex-column mb-4">
 					<div className="d-flex justify-content-start mx-2 my-2">
-						<img className="user-img" src={userImage} />
+						<img className="user-img" src={store.profile.employer !== null ? userImage : empty_profile} />
 						<h4 className="justify-content-start my-auto">
 							<span className="pl-2">{store.profile.username}</span> <br />{" "}
-							<span className="pr-5">Role</span>
+							<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
 						</h4>
 						<h2 className="mx-auto my-auto font-weight-bold">Timesheet</h2>
 					</div>
@@ -30,7 +32,7 @@ export const Timesheet = () => {
 						</div>
 					</form> */}
 					<div className="">
-						<table className="table container table-striped">
+						<table className="table container table-striped mt-3">
 							<thead>
 								<tr>
 									<th scope="col">Date</th>
@@ -43,18 +45,15 @@ export const Timesheet = () => {
 							<tbody>
 								{store.shift &&
 									store.shift.map((item, index) => {
-										const startingTime = new Date(item.clock_in);
-										const endingTime = new Date(item.clock_out);
-										const month = startingTime.getUTCMonth();
-										const day = startingTime.getUTCDate();
-										const year = startingTime.getUTCFullYear();
+										const dateShow = new Date(item.clock_in);
+										const startingTime = moment(item.clock_in);
+										const endingTime = moment(item.clock_out);
+										const month = dateShow.getUTCMonth() + 1;
+										const day = dateShow.getUTCDate();
+										const year = dateShow.getUTCFullYear();
 										const date = month + "/" + day + "/" + year;
-										const hoursStartingTime =
-											startingTime.getUTCHours() + startingTime.getUTCMinutes() / 60;
-										const hoursEndingTime =
-											endingTime.getUTCHours() + endingTime.getUTCMinutes() / 60;
-										const totalHours =
-											Math.round((hoursEndingTime - hoursStartingTime) * 100) / 100;
+										const totalHours = endingTime.diff(startingTime, "hours", true);
+
 										if (item.profile_id === store.profile.id && item.clock_out !== null)
 											return (
 												<tr key={index}>
@@ -64,7 +63,7 @@ export const Timesheet = () => {
 															if (i.id === item.role_id) return i.role;
 														})}
 													</td>
-													<td>{totalHours}</td>
+													<td>{totalHours.toFixed(2)}</td>
 													<td>
 														{store.employee.map((i, ind) => {
 															if (i.id === item.role_id)
@@ -78,19 +77,19 @@ export const Timesheet = () => {
 												<tr key={index}>
 													<td scope="row">{date}</td>
 													<td scope="row">
-														{store.allProfiles.map((i, ind) => {
+														{store.allProfiles.map(i => {
 															if (i.id === item.profile_id)
 																return `${i.name + " " + i.last_name}`;
 														})}
 													</td>
 													<td>
-														{store.employee.map((i, ind) => {
+														{store.employee.map(i => {
 															if (i.id === item.role_id) return i.role;
 														})}
 													</td>
-													<td>{totalHours}</td>
+													<td>{totalHours.toFixed(2)}</td>
 													<td>
-														{store.employee.map((i, ind) => {
+														{store.employee.map(i => {
 															if (i.id === item.role_id)
 																return (totalHours * i.hourly_rate).toFixed(2);
 														})}

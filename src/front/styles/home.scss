@@ -1,5 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,500&family=Zilla+Slab:wght@300&display=swap');
 
+.icon-size{
+    font-size:xx-large;
+}
+
+.icon-hover{
+    cursor: pointer;
+}
+
+.table-width{
+    width: 100%
+}
+
 .font-size-xl {
     font-size: 8rem;
     color: rgb(253, 253, 253)
@@ -75,8 +87,11 @@
 
 .position-try {
     max-width: 630px;
-    font-size: 2.7rem;
-    margin-right: 10px
+    font-size: 2rem;
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: justify;
+    
 }
 
 .font-title {
@@ -100,7 +115,7 @@
 }
 
 .fadein-animation {
-    animation: fadeInAnimation ease 3s;
+    animation: fadeInAnimation ease 0.5s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 }

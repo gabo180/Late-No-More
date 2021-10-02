@@ -1,19 +1,21 @@
 import React, { useContext } from "react";
 import userImage from "../../../img/userImage.jpg";
 import { Context } from "../../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import swal from "sweetalert";
+import empty_profile from "../../../img/empty_profile.jpg";
 import "../../../styles/home.scss";
 
 export const Roles = () => {
 	const { store, actions } = useContext(Context);
+	const history = useHistory();
 
 	return (
-		<div className="text-center">
-			<div className="my-3">
+		<div className="text-center mb-5 pb-5">
+			<div className="my-3 mb-5 pb-5">
 				<div className="fadein-animation d-flex flex-column">
 					<div className="d-flex justify-content-start mx-2">
-						<img className="user-img" src={userImage} />
+						<img className="user-img" src={store.profile.employer !== null ? userImage : empty_profile} />
 						<h4 className="justify-content-start my-auto">
 							<span className="pl-2">{store.profile.username}</span> <br />{" "}
 							<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
@@ -40,7 +42,6 @@ export const Roles = () => {
 											return (
 												<tr key={index}>
 													<td>
-														<i className="text-success far fa-edit" />{" "}
 														<i
 															className="text-danger far fa-trash-alt"
 															onClick={() =>
@@ -53,7 +54,9 @@ export const Roles = () => {
 																	dangerMode: true
 																}).then(willDelete => {
 																	if (willDelete) {
-																		actions.deleteSingleEmployee(item.id);
+																		actions.updateEmployee(item.id, {
+																			employer_id: null
+																		});
 																		swal(
 																			"Your role has been deleted succesfully!",
 																			{
@@ -61,7 +64,7 @@ export const Roles = () => {
 																			}
 																		);
 																	} else {
-																		swal("Your role file is safe!");
+																		swal("Your role is safe!");
 																	}
 																})
 															}

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../../store/appContext";
 import userImage from "../../../img/userImage.jpg";
+import empty_profile from "../../../img/empty_profile.jpg";
 import "../../../styles/home.scss";
 import moment from "moment";
 
@@ -48,18 +49,18 @@ export const Main = () => {
 		sumEarnings += amountEarnedArray[i];
 	}
 
-
 	return (
 		<>
-			<div className="fadein-animation d-flex flex-column">
-				<div className="d-flex justify-content-start mx-2">
-					<img className="user-img" src={userImage} />
+			<div className="fadein-animation d-flex flex-column mb-5 pb-5">
+				<div className="d-flex justify-content-start mx-2 my-4">
+					<img className="user-img" src={store.profile.employer !== null ? userImage : empty_profile} />
 					<h4 className="justify-content-start my-auto">
 						<span className="pl-2">{store.profile.username}</span> <br />{" "}
 						<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
 					</h4>
 				</div>
-				<div className="card text-center mt-5 ml-5" style={{ width: "18rem", height: "25rem" }}>
+				<h2 className="mt-2 mx-auto">Daily Summary</h2>
+				<div className="card text-center mt-1 mx-auto" style={{ width: "18rem", height: "25rem" }}>
 					<input
 						className="form-control"
 						type="date"

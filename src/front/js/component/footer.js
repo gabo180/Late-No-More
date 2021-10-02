@@ -26,7 +26,7 @@ export const FooterLoggedIn = () => (
 export const FooterPublicUser = () => (
 	<footer className="fixed-bottom py-2 shade-color-footer text-white">
 		<div className="text-center py-3">
-			Made with <i className="text-danger fas fa-palette" /> by{" "}
+			Made with <i className="text-danger far fa-keyboard" /> by{" "}
 			<a className="text-white text-decoration-none" href="https://github.com/marcoescmont">
 				Marco Escalona
 			</a>

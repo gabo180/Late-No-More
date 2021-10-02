@@ -21,14 +21,14 @@ export const SignUp = () => {
 	};
 
 	return (
-		<div className="text-center">
+		<div className="text-center mb-5 pb-5">
 			<h2>
 				Welcome and thank you for choosing us!
 				<br />
-				Sign up so you can enjoy of our benefits <i className="far fa-thumbs-up" />
+				Sign up so you can start to enjoy of our benefits <i className="far fa-thumbs-up" />
 			</h2>
-			<form className="mx-1 my-2" onSubmit={handleSubmit}>
-				<div className="form-group mb-2">
+			<form className="mx-5 my-3" onSubmit={handleSubmit}>
+				<div className="form-group mb-3">
 					<input
 						type="datetime"
 						className="form-control"
@@ -42,7 +42,7 @@ export const SignUp = () => {
 						value={createProfile.name}
 					/>
 				</div>
-				<div className="form-group mx-sm-3 mb-2">
+				<div className="form-group mx-sm-3 mb-3">
 					<input
 						type="text"
 						className="form-control"
@@ -56,7 +56,7 @@ export const SignUp = () => {
 						value={createProfile.last_name}
 					/>
 				</div>
-				<div className="form-group mx-sm-3 mb-2">
+				<div className="form-group mx-sm-3 mb-3">
 					<input
 						type="text"
 						className="form-control"
@@ -70,7 +70,7 @@ export const SignUp = () => {
 						value={createProfile.phone_number}
 					/>
 				</div>
-				<div className="form-group mx-sm-3 mb-2">
+				<div className="form-group mx-sm-3 mb-3">
 					<input
 						type="text"
 						className="form-control"
@@ -84,7 +84,7 @@ export const SignUp = () => {
 						value={createProfile.email}
 					/>
 				</div>
-				<div className="form-group mx-sm-3 mb-2">
+				<div className="form-group mx-sm-3 mb-3">
 					<input
 						type="text"
 						className="form-control"

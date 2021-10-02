@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import userImage from "../../../img/userImage.jpg";
 import { Context } from "../../store/appContext";
 import "../../../styles/home.scss";
+import empty_profile from "../../../img/empty_profile.jpg";
 
 export const CreateRole = () => {
 	const { store, actions } = useContext(Context);
@@ -18,11 +19,11 @@ export const CreateRole = () => {
 	};
 
 	return (
-		<div className="text-center">
-			<div className="my-3">
+		<div className="text-center mb-5 pb-5">
+			<div className="my-3 mb-5 pb-5">
 				<div className="fadein-animation d-flex flex-column">
 					<div className="d-flex justify-content-start mx-2">
-						<img className="user-img" src={userImage} />
+						<img className="user-img" src={store.profile.employer !== null ? userImage : empty_profile} />
 						<h4 className="justify-content-start my-auto">
 							<span className="pl-2">{store.profile.username}</span> <br />{" "}
 							<span className="pl-2">{store.profile.employer === null ? "Employee" : "Employer"}</span>
@@ -31,11 +32,11 @@ export const CreateRole = () => {
 							Create <br /> Role
 						</h2>
 					</div>
-					<form className="d-flex flex-column mr-auto" onSubmit={handleSubmit}>
-						<div className="my-2 d-flex flex-column mx-auto">
-							<span className="mr-auto ml-2">Role name:</span>{" "}
+					<form className="d-flex flex-column mx-auto" onSubmit={handleSubmit}>
+						<div className="my-3 d-flex flex-column mx-auto">
+							<span className="mr-auto">Role name:</span>{" "}
 							<input
-								className="ml-4 form-control"
+								className="form-control"
 								type="text"
 								onChange={e =>
 									setFields({
@@ -46,10 +47,10 @@ export const CreateRole = () => {
 								value={fields.role}
 							/>
 						</div>
-						<div className=" d-flex flex-column mx-auto">
-							<span className="mr-auto ml-2">Hourly rate:</span>{" "}
+						<div className="d-flex flex-column mx-auto mb-4">
+							<span className="mr-auto">Hourly rate:</span>{" "}
 							<input
-								className="ml-4 form-control"
+								className="form-control"
 								type="text"
 								onChange={e =>
 									setFields({
@@ -60,7 +61,7 @@ export const CreateRole = () => {
 								value={fields.hourly_rate}
 							/>
 						</div>
-						<div className="ml-5 d-flex justify-content-around">
+						<div className="d-flex justify-content-around">
 							<Link to="/account">
 								<button type="submit" className="btn btn-primary mb-2 px-4 my-2 mx-3" value="Log in">
 									Cancel

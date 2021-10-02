@@ -1,10 +1,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			myURL: "https://3001-moccasin-leech-cqixhw04.ws-us18.gitpod.io/api",
 
-			myURL: "https://3001-apricot-manatee-i2ceo4yy.ws-us18.gitpod.io/api",
-			messagesAuthor: [],
-			messagesRecipient: [],
+			// messagesAuthor: [],
+			// messagesRecipient: [],
 			shift: [],
 			// TODO: rename shift to allShifts
 			profile: {},
@@ -20,8 +20,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().loadShift();
 				getActions().loadEmployer();
 				getActions().loadEmployee();
-				getActions().loadMessageAuthor();
-				getActions().loadMessageRecipient();
+				// getActions().loadMessageAuthor();
+				// getActions().loadMessageRecipient();
 			},
 			//TODO: add return to all asyncs fucntions
 
@@ -171,7 +171,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			updateShift: async shift_id => {
+			updateShift: async (shiftCredentials, history, shift_id) => {
 				const endPoint = "/shift/" + shift_id;
 				const token = localStorage.getItem("jwt-token");
 				try {
@@ -180,11 +180,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							Authorization: "Bearer " + token,
 							"Content-Type": "application/json"
-						}
+						},
+						body: JSON.stringify(shiftCredentials)
 					});
 					const data = await response.json();
-					if (data.ok) {
+					if (response.ok) {
 						setStore({ shift: data });
+						setTimeout(
+							() => {
+								setTimeout(
+									() => {
+										history.go(0);
+									},
+									[100]
+								);
+								history.push("/shifts");
+							},
+							[300]
+						);
 					}
 				} catch (error) {
 					throw new Error(error);
@@ -398,7 +411,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			updateEmployee: async employee_id => {
+			updateEmployee: async (employee_id, employeeCredentials) => {
 				const endPoint = "/employee/" + employee_id;
 				const token = localStorage.getItem("jwt-token");
 				try {
@@ -407,10 +420,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							Authorization: "Bearer " + token,
 							"Content-Type": "application/json"
-						}
+						},
+						body: JSON.stringify(employeeCredentials)
 					});
 					const data = await response.json();
-					if (data.ok) {
+					if (response.ok) {
 						setStore({ employee: data });
 					}
 				} catch (error) {
