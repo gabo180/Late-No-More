@@ -54,7 +54,7 @@ export const HomePage = () => {
 					</Link>
 				</div>
 			</div>
-			<img src={logo} />
+			<img src={logo} className="w-100" />
 			<div className="mb-3">
 				<div className="d-flex flex-column">
 					<div className="position-try">
