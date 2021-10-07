@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			myURL: "https://3001-rose-bug-ccx5tzmi.ws-us18.gitpod.io/api",
+			myURL: "https://late-no-more-app.herokuapp.com/api",
 
 			// messagesAuthor: [],
 			// messagesRecipient: [],
