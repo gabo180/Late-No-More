@@ -7,7 +7,7 @@
 
 ## Languages and libraries used on this project:
 <ul>
-  <li>React.js.</li>
+  <li># React.js.</li>
 <li>Python.</li>
 <li>Moment.js.</li>
 <li>Flask.</li>
