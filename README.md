@@ -7,14 +7,14 @@
 
 ## Languages and libraries used on this project:
 <ul>
-  <li># React.js.</li>
-<li>Python.</li>
-<li>Moment.js.</li>
-<li>Flask.</li>
-<li>SQLAlquemy.</li>
-<li>HTML 5.</li>
-<li>SCSS.</li>
-<li>Sweetalerts.</li>
+  <li><h3>React.js.</h3></li>
+<li><h3>Python.</h3></li>
+<li><h3>Moment.js.</h3></li>
+<li><h3>Flask.</h3></li>
+<li><h3>SQLAlquemy.</h3></li>
+<li><h3>HTML 5.</h3></li>
+<li><h3>SCSS.</h3></li>
+<li><h3>Sweetalerts.</h3></li>
   </ul>
 
 ![logo with QR](https://user-images.githubusercontent.com/81428361/135701173-a21572dd-7d17-4ac7-b02e-c082fbdb8fa9.png)
