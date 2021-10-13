@@ -18,7 +18,7 @@
   </ul>
 
 <div>
-AS AN EMPLOYER!
+ <h2>AS AN EMPLOYER!</h2>
 <p><img src="https://user-images.githubusercontent.com/81428361/137210883-6d020d39-148c-4f96-9678-d10ae5d4d7cd.gif"/></p>
 </div>
 <div>
