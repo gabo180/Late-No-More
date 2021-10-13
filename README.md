@@ -17,7 +17,11 @@
 <li><h3>Sweetalerts.</h3></li>
   </ul>
 
+<div>
 AS AN EMPLOYER!
-![ezgif com-gif-maker (11)](https://user-images.githubusercontent.com/81428361/137210883-6d020d39-148c-4f96-9678-d10ae5d4d7cd.gif)
+<p>![ezgif com-gif-maker (11)](https://user-images.githubusercontent.com/81428361/137210883-6d020d39-148c-4f96-9678-d10ae5d4d7cd.gif)</p>
+</div>
+<div>
 AS AN EMPLOYEE!
-![ezgif com-gif-maker (12)](https://user-images.githubusercontent.com/81428361/137210889-3b7d8c39-ea2e-4a80-88ac-1b7d7fb8c447.gif)
+<p>![ezgif com-gif-maker (12)](https://user-images.githubusercontent.com/81428361/137210889-3b7d8c39-ea2e-4a80-88ac-1b7d7fb8c447.gif)</p>
+</div>
