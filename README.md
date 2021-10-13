@@ -19,7 +19,7 @@
 
 <div>
 AS AN EMPLOYER!
-<img>src="https://user-images.githubusercontent.com/81428361/137210883-6d020d39-148c-4f96-9678-d10ae5d4d7cd.gif"/>
+<img src="https://user-images.githubusercontent.com/81428361/137210883-6d020d39-148c-4f96-9678-d10ae5d4d7cd.gif"/>
 </div>
 <div>
 AS AN EMPLOYEE!
